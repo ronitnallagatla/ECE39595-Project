@@ -1,5 +1,5 @@
-#ifndef INSTR_H
-#define INSTR_H
+#ifndef INSTRUCTION_H
+#define INSTRUCTION_H
 
 #include <string>
 
