@@ -11,4 +11,4 @@ clean:
 commit:
 	git add --all
 	git commit -m "$(m)"
-	git push
+	git push -f
