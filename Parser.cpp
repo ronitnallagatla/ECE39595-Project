@@ -1,35 +1,43 @@
-#include <iostream>
-#include <string>
 #include <fstream>
-#include <vector>
-#include <queue>
+#include <iostream>
 #include <map>
+#include <queue>
+#include <string>
+#include <vector>
 
-#include "Instruction.h"
+#include "InstructionBuffer.h"
+#include "StringBuffer.h"
+#include "SymbolTable.h"
 
-using namespace std;
+// #include "Instruction.h"
 
-int main () {
-  string instr = "";
-  ifstream fptr ("OutputAndTestCases/OutputAndTestCases/TestCases10_08_22/1PushI");
-  if (fptr.is_open())
-  {
-    queue <Instruction*> instr_queue;
-    std::string opcode, op1, op2, jumpaddr;
-    while ( getline (fptr, instr) )
-    {
-      tie (opcode, op1, op2, jumpaddr) = parse_text (instr);
-      instr_queue.push (new Instruction (opcode, op1, op2, jumpaddr));
-     }
-    fptr.close();
-  }
+// using namespace std;
 
-  else cout << "Unable to open file"; 
+// int main () {
+//   string instr = "";
+//   ifstream fptr ("OutputAndTestCases/OutputAndTestCases/TestCases10_08_22/1PushI");
+//   if (fptr.is_open())
+//   {
+//     queue <Instruction*> instr_queue;
+//     std::string opcode, op1, op2, jumpaddr;
+//     while ( getline (fptr, instr) )
+//     {
+//       tie (opcode, op1, op2, jumpaddr) = parse_text (instr);
+//       instr_queue.push (new Instruction (opcode, op1, op2, jumpaddr));
+//      }
+//     fptr.close();
+//   }
 
-  return 0;
-}
+//   else cout << "Unable to open file";
 
-tuple <string, string, string, string> parse_text (string instr) {
-  string opcode, op1, op2, jumpaddr;
-  return make_tuple (opcode, op1, op2, jumpaddr);
+//   return 0;
+// }
+
+// tuple <string, string, string, string> parse_text (string instr) {
+//   string opcode, op1, op2, jumpaddr;
+//   return make_tuple (opcode, op1, op2, jumpaddr);
+// }
+
+int main(int argc, char* argv[])
+{
 }

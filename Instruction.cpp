@@ -1,6 +1,7 @@
-#include "Instruction.h"
 #include <iostream>
 #include <string>
+
+#include "Instruction.h"
 
 Instruction::Instruction()
 {

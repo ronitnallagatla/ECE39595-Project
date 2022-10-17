@@ -1,19 +1,19 @@
 #ifndef SYMBOLTABLE_H_
 #define SYMBOLTABLE_H_
 
-#include <string>
 #include <map>
+#include <string>
 
-class SymbolTable
-{
+class SymbolTable {
 private:
+    static SymbolTable* instance;
     std::map<std::string, int> definedMap;
-    static int idx;
-    static bool mapDefined;
-
+    int idx;
     SymbolTable();
 
 public:
-    static int getData(std::string key);
+    int getData(std::string key);
+    static SymbolTable* getInstance();
 };
-#endif /* SYMBOLTABLE_H_ */
+
+#endif;

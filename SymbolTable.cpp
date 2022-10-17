@@ -1,27 +1,28 @@
+#include "SymbolTable.h"
+
+#include <iostream>
 #include <map>
 #include <string>
-#include <iostream>
 
-#include "SymbolTable.h"
+SymbolTable* SymbolTable::instance = 0;
 
 SymbolTable::SymbolTable()
 {
-    definedMap = new std::map<std::string, int>();
     idx = 0;
+}
+
+SymbolTable* SymbolTable::getInstance()
+{
+    if (instance == nullptr) {
+        instance = new SymbolTable();
+    }
+    return instance;
 }
 
 int SymbolTable::getData(std::string key)
 {
-    if (!mapDefined)
-    {
-        return -1;
+    if (definedMap.find(key) == definedMap.end()) {
+        definedMap[key] = idx++;
     }
-
-    for (auto const &e : definedMap)
-    {
-        if (e.first == key)
-        {
-            return e.second;
-        }
-    }
+    return definedMap[key];
 }
