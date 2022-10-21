@@ -19,22 +19,22 @@ Instruction::Instruction(std::string _opcode, std::string _op1, std::string _op2
     jumpaddr = _jump;
 }
 
-std::string Instruction::getOpcode()
+std::string Instruction::getOpcode() const
 {
     return op;
 }
 
-std::string Instruction::getOp1()
+std::string Instruction::getOp1() const
 {
     return op1;
 }
 
-std::string Instruction::getOp2()
+std::string Instruction::getOp2() const
 {
     return op2;
 }
 
-std::string Instruction::getJump()
+std::string Instruction::getJump() const
 {
     return jumpaddr;
 }

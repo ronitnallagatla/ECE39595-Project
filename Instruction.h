@@ -1,5 +1,5 @@
-#ifndef INSTRUCTION_H
-#define INSTRUCTION_H
+#ifndef INSTR_H
+#define INSTR_H
 
 #include <string>
 
@@ -17,10 +17,10 @@ class Instruction : public Statement {
         void setOp2(std::string _op2);
         void setJump(std::string _jump);
         void print_instruction();
-        std::string getOpcode();
-        std::string getOp1();
-        std::string getOp2();
-        std::string getJump();
+        std::string getOpcode() const;
+        std::string getOp1() const;
+        std::string getOp2() const;
+        std::string getJump() const;
     private:
         std::string op;
         std::string op1;
