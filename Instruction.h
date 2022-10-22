@@ -11,21 +11,21 @@ class Statement {
 class Instruction : public Statement {
     public:
         Instruction ();
-        Instruction (std::string _opcode, std::string _op1, std::string _op2, std::string _jump);
-        void setOpcode(std::string _opcode);
-        void setOp1(std::string _op1);
-        void setOp2(std::string _op2);
-        void setJump(std::string _jump);
+        Instruction (int _opcode, int _op1, int _op2, int _jump);
+        void setOpcode(int _opcode);
+        void setOp1(int _op1);
+        void setOp2(int _op2);
+        void setJump(int _jump);
         void print_instruction();
-        std::string getOpcode() const;
-        std::string getOp1() const;
-        std::string getOp2() const;
-        std::string getJump() const;
+        int getOpcode() const;
+        int getOp1() const;
+        int getOp2() const;
+        int getJump() const;
     private:
-        std::string op;
-        std::string op1;
-        std::string op2;
-        std::string jumpaddr;;
+        int op;
+        int op1;
+        int op2;
+        int jumpaddr;;
 };
 
 #endif
