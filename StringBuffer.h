@@ -1,6 +1,7 @@
 #ifndef STRINGBUFFER_H_
 #define STRINGBUFFER_H_
 
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -13,7 +14,7 @@ private:
 public:
     static StringBuffer* getInstance();
     void add(std::string str);
-    void print();
+    void serialize(std::ofstream& outFile);
 };
 
 #endif /* STRINGBUFFER_H_ */

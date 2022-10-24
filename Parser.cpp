@@ -40,4 +40,15 @@
 
 int main(int argc, char* argv[])
 {
+    std::ifstream inFile(argv[1]);
+
+    if (!inFile.is_open()) {
+        std::cout << "Failed to open input file " << argv[1] << std::endl;
+        return -1;
+    }
+
+    std::string prefix = std::string(argv[1]);
+    std::string outFileName = prefix + ".out";
+
+    std::ofstream outFile(outFileName, std::ios::out | std::ios::binary);
 }

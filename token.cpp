@@ -1,45 +1,47 @@
 #ifndef _TOKEN_H_
 #define _TOKEN_H_
 
-#include <cstring> 
-#include <iostream>
 #include "Instruction.h"
+#include <cstring>
+#include <iostream>
 
 class Token {
-    private:
-        int i = 0;
-        void set_op (char* s);
-    
-    public:
-        Token (std::string str);
-        void print_tokens () const;
+private:
+    int i = 0;
+    void set_op(char* s);
 
-        void tokenize (std::string s);
-        void tokenize ();
+public:
+    Token(std::string str);
+    void print_tokens() const;
 
-        std::string op1 = "/0";
-        std::string op2 = "/0";
-        std::string op3 = "/0";
-        std::string op4 = "/0";
-        std::string op5 = "/0";
-        std::string op6 = "/0";
-        std::string op7 = "/0";
-        std::string inst = "/0";
-        
-    protected:
-        void set_instruction (std::string ins);
+    void tokenize(std::string s);
+    void tokenize();
+
+    std::string op1 = "/0";
+    std::string op2 = "/0";
+    std::string op3 = "/0";
+    std::string op4 = "/0";
+    std::string op5 = "/0";
+    std::string op6 = "/0";
+    std::string op7 = "/0";
+    std::string inst = "/0";
+
+protected:
+    void set_instruction(std::string ins);
 };
 
-Token::Token (std::string str) {
+Token::Token(std::string str)
+{
     Token::inst = str;
 }
 
-void Token::set_instruction (std::string ins) {
+void Token::set_instruction(std::string ins)
+{
     Token::inst = ins;
 }
 
-
-void Token::set_op (char* s) {
+void Token::set_op(char* s)
+{
     std::string str(s);
     i++;
     if (i == 1) {
@@ -71,7 +73,8 @@ void Token::set_op (char* s) {
     }
 }
 
-void Token::print_tokens() const {
+void Token::print_tokens() const
+{
     std::cout << "op1: " << op1 << std::endl;
     std::cout << "op2: " << op2 << std::endl;
     std::cout << "op3: " << op3 << std::endl;
@@ -81,27 +84,29 @@ void Token::print_tokens() const {
     std::cout << "op7: " << op7 << std::endl;
 }
 
-void Token::tokenize (std::string s) {
-    set_instruction (s);
-    tokenize ();
+void Token::tokenize(std::string s)
+{
+    set_instruction(s);
+    tokenize();
 }
 
-void Token::tokenize () {
+void Token::tokenize()
+{
     char *ptr, *str;
     str = &inst[0];
     ptr = strtok(str, " , ");
 
-    while (ptr != NULL)  
-    {
+    while (ptr != NULL) {
         set_op(ptr);
-        ptr = strtok (NULL, " , ");
+        ptr = strtok(NULL, " , ");
     }
 }
 
 #endif
 
-/* Uncomment to test tokenizer
-int main () {
+// /* Uncomment to test tokenizer
+int main()
+{
     std::string st = "JumpZero, FIBL0, (18)";
     std::string st2 = "PushScalar A, (0)";
     std::string st3 = "Prints 2+6=";
@@ -119,4 +124,4 @@ int main () {
     t3.print_tokens();
     return 0;
 }
-*/
+// */
