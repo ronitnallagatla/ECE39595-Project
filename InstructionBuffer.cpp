@@ -4,7 +4,7 @@
 #include "InstructionBuffer.h"
 #include "Stmt.h"
 
-InstructionBuffer* InstructionBuffer::instance = 0;
+InstructionBuffer* InstructionBuffer::instance = nullptr;
 
 InstructionBuffer::InstructionBuffer() { }
 

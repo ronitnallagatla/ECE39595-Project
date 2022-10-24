@@ -31,7 +31,7 @@ clean:
 # 	rm -rf a.out
 # 	clear
 
-# commit:
-# 	git add --all
-# 	git commit -m "$(m)"
-# 	git push -f
+commit:
+	git add --all
+	git commit -m "$(m)"
+	git push -f
