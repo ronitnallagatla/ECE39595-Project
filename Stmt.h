@@ -8,6 +8,7 @@ protected:
     uint32_t opcode;
 
 public:
+    Stmt();
     virtual void serialize() = 0;
 };
 
@@ -28,6 +29,9 @@ public:
 };
 
 class Gosublabel : public Stmt {
+private:
+    std::string label;
+
 public:
     Gosublabel(std::string label);
     void serialize();
@@ -52,12 +56,18 @@ public:
 };
 
 class Jump : public Stmt {
+private:
+    std::string label;
+
 public:
     Jump(std::string label);
     void serialize();
 };
 
 class Jumpzero : public Stmt {
+private:
+    std::string label;
+
 public:
     Jumpzero(std::string label);
     void serialize();
@@ -84,7 +94,7 @@ public:
 class Pushscal : public Stmt {
 protected:
     int opcode = OP_PUSHSCALAR;
-    // int* value;
+    std::string var;
 
 public:
     Pushscal(std::string var);
@@ -97,7 +107,7 @@ protected:
     // int* array;
 
 public:
-    Pusharr(std::string var);
+    Pusharr(std::string var, int index);
     void serialize();
 };
 
@@ -123,6 +133,7 @@ class Popscal : public Stmt {
 protected:
     int opcode = OP_POPSCALAR;
     // int* index;
+    std::string var;
 
 public:
     Popscal(std::string var);
@@ -132,10 +143,11 @@ public:
 class Poparr : public Stmt {
 protected:
     int opcode = OP_POPARRAY;
-    // int* index;
+    std::string var;
+    int index;
 
 public:
-    Poparr(std::string var);
+    Poparr(std::string var, int index);
     void serialize();
 };
 
@@ -149,18 +161,12 @@ public:
 };
 
 class Swap : public Stmt {
-protected:
-    int opcode = OP_SWAP;
-
 public:
     Swap();
     void serialize();
 };
 
 class Add : public Stmt {
-protected:
-    int opcode = OP_ADD;
-
 public:
     Add();
     void serialize();
@@ -204,9 +210,9 @@ public:
 
 class Prints : public Stmt {
 protected:
-    Prints(std::string* str);
-    int opcode = OP_PRINTS;
-    std::string* string_buffer = nullptr;
+    Prints(std::string str);
+    // std::string* string_buffer = nullptr;
+    std::string str;
 
 public:
     void serialize();
