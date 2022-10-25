@@ -1,11 +1,12 @@
 #ifndef STMT_H_
 #define STMT_H_
 
+#include <string>
 #include "opcodes.h"
 
 class Stmt {
 protected:
-    uint32_t opcode;
+    int opcode;
 
 public:
     Stmt();
@@ -24,7 +25,7 @@ public:
 
 class Label : public Stmt {
 public:
-    Label(std::string label);
+    Label (std::string label);
     void serialize();
 };
 
@@ -184,9 +185,9 @@ public:
 class Mul : public Stmt {
 public:
     void serialize();
-
-protected:
     Mul();
+
+protected: 
     int opcode = OP_MUL;
 };
 

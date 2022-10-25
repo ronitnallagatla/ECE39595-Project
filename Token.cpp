@@ -1,45 +1,50 @@
-#include "Token.h"
 #include <cstring>
 #include <iostream>
-#include <string>
+#include "Token.h"
 
-// Token::Token(std::string inst, std::string op1, std::string op2, std::string op3, std::string op4, std::string op5, std::string op6, std::string op7)
-// {
-//     this->inst = inst;
-//     this->op1 = op1;
-//     this->op2 = op2;
-// }
-
-Token::Token(std::string line)
+Token::Token(std::string str)
 {
-    tokenize(line);
+    Token::inst = str;
 }
 
-std::string Token::getInst()
+void Token::set_instruction(std::string ins)
 {
-    return inst;
+    Token::inst = ins;
 }
 
-std::string Token::getOp1()
+void Token::set_op(char* s)
 {
-    return op1;
+    std::string str(s);
+    i++;
+    
+    if (i == 1) {
+        op1 = str;
+    }
+
+    else if (i == 2) {
+        op2 = str;
+    }
+
+    else if (i == 3) {
+        op3 = str;
+    }
+
+    else {
+        op4 = str;
+    }
 }
 
-std::string Token::getOp2()
+void Token::print_tokens() const
 {
-    return op2;
-}
-
-void Token::printTokens() const
-{
-    std::cout << "Opcode: " << inst << std::endl;
-    std::cout << "Operand 1: " << op1 << std::endl;
-    std::cout << "Operand 2: " << op2 << std::endl;
+    std::cout << "Opcode: " << op1 << std::endl;
+    std::cout << "Operand 1: " << op2 << std::endl;
+    std::cout << "Operand 2: " << op3 << std::endl;
+    std::cout << "Operand 3: " << op4 << std::endl;
 }
 
 void Token::tokenize(std::string s)
 {
-    setInstruction(s);
+    set_instruction(s);
     tokenize();
 }
 
@@ -47,21 +52,10 @@ void Token::tokenize()
 {
     char *ptr, *str;
     str = &inst[0];
-    ptr = strtok(str, " , ");
+    ptr = strtok(str, ", ");
 
     while (ptr != NULL) {
-        setOp(ptr);
-        ptr = strtok(NULL, " , ");
+        set_op(ptr);
+        ptr = strtok(NULL, ", ");
     }
-}
-
-void Token::setOp(char* s)
-{
-    std::string str(s);
-
-    i++;
-
-    op1 = (i == 1) ? str : op1;
-
-    op2 = (i == 2) ? str : op2;
 }

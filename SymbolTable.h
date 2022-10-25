@@ -23,4 +23,4 @@ public:
     static SymbolTable* getInstance();
 };
 
-#endif;
+#endif /* SYMBOLTABLE_H_ */

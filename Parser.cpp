@@ -56,15 +56,24 @@
 //     std::ofstream outFile(outFileName, std::ios::out | std::ios::binary);
 // }
 
+
 Parser::Parser()
 {
-    symbolTable = SymbolTable::getInstance();
-    instructionBuffer = InstructionBuffer::getInstance();
-    stringBuffer = StringBuffer::getInstance();
+    // symbolTable = SymbolTable::getInstance();
+    // instructionBuffer = InstructionBuffer::getInstance();
+    // stringBuffer = StringBuffer::getInstance();
+}
+
+Parser* Parser::getInstance()
+{
+    if (instance == nullptr) {
+        instance = new Parser();
+    }
+    return instance;
 }
 
 // void Parser::Parse(std::ifstream& inFile)
-void Parser::Parse(std::ifstream& fptr)
+void Parser::Parse(std::string inFile)
 {
     // go through file, get each line
     // tokenize each line (op, op1, op2, jumpaddr)
@@ -72,13 +81,21 @@ void Parser::Parse(std::ifstream& fptr)
     // add to instruction buffer
     // add to symbol table
     // add to string buffer
+
+    std::ifstream fptr(inFile);
+
+    if (!fptr.is_open()) {
+        std::cout << "Error opening file in Parser::Parse (std::string inFile)" << std::endl;
+    }
+
     std::string instr;
 
     while (getline(fptr, instr)) {
-        // std::cout << instr << std::endl;
         Token t(instr);
         t.tokenize();
         t.printTokens();
+
+        std::cout << std::endl;
     }
 
     int numInst = 0;
@@ -86,36 +103,45 @@ void Parser::Parse(std::ifstream& fptr)
     std::string line;
 }
 
-void Parser::makeInstruction(std::string op)
+void Parser::makeInstruction (Token token)
 {
     Stmt* stmt = nullptr;
     int val;
 
-    if (op == "start") {
+    if (token.getInst() == "start") {
         stmt = new Start();
     }
 
-    else if (op == "end") {
+    else if (token.getInst() == "end") {
         stmt = new End();
     }
 
-    else if (op == "exit") {
+    else if (token.getInst() == "exit") {
         stmt = new Exit();
     }
 
-    else if (op == "pushi") {
-        val = tokens->getVal();
-        stmt = new Pushi();
+    else if (token.getInst() == "pushi") {
+        val = stoi(token.getOp1());
+        stmt = new Pushi(val);
     }
 
-    else if (op == "add") {
+    else if (token.getInst() == "add") {
         stmt = new Add();
     }
 
-    else if (op == "printtos") {
+    else if (token.getInst() == "printtos") {
     }
 
-    // else if (op == "return") {
-    //     stmt = new Return();
-    // }
+    else if (token.getInst() == "return") {
+        stmt = new Return();
+    }
+
+    else if (token.getInst() == "pop") {
+        stmt = new Pop();
+    }
+
+    else if (token.getInst() == "mul") {
+        stmt = new Mul();
+    }
+
 }

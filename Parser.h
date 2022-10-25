@@ -5,6 +5,7 @@
 #include "Stmt.h"
 #include "StringBuffer.h"
 #include "SymbolTable.h"
+#include "Token.h"
 #include <string>
 #include <vector>
 
@@ -12,9 +13,9 @@ class Parser {
 private:
     static Parser* instance;
     Parser();
-    void Parse(std::ifstream& inFile);
-    // void Parse(FILE* fptr);
-    void makeInstruction(std::string instr);
+    // Moved Parse to public. Also changed input arg
+    //void Parse(std::ifstream& inFile);
+    void makeInstruction(Token t);
     std::vector<std::string> tokens;
     SymbolTable* symbolTable;
     InstructionBuffer* instructionBuffer;
@@ -23,6 +24,7 @@ private:
 public:
     static Parser* getInstance();
     void parse(std::vector<std::string> tokens);
+    void Parse(std::string inFile);
     void print();
 };
 

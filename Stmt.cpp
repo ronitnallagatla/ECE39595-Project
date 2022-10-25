@@ -1,12 +1,8 @@
 #include "Stmt.h"
 #include "opcodes.h"
-
 #include <iostream>
-#include <string>
 
-// Label::Label(std::string label)
-// {
-// }
+Label::Label(std::string label) {};
 
 Gosublabel::Gosublabel(std::string label)
 {
