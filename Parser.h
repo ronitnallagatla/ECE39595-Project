@@ -12,6 +12,9 @@ class Parser {
 private:
     static Parser* instance;
     Parser();
+    void Parse(std::ifstream& inFile);
+    // void Parse(FILE* fptr);
+    void makeInstruction(std::string instr);
     std::vector<std::string> tokens;
     SymbolTable* symbolTable;
     InstructionBuffer* instructionBuffer;

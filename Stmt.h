@@ -4,10 +4,11 @@
 #include "opcodes.h"
 
 class Stmt {
-private:
-    int opcode;
+protected:
+    uint32_t opcode;
 
 public:
+    Stmt();
     virtual void serialize() = 0;
 };
 
@@ -23,121 +24,198 @@ public:
 
 class Label : public Stmt {
 public:
+    Label(std::string label);
     void serialize();
 };
 
 class Gosublabel : public Stmt {
+private:
+    std::string label;
 
 public:
+    Gosublabel(std::string label);
+    void serialize();
+};
+
+class Start : public Stmt {
+public:
+    Start();
+    void serialize();
+};
+
+class End : public Stmt {
+public:
+    End();
+    void serialize();
+};
+
+class Exit : public Stmt {
+public:
+    Exit();
+    void serialize();
+};
+
+class Jump : public Stmt {
+private:
+    std::string label;
+
+public:
+    Jump(std::string label);
+    void serialize();
+};
+
+class Jumpzero : public Stmt {
+private:
+    std::string label;
+
+public:
+    Jumpzero(std::string label);
+    void serialize();
+};
+
+class Jumpnzero : public Stmt {
+public:
+    Jumpnzero(std::string label);
+    void serialize();
+};
+
+class Gosub : public Stmt {
+public:
+    Gosub(std::string label);
+    void serialize();
+};
+
+class Return : public Stmt {
+public:
+    Return();
     void serialize();
 };
 
 class Pushscal : public Stmt {
-    protected:
-        int Opcode = OP_PUSHSCALAR;
-        int *value;
-    public:
-        void serialize();
+protected:
+    int opcode = OP_PUSHSCALAR;
+    std::string var;
+
+public:
+    Pushscal(std::string var);
+    void serialize();
 };
 
 class Pusharr : public Stmt {
-    protected:
-        int Opcode = OP_PUSHARRAY;
-        int *array;
-    public:
-        void serialize();
+protected:
+    int opcode = OP_PUSHARRAY;
+    // int* array;
+
+public:
+    Pusharr(std::string var, int index);
+    void serialize();
 };
 
 class Pushi : public Stmt {
-    public:
-        int Opcode = OP_PUSHI;
-        int value;
-        void serialize();
+protected:
+    int opcode = OP_PUSHI;
+    // int value;
+public:
+    Pushi(int val);
+    void serialize();
 };
 
 class Pop : public Stmt {
-    protected:
-        int Opcode = OP_POP;
-    public:
-        void serialize();
+protected:
+    int opcode = OP_POP;
+
+public:
+    Pop();
+    void serialize();
 };
 
 class Popscal : public Stmt {
-    protected:
-        int Opcode = OP_POPSCALAR;
-        int *index;
-    public:
-        void serialize();
+protected:
+    int opcode = OP_POPSCALAR;
+    // int* index;
+    std::string var;
+
+public:
+    Popscal(std::string var);
+    void serialize();
 };
 
 class Poparr : public Stmt {
-    protected:
-        int Opcode = OP_POPARRAY;
-        int *index;
-    public:
-        void serialize();
+protected:
+    int opcode = OP_POPARRAY;
+    std::string var;
+    int index;
+
+public:
+    Poparr(std::string var, int index);
+    void serialize();
 };
 
 class Dup : public Stmt {
-    protected:
-        int Opcode = OP_DUP;
-    public:
-        void serialize();
+protected:
+    int opcode = OP_DUP;
+
+public:
+    Dup();
+    void serialize();
 };
 
 class Swap : public Stmt {
-    protected:
-        int Opcode = OP_SWAP;
-    public:
-        void serialize();
+public:
+    Swap();
+    void serialize();
 };
 
 class Add : public Stmt {
-    protected:
-        int Opcode = OP_ADD;
-    public:
-        void serialize();
+public:
+    Add();
+    void serialize();
 };
 
 class Negate : public Stmt {
-    protected:
-        int Opcode = OP_NEGATE;
-    public
-        void serialize();
+protected:
+    int opcode = OP_NEGATE;
+
+public:
+    Negate();
+    void serialize();
 };
 
 class Mul : public Stmt {
-    public:
-        void serialize();
+public:
+    void serialize();
 
-    protected:
-        int Opcode = OP_MUL;
+protected:
+    Mul();
+    int opcode = OP_MUL;
 };
 
 class Div : public Stmt {
-    protected:
-        int Opcode = OP_DIV;
-    public:
-        void serialize();
+protected:
+    int opcode = OP_DIV;
+
+public:
+    Div();
+    void serialize();
 };
 
-
 class Printtos : public Stmt {
-    protected:
-        int Opcode = OP_PRINTTOS;
-    public:
-        void serialize();
+protected:
+    int opcode = OP_PRINTTOS;
+
+public:
+    Printtos();
+    void serialize();
 };
 
 class Prints : public Stmt {
-    protected:
-        Prints(std::string *str);
-        int OpCode = OP_PRINTS;
-        std::string *string_buffer = nullptr;
-    public:
-        void serialize();
-};
+protected:
+    Prints(std::string str);
+    // std::string* string_buffer = nullptr;
+    std::string str;
 
-#endif /* STMT_H_ */
+public:
+    void serialize();
+};
 
 #endif /* STMT_H_ */
