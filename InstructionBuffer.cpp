@@ -34,3 +34,15 @@ bool InstructionBuffer::isEmpty()
 {
     return buffer.empty();
 }
+
+int InstructionBuffer::size()
+{
+    return buffer.size();
+}
+
+Stmt* InstructionBuffer::get()
+{
+    Stmt* stmt = buffer.front();
+    buffer.pop();
+    return stmt;
+}

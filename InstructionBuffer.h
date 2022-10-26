@@ -13,6 +13,9 @@ private:
 public:
     static InstructionBuffer* getInstance();
     void add(Stmt* stmt);
+    int size();
+    // Stmt* get(int i);
+    Stmt* get();
     void print();
     bool isEmpty();
 };

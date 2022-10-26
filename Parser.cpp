@@ -12,6 +12,8 @@
 #include "SymbolTable.h"
 #include "Token.h"
 
+Parser* Parser::instance = nullptr;
+
 // #include "Instruction.h"
 
 // using namespace std;
@@ -56,18 +58,36 @@
 //     std::ofstream outFile(outFileName, std::ios::out | std::ios::binary);
 // }
 
+// Parser::Parser()
+// {
+//     symbolTable = SymbolTable::getInstance();
+//     instructionBuffer = InstructionBuffer::getInstance();
+//     stringBuffer = StringBuffer::getInstance();
+// }
 
-Parser::Parser()
+Parser::Parser(SymbolTable* _symbolTable, InstructionBuffer* _instructionBuffer,
+    StringBuffer* _stringBuffer)
 {
-    // symbolTable = SymbolTable::getInstance();
-    // instructionBuffer = InstructionBuffer::getInstance();
-    // stringBuffer = StringBuffer::getInstance();
+    symbolTable = _symbolTable;
+    instructionBuffer = _instructionBuffer;
+    stringBuffer = _stringBuffer;
 }
 
-Parser* Parser::getInstance()
+// Parser* Parser::getInstance()
+// {
+//     if (instance == nullptr) {
+//         // instance = new Parser();
+//         instance = new Parser(SymbolTable::getInstance(),
+
+//     }
+//     return instance;
+// }
+
+Parser* Parser::getInstance(SymbolTable* symbolTable, InstructionBuffer* instructionBuffer,
+    StringBuffer* stringBuffer)
 {
     if (instance == nullptr) {
-        instance = new Parser();
+        instance = new Parser(symbolTable, instructionBuffer, stringBuffer);
     }
     return instance;
 }
@@ -95,7 +115,7 @@ void Parser::Parse(std::string inFile)
         t.tokenize();
         t.printTokens();
 
-        std::cout << std::endl;
+        // std::cout << std::endl;
     }
 
     int numInst = 0;
@@ -103,7 +123,7 @@ void Parser::Parse(std::string inFile)
     std::string line;
 }
 
-void Parser::makeInstruction (Token token)
+void Parser::makeInstruction(Token token)
 {
     Stmt* stmt = nullptr;
     int val;
@@ -144,4 +164,5 @@ void Parser::makeInstruction (Token token)
         stmt = new Mul();
     }
 
+    instructionBuffer->add(stmt);
 }

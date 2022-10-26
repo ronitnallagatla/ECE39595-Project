@@ -7,10 +7,14 @@
 
 #include "Instruction.h"
 #include "Parser.h"
-#include "opcodes.h"
 #include "Token.h"
+#include "opcodes.h"
 
-/* COMMENT OUT TO GET WORKING TOKENIZER 
+#include "InstructionBuffer.h"
+#include "StringBuffer.h"
+#include "SymbolTable.h"
+
+/* COMMENT OUT TO GET WORKING TOKENIZER
 int main(int argc, char* argv[])
 {
     if (argc != 2) {
@@ -31,7 +35,6 @@ int main(int argc, char* argv[])
 }
 */
 
-
 int main(int argc, char* argv[])
 {
     /*  open input file
@@ -44,8 +47,8 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    /* Moved file opening to parser.
-        Could not get it to work here.
+    // Moved file opening to parser.
+    // Could not get it to work here.
 
     std::fstream inFile(argv[1]);
 
@@ -54,9 +57,30 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    */
+    // Parser* parser = Parser::getInstance();
+    // // parser->Parse(inFile);
+    // parser->Parse(argv[1]);
 
-    Parser* parser;
-    *parser = Parser::getInstance();
+    SymbolTable* symbolTable = SymbolTable::getInstance();
+    InstructionBuffer* instructionBuffer = InstructionBuffer::getInstance();
+    StringBuffer* stringBuffer = StringBuffer::getInstance();
+
+    Parser* parser = Parser::getInstance(symbolTable, instructionBuffer, stringBuffer);
+
     parser->Parse(argv[1]);
+
+    // SymbolTable* symbolTable;
+    // symbolTable = symbolTable->getInstance();
+
+    // InstructionBuffer* instructionBuffer;
+    // instructionBuffer = instructionBuffer->getInstance();
+
+    // StringBuffer* stringBuffer;
+    // stringBuffer = stringBuffer->getInstance();
+
+    // Parser* parser;
+    // parser = parser->getInstance(symbolTable, instructionBuffer, stringBuffer);
+
+    // Parser* parser = Parser::getInstance(symbolTable, instructionBuffer, stringBuffer);
+    // parser->Parse(argv[1]);
 }

@@ -15,6 +15,7 @@ public:
     static StringBuffer* getInstance();
     void add(std::string str);
     void serialize(std::ofstream& outFile);
+    std::string get(int i);
 };
 
 #endif /* STRINGBUFFER_H_ */

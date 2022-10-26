@@ -1,22 +1,22 @@
+#include "Token.h"
 #include <cstring>
 #include <iostream>
-#include "Token.h"
 
 Token::Token(std::string str)
 {
     Token::inst = str;
 }
 
-void Token::set_instruction(std::string ins)
+void Token::setInstruction(std::string ins)
 {
     Token::inst = ins;
 }
 
-void Token::set_op(char* s)
+void Token::setOp(char* s)
 {
     std::string str(s);
     i++;
-    
+
     if (i == 1) {
         op1 = str;
     }
@@ -25,26 +25,25 @@ void Token::set_op(char* s)
         op2 = str;
     }
 
-    else if (i == 3) {
-        op3 = str;
-    }
+    // else if (i == 3) {
+    //     op3 = str;
+    // }
 
-    else {
-        op4 = str;
-    }
+    // else {
+    //     op4 = str;
+    // }
 }
 
-void Token::print_tokens() const
+void Token::printTokens() const
 {
-    std::cout << "Opcode: " << op1 << std::endl;
-    std::cout << "Operand 1: " << op2 << std::endl;
-    std::cout << "Operand 2: " << op3 << std::endl;
-    std::cout << "Operand 3: " << op4 << std::endl;
+    std::cout << "Opcode: " << inst << std::endl;
+    std::cout << "Operand 1: " << op1 << std::endl;
+    std::cout << "Operand 2: " << op2 << std::endl;
 }
 
 void Token::tokenize(std::string s)
 {
-    set_instruction(s);
+    setInstruction(s);
     tokenize();
 }
 
@@ -55,7 +54,7 @@ void Token::tokenize()
     ptr = strtok(str, ", ");
 
     while (ptr != NULL) {
-        set_op(ptr);
+        setOp(ptr);
         ptr = strtok(NULL, ", ");
     }
 }

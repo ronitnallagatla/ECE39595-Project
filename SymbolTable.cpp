@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 
-SymbolTable* SymbolTable::instance = 0;
+SymbolTable* SymbolTable::instance = nullptr;
 
 SymbolTable::SymbolTable()
 {
@@ -27,17 +27,12 @@ SymbolTable* SymbolTable::getInstance()
 //     return definedMap[key];
 // }
 
-std::map<int, TableEntry> SymbolTable::getDefinedMap()
-{
-    return definedMap;
-}
-
-std::pair<int, TableEntry> SymbolTable::getEntry(int key)
-{
-    return std::make_pair(key, definedMap[key]);
-}
+// std::map<std::string, TableEntry> SymbolTable::getDefinedMap()
+// {
+//     return definedMap;
+// }
 
 TableEntry SymbolTable::getEntry(std::string key)
 {
-    return definedMap[std::stoi(key)];
+    return definedMap[key];
 }

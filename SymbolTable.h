@@ -11,15 +11,17 @@ private:
     static SymbolTable* instance;
     // std::map<std::string, int> definedMap;
     // std::map<std::pair<int, std::string>, TableEntry> definedMap;
-    std::map<int, TableEntry> definedMap;
+    std::map<std::string, TableEntry> definedMap;
+    std::map<std::string, TableEntry> subMap;
     int idx;
     SymbolTable();
 
 public:
     // int getData(std::string key);
-    std::map<int, TableEntry> getDefinedMap();
-    std::pair<int, TableEntry> getEntry(int key);
+    // std::map<std::string, TableEntry> getDefinedMap();
+    // std::pair<std::string, TableEntry> getEntry(int key);
     TableEntry getEntry(std::string key);
+    TableEntry getSubEntry(std::string key);
     static SymbolTable* getInstance();
 };
 

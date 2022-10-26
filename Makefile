@@ -1,4 +1,4 @@
-OBJS = Parser.o Stmt.o StringBuffer.o InstructionBuffer.o SymbolTable.o
+OBJS = Parser.o Stmt.o StringBuffer.o InstructionBuffer.o SymbolTable.o Token.o
 CC = g++
 CFLAGS = -g -Wall -std=c++11 
 EXEC = parser
@@ -18,6 +18,8 @@ all: $(EXEC)
 
 clean:
 	rm -f $(OBJS) $(EXEC)
+
+
 	
 
 

@@ -37,3 +37,8 @@ void StringBuffer::serialize(std::ofstream& outFile)
         outFile.write(buffer[i].c_str(), strLength);
     }
 }
+
+std::string StringBuffer::get(int i)
+{
+    return buffer[i];
+}
