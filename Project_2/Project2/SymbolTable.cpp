@@ -27,22 +27,68 @@
 //     return definedMap[key];
 // }
 
+// SymbolTable::SymbolTable()
+// {
+//     idx = 0;
+// }
+
+// std::map<int, TableEntry> SymbolTable::getDefinedMap()
+// {
+//     return definedMap;
+// }
+
+// std::pair<int, TableEntry> SymbolTable::getEntry(int key)
+// {
+//     return std::make_pair(key, definedMap[key]);
+// }
+
+// TableEntry SymbolTable::getEntry(std::string key)
+// {
+//     return definedMap[std::stoi(key)];
+// }
+
+SymbolTable* SymbolTable::instance = nullptr;
+
 SymbolTable::SymbolTable()
 {
-    idx = 0;
+    size = 0;
 }
 
-std::map<int, TableEntry> SymbolTable::getDefinedMap()
+SymbolTable* SymbolTable::getInstance()
 {
-    return definedMap;
+    if (instance == nullptr) {
+        instance = new SymbolTable();
+    }
+    return instance;
 }
 
-std::pair<int, TableEntry> SymbolTable::getEntry(int key)
+void SymbolTable::addEntry(std::string key, double loc, double len)
 {
-    return std::make_pair(key, definedMap[key]);
+    map[key] = std::make_pair(loc, len);
+    size++;
 }
 
-TableEntry SymbolTable::getEntry(std::string key)
+void SymbolTable::addSubEntry(std::string key, double loc, double len)
 {
-    return definedMap[std::stoi(key)];
+    subMap[key] = std::make_pair(loc, len);
+}
+
+std::pair<double, double> SymbolTable::getEntry(std::string key)
+{
+    return map[key];
+}
+
+std::pair<double, double> SymbolTable::getSubEntry(std::string key)
+{
+    return subMap[key];
+}
+
+int SymbolTable::getSize()
+{
+    return size;
+}
+
+int SymbolTable::getSubSize()
+{
+    return subMap.size();
 }

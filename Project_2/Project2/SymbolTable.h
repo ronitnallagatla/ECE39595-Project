@@ -6,22 +6,39 @@
 
 #include "TableEntry.h"
 
+// class SymbolTable {
+// private:
+//     // static SymbolTable* instance;
+//     // std::map<std::string, int> definedMap;
+//     // std::map<std::pair<int, std::string>, TableEntry> definedMap;
+//     std::map<int, TableEntry> definedMap;
+//     int idx;
+//     // SymbolTable();
+
+// public:
+//     SymbolTable();
+//     // int getData(std::string key);
+//     std::map<int, TableEntry> getDefinedMap();
+//     std::pair<int, TableEntry> getEntry(int key);
+//     TableEntry getEntry(std::string key);
+//     // static SymbolTable* getInstance();
+// };
+
 class SymbolTable {
 private:
-    // static SymbolTable* instance;
-    // std::map<std::string, int> definedMap;
-    // std::map<std::pair<int, std::string>, TableEntry> definedMap;
-    std::map<int, TableEntry> definedMap;
-    int idx;
-    // SymbolTable();
+    SymbolTable();
+    static SymbolTable* instance;
+    int size;
+    std::map<std::string, std::pair<double, double>> map;
+    std::map<std::string, std::pair<double, double>> subMap;
 
 public:
-    SymbolTable();
-    // int getData(std::string key);
-    std::map<int, TableEntry> getDefinedMap();
-    std::pair<int, TableEntry> getEntry(int key);
-    TableEntry getEntry(std::string key);
-    // static SymbolTable* getInstance();
+    static SymbolTable* getInstance();
+    void addEntry(std::string key, double loc, double len);
+    void addSubEntry(std::string key, double loc, double len);
+    std::pair<double, double> getEntry(std::string key);
+    std::pair<double, double> getSubEntry(std::string key);
+    int getSize();
+    int getSubSize();
 };
-
 #endif /* SYMBOLTABLE_H_ */
