@@ -4,6 +4,8 @@
 
 #include "Token.h"
 #include "opcodes.h"
+#include "SymbolTable.h"
+#include "StringBuffer.h"
 
 Instruction* get_instruction(std::string instr);
 
@@ -17,14 +19,14 @@ int main(int argc, char* argv[])
     std::string instr;
     std::ifstream fptr(argv[1]);
     std::queue<Instruction*> instr_queue;
-
+    
     while (getline(fptr, instr)) {
         Instruction* instr_ptr = get_instruction(instr);
         instr_queue.push(instr_ptr);
-    }
+    }    
 
-        while (!instr_queue.empty()) {
-        instr_queue.front()->serialize();
+    while (!instr_queue.empty()) {
+        instr_queue.frsont()->serialize();
         instr_queue.pop();
     }
 
@@ -33,6 +35,7 @@ int main(int argc, char* argv[])
 
 Instruction* get_instruction(std::string instr)
 {
+    SymbolTable* sym_table = SymbolTable::getInstance();
     Token t(instr);
     Instruction* ins = nullptr;
     t.tokenize();
@@ -40,6 +43,7 @@ Instruction* get_instruction(std::string instr)
     if (t.inst == "declscal") {
         ins = new declscal();
         ins->label_for_symbol_table = t.op1;
+        std::pair <int, int> p;
     }
 
     else if (t.inst == "declarr") {
@@ -105,8 +109,7 @@ Instruction* get_instruction(std::string instr)
     }
 
     else if (t.inst == "pushi") {
-        ins = new pushi();
-        ins->value = stoi(t.op1);
+        ins = new pushi(stoi(t.op1));
     }
 
     else if (t.inst == "pop") {
