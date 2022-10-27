@@ -2,9 +2,9 @@
 #include <iostream>
 #include <queue>
 
+#include "SymbolTable.h"
 #include "Token.h"
 #include "opcodes.h"
-#include "SymbolTable.h"
 
 Instruction* get_instruction(std::string instr);
 
@@ -18,13 +18,11 @@ int main(int argc, char* argv[])
     std::string instr;
     std::ifstream fptr(argv[1]);
     std::queue<Instruction*> instr_queue;
-    
+
     while (getline(fptr, instr)) {
         Instruction* instr_ptr = get_instruction(instr);
         instr_queue.push(instr_ptr);
     }
-
-
 
     while (!instr_queue.empty()) {
         instr_queue.front()->serialize();
@@ -36,8 +34,7 @@ int main(int argc, char* argv[])
 
 Instruction* get_instruction(std::string instr)
 {
-    SymbolTable* sym_table;
-    sym_table = sym_table->getInstance();
+    SymbolTable* symbolTable = SymbolTable::getInstance();
     Token t(instr);
     Instruction* ins = nullptr;
     t.tokenize();
@@ -45,22 +42,32 @@ Instruction* get_instruction(std::string instr)
     if (t.inst == "declscal") {
         ins = new declscal();
         ins->label_for_symbol_table = t.op1;
+
+        symbolTable->addVar(t.op1, 1);
     }
 
     else if (t.inst == "declarr") {
         ins = new declarr();
         ins->label_for_symbol_table = t.op1;
         ins->length = stoi(t.op2);
+
+        symbolTable->addVar(t.op1, stoi(t.op2));
     }
 
     else if (t.inst == "label") {
         ins = new label();
         ins->label_for_symbol_table = t.op1;
+
+        symbolTable->addLabel(t.op1, symbolTable->getLoc());
     }
 
     else if (t.inst == "gosublabel") {
         ins = new gosublabel();
         ins->label_for_symbol_table = t.op1;
+
+        symbolTable->setScope(1);
+        symbolTable->addLabel(t.op1, symbolTable->getLoc());
+
     }
 
     else if (t.inst == "start") {

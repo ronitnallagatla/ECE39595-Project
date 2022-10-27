@@ -1,30 +1,49 @@
 #include "TableEntry.h"
 
-// #include <string>
-
-// TableEntry::TableEntry(double loc, double len)
+// TableEntry::TableEntry(int loc, int len)
 // {
 //     entry.first = loc;
 //     entry.second = len;
 // }
 
-// std::pair<double, double> TableEntry::getEntry()
+// std::pair<int, int> TableEntry::getEntry()
 // {
 //     return entry;
 // }
 
-// double TableEntry::getLoc()
+// int TableEntry::getLoc()
 // {
 //     return entry.first;
 // }
 
-// double TableEntry::getLen()
+// int TableEntry::getLen()
 // {
 //     return entry.second;
 // }
 
-TableEntry::TableEntry(double loc, double len)
+TableEntry::TableEntry()
+    : loc(-1)
+    , len(-1)
+{
+}
+
+TableEntry::TableEntry(int loc, int len)
     : loc(loc)
     , len(len)
 {
+}
+
+int TableEntry::getLoc()
+{
+    return loc;
+}
+
+int TableEntry::getLen()
+{
+    return len;
+}
+
+std::pair<int, int> TableEntry::getEntry()
+{
+    return std::make_pair(loc, len);
 }
