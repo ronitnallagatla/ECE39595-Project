@@ -16,21 +16,33 @@ InstructionBuffer* InstructionBuffer::getInstance()
     return instance;
 }
 
+// void InstructionBuffer::add(Instruction* stmt)
+// {
+//     buffer.push(stmt);
+// }
+
 void InstructionBuffer::add(Instruction* stmt)
 {
-    buffer.push(stmt);
+    buffer.push_back(stmt);
 }
+
+// void InstructionBuffer::print()
+// {
+//     while (!buffer.empty()) {
+//         Instruction* stmt = buffer.front();
+//         buffer.pop();
+//         stmt->serialize();
+//     }
+// }
 
 void InstructionBuffer::print()
 {
-    while (!buffer.empty()) {
-        Instruction* stmt = buffer.front();
-        buffer.pop();
+    for (auto stmt : buffer) {
         stmt->serialize();
     }
 }
 
-bool InstructionBuffer::isEmpty()
-{
-    return buffer.empty();
-}
+// bool InstructionBuffer::isEmpty()
+// {
+//     return buffer.empty();
+// }

@@ -18,7 +18,7 @@ void pushi::serialize()
 
 void start::serialize()
 {
-    // std::cout << "Start " << symbolTable->getNumVar(1) << std::endl;
+    // std::cout << "Start " << symbolTable->getNumVar(0) << std::endl;
     std::cout << "Start " << symbolTable->getNumVar() << std::endl;
 }
 
@@ -47,7 +47,7 @@ void gosub::serialize()
     // std::cout << "GoSub " << label_for_symbol_table << ", (" << (symbolTable->getEntry(label_for_symbol_table)).getLoc() << ")" << std::endl;
     std::cout << "GoSub "
               << label_for_symbol_table
-              << " (" << symbolTable->getEntry(label_for_symbol_table).getLoc() << ")" << std::endl;
+              << "(" << symbolTable->getEntry(label_for_symbol_table).getLoc() << ")" << std::endl;
 }
 
 void Return::serialize()
