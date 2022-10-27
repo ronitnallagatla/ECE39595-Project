@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     }    
 
     while (!instr_queue.empty()) {
-        instr_queue.frsont()->serialize();
+        instr_queue.front()->serialize();
         instr_queue.pop();
     }
 

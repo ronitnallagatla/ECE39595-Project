@@ -28,7 +28,7 @@ void declarr::serialize() {}
 
 void start::serialize()
 {
-    std::cout << "Start " << Instruction::decl_count  << std::endl;
+    std::cout << "Start " << std::endl;
 }
 
 void end::serialize() {}

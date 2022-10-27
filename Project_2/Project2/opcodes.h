@@ -11,7 +11,6 @@ class Instruction {
         std::string instr;
         std::string label_for_symbol_table;
         virtual void serialize() = 0;
-        Instruction ();
 };
 
 static const int OP_JUMP = 0x00000010;
