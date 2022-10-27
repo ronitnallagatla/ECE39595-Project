@@ -37,6 +37,7 @@ Instruction* get_instruction(std::string instr)
     SymbolTable* symbolTable = SymbolTable::getInstance();
     Token t(instr);
     Instruction* ins = nullptr;
+
     t.tokenize();
 
     if (t.inst == "declscal") {
@@ -76,7 +77,8 @@ Instruction* get_instruction(std::string instr)
 
     else if (t.inst == "end") {
         ins = new End();
-    }
+
+        }
 
     else if (t.inst == "exit") {
         ins = new Exit();

@@ -38,6 +38,7 @@ void SymbolTable::addLabel(std::string key, int loc)
 void SymbolTable::addVar(std::string key, int len)
 {
     addEntry(key, TableEntry(getLoc(), len));
+    size += len;
 }
 
 TableEntry SymbolTable::getEntry(std::string key)
@@ -74,5 +75,25 @@ int SymbolTable::getLoc()
 void SymbolTable::setScope(int scope)
 {
     this->scope = scope;
+}
+
+int SymbolTable::getNumVar()
+{
+    int numVar = 0;
+
+    std::map<std::string, TableEntry>::iterator it;
+    for (it = map.begin(); it != map.end(); it++) {
+        if (it->second.getLen() > 0) {
+            numVar++;
+        }
+    }
+
+    for (it = subMap.begin(); it != subMap.end(); it++) {
+        if (it->second.getLen() > 0) {
+            numVar++;
+        }
+    }
+
+    return numVar;
 }
 
