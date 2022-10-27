@@ -16,7 +16,7 @@ InstructionBuffer* InstructionBuffer::getInstance()
     return instance;
 }
 
-void InstructionBuffer::add(Stmt* stmt)
+void InstructionBuffer::add(Instruction* stmt)
 {
     buffer.push(stmt);
 }

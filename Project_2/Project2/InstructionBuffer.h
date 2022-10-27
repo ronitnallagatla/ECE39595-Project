@@ -2,20 +2,21 @@
 #define INSTRUCTIONBUFFER_H_
 
 #include "Stmt.h"
+#include "opcodes.h"
 #include <queue>
 
 class InstructionBuffer {
 private:
     static InstructionBuffer* instance;
     InstructionBuffer();
-    std::queue<Stmt*> buffer;
+    std::queue<Instruction*> buffer;
 
 public:
     static InstructionBuffer* getInstance();
-    void add(Stmt* stmt);
+    void add(Instruction* stmt);
     int size();
     // Stmt* get(int i);
-    Stmt* get();
+    Instruction* get();
     void print();
     bool isEmpty();
 };

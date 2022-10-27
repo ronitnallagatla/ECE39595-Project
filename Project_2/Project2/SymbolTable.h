@@ -29,16 +29,22 @@ private:
     SymbolTable();
     static SymbolTable* instance;
     int size;
+    int subSize;
+    // int subIdx;
     std::map<std::string, std::pair<double, double>> map;
     std::map<std::string, std::pair<double, double>> subMap;
 
 public:
     static SymbolTable* getInstance();
-    void addEntry(std::string key, double loc, double len);
+    // void addEntry(std::string key, double loc, double len);
+    void addEntry(std::string key, double loc, double len, int where);
     void addSubEntry(std::string key, double loc, double len);
-    std::pair<double, double> getEntry(std::string key);
+    // std::pair<double, double> getEntry(std::string key);
+    std::pair<double, double> getEntry(std::string key, int where);
     std::pair<double, double> getSubEntry(std::string key);
-    int getSize();
+    // int getSize();
+    int getSize(int which);
+    void setSubSize(int size);
     int getSubSize();
 };
 #endif /* SYMBOLTABLE_H_ */
