@@ -71,7 +71,7 @@ int SymbolTable::getNumVar(int scope)
         if (it->second.getLen() > 0) {
             numVar++;
             if (scope == 0) {
-                return numVar;
+                return numVar + 1;
             }
         }
     }

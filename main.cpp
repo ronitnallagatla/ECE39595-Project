@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 
     std::string instr;
     std::ifstream fptr(argv[1]);
-    std::vector<Instruction*> instr_queue;
+    std::vector <Instruction*> instr_queue;
 
     while (getline(fptr, instr)) {
         Instruction* instr_ptr = get_instruction(instr);
@@ -27,9 +27,43 @@ int main(int argc, char* argv[])
     }
 
     for (auto instr : instr_queue) {
-        instr->serialize();
+        /*
+        if instruction is label | jump | gosub | jumpzero | jumpnzero
+        
+        read the label
+        
+        if (instr->opcode == OP_ENTER_SUBROUTINE) {
+            gosub* gosub_instr = dynamic_cast<gosub*>(instr);
+            gosub_instr->get_label_loc(instr_queue);
+        }
+        else if (instr->opcode == OP_JUMPZERO) {
+            jumpzero* jumpzero_instr = dynamic_cast<jumpzero*>(instr);
+            jumpzero_instr->get_label_loc(instr_queue);
+        }
+        else if (instr->opcode == OP_JUMPNZERO) {
+            jumpnzero* jumpnzero_instr = dynamic_cast<jumpnzero*>(instr);
+            jumpnzero_instr->get_label_loc(instr_queue);
+        }
+        else if (instr->opcode == OP_JUMP) {
+            jump* jump_instr = dynamic_cast<jump*>(instr);
+            jump_instr->get_label_loc(instr_queue);
+        }
+
+        */
+        instr->get_label_loc(instr_queue);
+        
+
+       // if ((instr->opcode == OP_JUMP) || (instr->opcode == OP_GOSUB) || (instr->opcode == OP_JUMPZERO) || (instr->opcode == OP_JUMPNZERO)) {
+       //     instr->get_label_loc(instr_queue);
+       // }
+
     }
 
+    
+    for (auto instr : instr_queue) {
+        instr->serialize();
+    }
+    
     fptr.close();
 }
 
@@ -55,6 +89,7 @@ Instruction* get_instruction(std::string instr)
     }
 
     else if (t.inst == "label") {
+        ins = new label(t.op1);
         symbolTable->addLabel(t.op1, symbolTable->getLoc());
     }
 

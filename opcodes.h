@@ -1,8 +1,10 @@
 #ifndef OP_H_
 #define OP_H_
+
 #include <iostream>
 #include <string>
 #include "SymbolTable.h"
+#include <vector>
 
 class Instruction {
     public:
@@ -12,8 +14,11 @@ class Instruction {
         std::string instr;
         std::string label_for_symbol_table;
         SymbolTable* symbolTable = SymbolTable::getInstance();
+        virtual void get_label_loc(std::vector <Instruction*>& instr_queue) = 0;
         virtual void serialize() = 0;
 };
+
+static const int NULL_OP = 0x00000000;
 
 static const int OP_JUMP = 0x00000010;
 static const int OP_JUMPZERO = 0x00000011;
@@ -49,9 +54,9 @@ same as the instruction buffer location) holding the variable
 (current value of bufferIdx) and the length 
 */
     public:
-        // std::string instr_text = "declscal";
-        // std::string label_for_symbol_table; // Might change to pointer to symbol table
+        int opcode = NULL_OP;
         void serialize();
+        void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class declarr : public Instruction {
@@ -65,10 +70,12 @@ the instruction buffer location) holding the variable
 this declaration.
 */
     public:
+        int opcode = NULL_OP;
         // std::string instr_text = "declarr";
         // std::string label_for_symbol_table; // Might change to pointer to symbol table
         int length;
         void serialize();
+        void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 
@@ -79,18 +86,18 @@ location where the label is (location of the next
 statement in the instruction buffer).
 */
     public:
-        // std::string instr_text = "label";
-        // std::string label_for_symbol_table; // Might change to pointer to symbol table
-
+        int opcode = NULL_OP;
+        std ::string label_name;
         void serialize();  
+        void get_label_loc(std::vector <Instruction*>& instr_queue);
+        label (std::string label_name) { this->label_name = label_name; }
 };
 
 class gosublabel : public Instruction {
     public:
     int opcode = OP_ENTER_SUBROUTINE;
-    // std::string instr_text = "enter_subroutine";
-    // Change to second level symbol table
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class start : public Instruction {
@@ -98,6 +105,7 @@ class start : public Instruction {
     int opcode = OP_START_PROGRAM;
     // std::string instr_text = "start";
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 
 };
 
@@ -106,6 +114,7 @@ class End : public Instruction {
     int opcode = OP_RETURN;
     // std::string instr_text = "end";
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class Exit : public Instruction {
@@ -113,22 +122,24 @@ class Exit : public Instruction {
     int opcode = OP_EXIT_PROGRAM;
     // std::string instr_text = "exit";
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class jump : public Instruction {
     public:
     int opcode = OP_JUMP;
-    // std::string instr_text = "jump";
-    // std::string label_for_symbol_table; // Might change to pointer to symbol table
     void serialize();
+
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
+    int label_loc;
 };
 
 class jumpzero : public Instruction {
     public:
     int opcode = OP_JUMPZERO;
-    // std::string instr_text = "jumpzero";
-    // std::string label_for_symbol_table; // Might change to pointer to symbol table
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
+    int label_loc;
 
     jumpzero (std::string label) { label_for_symbol_table = label; }
 };
@@ -136,9 +147,10 @@ class jumpzero : public Instruction {
 class jumpnzero : public Instruction {
     public:
     int opcode = OP_JUMPNZERO;
-    // std::string instr_text = "jumpnzero";
-    // std::string label_for_symbol_table; // Might change to pointer to symbol table
     void serialize();
+
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
+    int label_loc;
 
     jumpnzero (std::string label) { label_for_symbol_table = label; }
 };
@@ -146,10 +158,11 @@ class jumpnzero : public Instruction {
 class gosub : public Instruction {
     public:
     int opcode = OP_GOSUB;
-    // std::string instr_text = "gosub";
-    // std::string label_for_symbol_table;
     void serialize();
     gosub (std::string label) { label_for_symbol_table = label; }
+    
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
+    int label_loc;
 };
 
 class Return : public Instruction {
@@ -157,6 +170,7 @@ class Return : public Instruction {
     int opcode = OP_RETURN;
     // std::string instr_text = "return";
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class pushscal : public Instruction {
@@ -168,6 +182,7 @@ class pushscal : public Instruction {
     pushscal (std::string label) { label_for_symbol_table = label; }
 
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class pusharr : public Instruction {
@@ -177,6 +192,7 @@ class pusharr : public Instruction {
     // Push array doesn't work
     void serialize();
     pusharr (std::string label) { label_for_symbol_table = label; }
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class pushi : public Instruction {
@@ -186,6 +202,7 @@ class pushi : public Instruction {
     int val;
     void serialize();
     pushi (int val) { this->val = val;}
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class pop : public Instruction {
@@ -193,6 +210,7 @@ class pop : public Instruction {
     int opcode = OP_POP;
     // std::string instr_text = "pop";
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class popscal : public Instruction {
@@ -201,6 +219,7 @@ class popscal : public Instruction {
     // std::string instr_text = "popscalar";
     // std::string label_for_symbol_table;
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
     popscal (std::string label) { label_for_symbol_table = label; }
 };
 
@@ -211,6 +230,7 @@ class poparr : public Instruction {
     // std::string label_for_symbol_table;
     // Pop array doesn't work
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 
     poparr (std::string label) { label_for_symbol_table = label; }
 };
@@ -221,6 +241,7 @@ class dup : public Instruction {
     int opcode = OP_DUP;
     // std::string instr_text = "dup";
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class Swap : public Instruction {
@@ -228,6 +249,7 @@ class Swap : public Instruction {
     int opcode = OP_SWAP;
     // std::string instr_text = "swap";
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class add : public Instruction {
@@ -235,6 +257,7 @@ class add : public Instruction {
     int opcode = OP_ADD;
     // std::string instr_text = "add";
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class Negate : public Instruction {
@@ -242,6 +265,7 @@ class Negate : public Instruction {
     int opcode = OP_NEGATE;
     // std::string instr_text = "negate";
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class mul : public Instruction {
@@ -249,6 +273,7 @@ class mul : public Instruction {
     int opcode = OP_MUL;
     // std::string instr_text = "mul";
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class Div : public Instruction {
@@ -256,6 +281,7 @@ class Div : public Instruction {
     int opcode = OP_DIV;
     // std::string instr_text = "div";
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class printtos : public Instruction {
@@ -263,6 +289,7 @@ class printtos : public Instruction {
     int opcode = OP_PRINTTOS;
     // std::string instr_text = "printtos";
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
 };
 
 class prints : public Instruction {
@@ -271,6 +298,7 @@ class prints : public Instruction {
     // std::string instr_text = "prints";
     std::string print_string;
     void serialize();
+    void get_label_loc(std::vector <Instruction*>& instr_queue);
     prints (std::string print_string) { this->print_string = print_string; }
 };
 
