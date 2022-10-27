@@ -1,9 +1,5 @@
 #include "SymbolTable.h"
 
-#include <iostream>
-#include <map>
-#include <string>
-
 SymbolTable* SymbolTable::instance = nullptr;
 
 SymbolTable::SymbolTable()
@@ -100,3 +96,4 @@ int SymbolTable::getNumVar()
 
     return numVar;
 }
+
