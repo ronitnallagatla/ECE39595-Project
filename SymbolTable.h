@@ -1,10 +1,10 @@
 #ifndef SYMBOLTABLE_H_
 #define SYMBOLTABLE_H_
 
-#include <string>
+#include "TableEntry.h"
 #include <iostream>
 #include <map>
-#include "TableEntry.h"
+#include <string>
 
 class SymbolTable {
 private:
@@ -26,6 +26,7 @@ public:
     int getLoc();
     void setScope(int scope);
     int getNumVar(int scope);
+    int getNumVar();
 };
 
 #endif /* SYMBOLTABLE_H_ */

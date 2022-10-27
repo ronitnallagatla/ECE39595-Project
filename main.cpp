@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 
     std::string instr;
     std::ifstream fptr(argv[1]);
-    std::vector <Instruction*> instr_queue;
+    std::vector<Instruction*> instr_queue;
 
     while (getline(fptr, instr)) {
         Instruction* instr_ptr = get_instruction(instr);
@@ -25,11 +25,11 @@ int main(int argc, char* argv[])
             instr_queue.push_back(instr_ptr);
         }
     }
-    
+
     for (auto instr : instr_queue) {
         instr->serialize();
     }
-    
+
     fptr.close();
 }
 

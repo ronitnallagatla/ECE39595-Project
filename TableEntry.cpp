@@ -1,26 +1,5 @@
 #include "TableEntry.h"
 
-// TableEntry::TableEntry(int loc, int len)
-// {
-//     entry.first = loc;
-//     entry.second = len;
-// }
-
-// std::pair<int, int> TableEntry::getEntry()
-// {
-//     return entry;
-// }
-
-// int TableEntry::getLoc()
-// {
-//     return entry.first;
-// }
-
-// int TableEntry::getLen()
-// {
-//     return entry.second;
-// }
-
 TableEntry::TableEntry(): loc(-1), len(-1)
 {
 }
