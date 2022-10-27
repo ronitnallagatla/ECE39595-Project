@@ -25,5 +25,6 @@ public:
     TableEntry getSubEntry(std::string key);
     int getLoc();
     void setScope(int scope);
+    int getNumVar();
 };
 #endif /* SYMBOLTABLE_H_ */
