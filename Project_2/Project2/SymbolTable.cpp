@@ -1,4 +1,3 @@
-
 #include "SymbolTable.h"
 
 SymbolTable* SymbolTable::instance = nullptr;
@@ -16,18 +15,64 @@ SymbolTable* SymbolTable::getInstance()
     return instance;
 }
 
-void SymbolTable::addEntry(std::string key, double location, double len)
+void SymbolTable::addEntry(std::string key, TableEntry entry)
 {
-    map[key] = std::make_pair(location, len);
-    size += len;
+    if (scope == 0) {
+        map[key] = entry;
+    } else {
+        subMap[key] = entry;
+    }
 }
 
-int SymbolTable::getSize()
+// void SymbolTable::addSubEntry(std::string key, TableEntry entry)
+// {
+//     subMap[key] = entry;
+//     size++;
+// }
+
+void SymbolTable::addLabel(std::string key, int loc)
+{
+    addEntry(key, TableEntry(loc, 0));
+}
+
+void SymbolTable::addVar(std::string key, int len)
+{
+    addEntry(key, TableEntry(getLoc(), len));
+}
+
+TableEntry SymbolTable::getEntry(std::string key)
+{
+    if (scope == 0) {
+        std::map<std::string, TableEntry>::iterator it = map.find(key);
+        if (it != map.end()) {
+            return it->second;
+        }
+    } else {
+        std::map<std::string, TableEntry>::iterator it = subMap.find(key);
+        if (it != subMap.end()) {
+            return it->second;
+        }
+    }
+
+    return TableEntry(-1, -1);
+}
+
+// TableEntry SymbolTable::getSubEntry(std::string key)
+// {
+//     std::map<std::string, TableEntry>::iterator it = subMap.find(key);
+//     if (it != subMap.end()) {
+//         return it->second;
+//     }
+//     return TableEntry(-1, -1);
+// }
+
+int SymbolTable::getLoc()
 {
     return size;
 }
 
-std::pair<double, double> SymbolTable::getEntry(std::string key)
+void SymbolTable::setScope(int scope)
 {
-    return map[key];
+    this->scope = scope;
 }
+

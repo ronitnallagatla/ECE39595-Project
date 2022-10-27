@@ -11,15 +11,20 @@ private:
     SymbolTable();
     static SymbolTable* instance;
     int size;
-    std::map<std::string, std::pair<double, double>> map;
+    int scope;
+    std::map<std::string, TableEntry> map;
+    std::map<std::string, TableEntry> subMap;
 
 public:
-    SymbolTable* getInstance();
-    void addEntry(std::string key, double loc, double len);
-    int getSize();
-    std::pair<double, double> getEntry(std::string key);
-    
+    static SymbolTable* getInstance();
+    void addEntry(std::string key, TableEntry entry);
+    void addLabel(std::string key, int loc);
+    void addVar(std::string key, int len);
+    void addSubEntry(std::string key, TableEntry entry);
+    TableEntry getEntry(std::string key);
+    TableEntry getSubEntry(std::string key);
+    int getLoc();
+    void setScope(int scope);
 };
 
 #endif /* SYMBOLTABLE_H_ */
-
