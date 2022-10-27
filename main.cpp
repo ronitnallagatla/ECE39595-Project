@@ -135,6 +135,8 @@ Instruction* get_instruction(std::string instr)
 
     else if (t.inst == "return") {
         ins = new Return();
+        symbolTable->setScope(0);
+
     }
 
     else if (t.inst == "pushscal") {

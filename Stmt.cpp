@@ -117,8 +117,8 @@ void pushi::serialize()
 
 void start::serialize()
 {
-    // std::cout << "Start " << symbolTable->getNumVar(1) << std::endl;
-    std::cout << "Start " << symbolTable->getNumVar(0) << std::endl;
+    // std::cout << "Start " << symbolTable->getNumVar(0) << std::endl;
+    std::cout << "Start " << symbolTable->getNumVar() << std::endl;
 }
 
 void Exit::serialize()
@@ -144,7 +144,9 @@ void jumpnzero::serialize()
 void gosub::serialize()
 {
     // std::cout << "GoSub " << label_for_symbol_table << ", (" << (symbolTable->getEntry(label_for_symbol_table)).getLoc() << ")" << std::endl;
-    std::cout << "GoSub " << label_for_symbol_table << " (" << label_loc << ")" << std::endl;
+    std::cout << "GoSub "
+              << label_for_symbol_table
+              << "(" << symbolTable->getEntry(label_for_symbol_table).getLoc() << ")" << std::endl;
 }
 
 void Return::serialize()

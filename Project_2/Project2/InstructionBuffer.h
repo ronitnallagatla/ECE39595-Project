@@ -9,13 +9,14 @@ class InstructionBuffer {
 private:
     static InstructionBuffer* instance;
     InstructionBuffer();
-    std::queue<Instruction*> buffer;
+    // std::queue<Instruction*> buffer;
+    std::vector<Instruction*> buffer;
 
 public:
     static InstructionBuffer* getInstance();
     void add(Instruction* stmt);
     void print();
-    bool isEmpty();
+    // bool isEmpty();
 };
 
 #endif /* INSTRUCTIONBUFFER_H_ */

@@ -11,6 +11,7 @@ private:
     SymbolTable();
     static SymbolTable* instance;
     int size;
+    int subSize;
     int scope;
     std::map<std::string, TableEntry> map;
     std::map<std::string, TableEntry> subMap;
