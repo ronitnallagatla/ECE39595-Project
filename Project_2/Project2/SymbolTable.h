@@ -1,9 +1,9 @@
 #ifndef SYMBOLTABLE_H_
 #define SYMBOLTABLE_H_
 
-#include <map>
 #include <string>
-
+#include <iostream>
+#include <map>
 #include "TableEntry.h"
 
 class SymbolTable {
@@ -26,4 +26,5 @@ public:
     int getLoc();
     void setScope(int scope);
 };
+
 #endif /* SYMBOLTABLE_H_ */

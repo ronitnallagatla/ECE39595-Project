@@ -1,9 +1,5 @@
 #include "SymbolTable.h"
 
-#include <iostream>
-#include <map>
-#include <string>
-
 SymbolTable* SymbolTable::instance = nullptr;
 
 SymbolTable::SymbolTable()
@@ -79,3 +75,4 @@ void SymbolTable::setScope(int scope)
 {
     this->scope = scope;
 }
+
