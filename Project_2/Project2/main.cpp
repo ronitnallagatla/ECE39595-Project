@@ -7,6 +7,8 @@
 #include "SymbolTable.h"
 #include "Token.h"
 #include "opcodes.h"
+#include "SymbolTable.h"
+#include "StringBuffer.h"
 
 Instruction* get_instruction(std::string instr);
 
@@ -20,11 +22,11 @@ int main(int argc, char* argv[])
     std::string instr;
     std::ifstream fptr(argv[1]);
     std::queue<Instruction*> instr_queue;
-
+    
     while (getline(fptr, instr)) {
         Instruction* instr_ptr = get_instruction(instr);
         instr_queue.push(instr_ptr);
-    }
+    }    
 
     while (!instr_queue.empty()) {
         instr_queue.front()->serialize();
@@ -36,6 +38,7 @@ int main(int argc, char* argv[])
 
 Instruction* get_instruction(std::string instr)
 {
+    SymbolTable* sym_table = SymbolTable::getInstance();
     Token t(instr);
     Instruction* ins = nullptr;
     ins->varCount = 0;
@@ -58,6 +61,8 @@ Instruction* get_instruction(std::string instr)
 
         symbolTable->addEntry(t.op1, loc, len, 0);
 
+
+        std::pair <int, int> p
     }
 
     else if (t.inst == "declarr") {
@@ -178,6 +183,8 @@ Instruction* get_instruction(std::string instr)
         instructionBuffer->add(ins);
         ins->varCount += 1;
 
+
+        ins = new pushi(stoi(t.op1));
     }
 
     else if (t.inst == "pop") {

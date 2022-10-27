@@ -83,6 +83,7 @@ public:
 };
 
 class gosublabel : public Instruction {
+    public:
     int opcode = OP_ENTER_SUBROUTINE;
     std::string instr_text = "enter_subroutine";
     // Change to second level symbol table
@@ -94,6 +95,7 @@ public:
     int opcode = OP_START_PROGRAM;
     std::string instr_text = "start";
     void serialize();
+
 };
 
 class end : public Instruction {
@@ -156,6 +158,8 @@ public:
     std::string label_for_symbol_table; // Might change to pointer to symbol table
 
     // Push Scalar Does not want
+    std::string label_for_symbol_table;
+
     void serialize();
 };
 
@@ -173,6 +177,7 @@ public:
     std::string instr_text = "pushi";
     int val;
     void serialize();
+    pushi (int val) { this->val = val;}
 };
 
 class pop : public Instruction {

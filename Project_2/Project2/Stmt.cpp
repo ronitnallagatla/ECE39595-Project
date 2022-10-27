@@ -13,28 +13,28 @@ void label::serialize()
 
 void pushi::serialize()
 {
-    std::cout << "PushI" << std::endl;
+    std::cout << "Pushi (" << val << ")" << std::endl;
 }
 
-void declscal::serialize()
-{
-    std::cout << "DeclScalar" << std::endl;
-}
+void declscal::serialize() {}
+// {
+//     std::cout << "DeclScalar" << std::endl;
+// }
 
-void declarr::serialize()
-{
-    std::cout << "DeclArray" << std::endl;
-}
+void declarr::serialize() {}
+//{
+//    std::cout << "DeclArray" << std::endl;
+//}
 
 void start::serialize()
 {
-    std::cout << "Start" << std::endl;
+    std::cout << "Start " << Instruction::decl_count  << std::endl;
 }
 
-void end::serialize()
-{
-    std::cout << "End" << std::endl;
-}
+void end::serialize() {}
+//{
+//    std::cout << "End" << std::endl;
+//}
 
 void Exit::serialize()
 {
