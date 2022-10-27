@@ -72,6 +72,8 @@ int SymbolTable::getNumVar(int scope)
     for (it = map.begin(); it != map.end(); it++) {
         if (it->second.getLen() > 0) {
             numVar += it->second.getLen();
+            }
+
         }
     }
 
