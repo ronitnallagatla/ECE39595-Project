@@ -1,10 +1,6 @@
 
 #include "SymbolTable.h"
 
-#include <iostream>
-#include <map>
-#include <string>
-
 SymbolTable* SymbolTable::instance = nullptr;
 
 SymbolTable::SymbolTable()
@@ -20,26 +16,10 @@ SymbolTable* SymbolTable::getInstance()
     return instance;
 }
 
-/*
-void SymbolTable::addEntry(std::string key, double loc, double len)
+void SymbolTable::addEntry(std::string key, double location, double len)
 {
-    map[key] = std::make_pair(loc, len);
-    size++;
-}
-
-void SymbolTable::addSubEntry(std::string key, double loc, double len)
-{
-    subMap[key] = std::make_pair(loc, len);
-}
-
-std::pair<double, double> SymbolTable::getEntry(std::string key)
-{
-    return map[key];
-}
-
-std::pair<double, double> SymbolTable::getSubEntry(std::string key)
-{
-    return subMap[key];
+    map[key] = std::make_pair(location, len);
+    size += len;
 }
 
 int SymbolTable::getSize()
@@ -47,9 +27,7 @@ int SymbolTable::getSize()
     return size;
 }
 
-int SymbolTable::getSubSize()
+std::pair<double, double> SymbolTable::getEntry(std::string key)
 {
-    return subMap.size();
+    return map[key];
 }
-
-*/

@@ -24,8 +24,6 @@ int main(int argc, char* argv[])
         instr_queue.push(instr_ptr);
     }
 
-
-
     while (!instr_queue.empty()) {
         instr_queue.front()->serialize();
         instr_queue.pop();
