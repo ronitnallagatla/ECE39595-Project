@@ -7,7 +7,7 @@ void End::serialize() {}
 
 void gosublabel::serialize()
 {
-    std::cout << "GoSubLabel " << label_for_symbol_table << std::endl;
+    std::cout << "GoSubLabel " << label_for_symbol_table << ", (" <<  (symbolTable->getEntry(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
 void pushi::serialize()
@@ -17,7 +17,7 @@ void pushi::serialize()
 
 void start::serialize()
 {
-    std::cout << "Start " << std::endl;
+    std::cout << "Start " << symbolTable->getNumVar(1) << std::endl;
 }
 
 void Exit::serialize()
@@ -27,22 +27,22 @@ void Exit::serialize()
 
 void jump::serialize()
 {
-    std::cout << "Jump, " << std::endl;
+    std::cout << "Jump, " << (symbolTable->getEntry(label_for_symbol_table)).getLoc() << std::endl;
 }
 
 void jumpzero::serialize()
 {
-    std::cout << "Jumpzero, " << label_for_symbol_table << "," << std::endl;
+    std::cout << "Jumpzero, " << label_for_symbol_table << ", (" <<  (symbolTable->getEntry(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
 void jumpnzero::serialize()
 {
-    std::cout << "JumpNZero, " << label_for_symbol_table << "," << std::endl;
+    std::cout << "JumpNZero, " << label_for_symbol_table << ", (" <<  (symbolTable->getEntry(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
 void gosub::serialize()
 {
-    std::cout << "GoSub " << label_for_symbol_table << std::endl;
+    std::cout << "GoSub " << label_for_symbol_table << ", (" <<  (symbolTable->getEntry(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
 void Return::serialize()
@@ -52,12 +52,12 @@ void Return::serialize()
 
 void pushscal::serialize()
 {
-    std::cout << "PushScalar " << label_for_symbol_table << "," << std::endl;
+    std::cout << "PushScalar " << label_for_symbol_table << ", (" <<  (symbolTable->getEntry(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
 void pusharr::serialize()
 {
-    std::cout << "PushArray " << label_for_symbol_table << "," << std::endl;
+    std::cout << "PushArray " << label_for_symbol_table << ", (" <<  (symbolTable->getEntry(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
 void pop::serialize()
@@ -67,12 +67,12 @@ void pop::serialize()
 
 void popscal::serialize()
 {
-    std::cout << "PopScalar " << label_for_symbol_table << "," << std::endl;
+    std::cout << "PopScalar " << label_for_symbol_table << ", (" <<  (symbolTable->getEntry(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
 void poparr::serialize()
 {
-    std::cout << "PopArray " << label_for_symbol_table << "," << std::endl;
+    std::cout << "PopArray " << label_for_symbol_table << ", (" <<  (symbolTable->getEntry(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
 void dup::serialize()

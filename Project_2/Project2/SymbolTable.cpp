@@ -4,7 +4,7 @@ SymbolTable* SymbolTable::instance = nullptr;
 
 SymbolTable::SymbolTable()
 {
-    size = 0;
+    size = -1;
 }
 
 SymbolTable* SymbolTable::getInstance()
@@ -24,11 +24,6 @@ void SymbolTable::addEntry(std::string key, TableEntry entry)
     }
 }
 
-// void SymbolTable::addSubEntry(std::string key, TableEntry entry)
-// {
-//     subMap[key] = entry;
-//     size++;
-// }
 
 void SymbolTable::addLabel(std::string key, int loc)
 {
@@ -58,16 +53,6 @@ TableEntry SymbolTable::getEntry(std::string key)
     return TableEntry(-1, -1);
 }
 
-// TableEntry SymbolTable::getSubEntry(std::string key)
-// {
-//     std::map<std::string, TableEntry>::iterator it = subMap.find(key);
-//     if (it != subMap.end()) {
-//         return it->second;
-//     }
-//     return TableEntry(-1, -1);
-// }
-
-
 int SymbolTable::getLoc()
 {
     return size;
@@ -78,7 +63,7 @@ void SymbolTable::setScope(int scope)
     this->scope = scope;
 }
 
-int SymbolTable::getNumVar()
+int SymbolTable::getNumVar(int scope)
 {
     int numVar = 0;
 
@@ -86,6 +71,9 @@ int SymbolTable::getNumVar()
     for (it = map.begin(); it != map.end(); it++) {
         if (it->second.getLen() > 0) {
             numVar++;
+            if (scope == 0) {
+                return numVar;
+            }
         }
     }
 

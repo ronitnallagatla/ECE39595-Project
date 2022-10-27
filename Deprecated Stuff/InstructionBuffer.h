@@ -18,3 +18,12 @@ public:
 };
 
 #endif /* INSTRUCTIONBUFFER_H_ */
+
+/*
+#include "InstructionBuffer.h"
+InstructionBuffer* instance = InstructBuffer::getInstance();
+instance->add(new pushscal("x"));
+
+ InstructBuffer::getInstance()->add(new pushscal("x"));
+
+*/

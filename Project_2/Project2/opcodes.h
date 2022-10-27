@@ -2,6 +2,7 @@
 #define OP_H_
 #include <iostream>
 #include <string>
+#include "SymbolTable.h"
 
 class Instruction {
     public:
@@ -10,6 +11,7 @@ class Instruction {
         int length;
         std::string instr;
         std::string label_for_symbol_table;
+        SymbolTable* symbolTable = SymbolTable::getInstance();
         virtual void serialize() = 0;
 };
 
