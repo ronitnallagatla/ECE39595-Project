@@ -1,29 +1,24 @@
 #include "opcodes.h"
-#include <iostream>
+
+void declscal::serialize() {}
+void declarr::serialize() {}
+void label::serialize() {}
+void End::serialize() {}
 
 void gosublabel::serialize()
 {
     std::cout << "GoSubLabel " << label_for_symbol_table << std::endl;
 }
 
-void label::serialize() {}
-
 void pushi::serialize()
 {
-    std::cout << "Pushi (" << val << ")" << std::endl;
+    std::cout << "PushI (" << val << ")" << std::endl;
 }
-
-void declscal::serialize() {}
-void declarr::serialize() {}
-
 
 void start::serialize()
 {
     std::cout << "Start " << std::endl;
 }
-
-void End::serialize() {}
-
 
 void Exit::serialize()
 {
@@ -37,12 +32,12 @@ void jump::serialize()
 
 void jumpzero::serialize()
 {
-    std::cout << "Jumpzero" << std::endl;
+    std::cout << "Jumpzero, " << label_for_symbol_table << "," << std::endl;
 }
 
 void jumpnzero::serialize()
 {
-    std::cout << "JumpNZero" << std::endl;
+    std::cout << "JumpNZero, " << label_for_symbol_table << "," << std::endl;
 }
 
 void gosub::serialize()
@@ -57,12 +52,12 @@ void Return::serialize()
 
 void pushscal::serialize()
 {
-    std::cout << "PushScalar" << std::endl;
+    std::cout << "PushScalar " << label_for_symbol_table << "," << std::endl;
 }
 
 void pusharr::serialize()
 {
-    std::cout << "PushArray" << std::endl;
+    std::cout << "PushArray " << label_for_symbol_table << "," << std::endl;
 }
 
 void pop::serialize()
@@ -72,12 +67,12 @@ void pop::serialize()
 
 void popscal::serialize()
 {
-    std::cout << "PopScalar" << std::endl;
+    std::cout << "PopScalar " << label_for_symbol_table << "," << std::endl;
 }
 
 void poparr::serialize()
 {
-    std::cout << "PopArray" << std::endl;
+    std::cout << "PopArray " << label_for_symbol_table << "," << std::endl;
 }
 
 void dup::serialize()

@@ -72,8 +72,7 @@ Instruction* get_instruction(std::string instr)
 
     else if (t.inst == "end") {
         ins = new End();
-
-        }
+    }
 
     else if (t.inst == "exit") {
         ins = new Exit();
@@ -85,13 +84,11 @@ Instruction* get_instruction(std::string instr)
     }
 
     else if (t.inst == "jumpzero") {
-        ins = new jumpzero();
-        ins->label_for_symbol_table = t.op1;
+        ins = new jumpzero(t.op1);
     }
 
     else if (t.inst == "jumpnzero") {
-        ins = new jumpnzero();
-        ins->label_for_symbol_table = t.op1;
+        ins = new jumpnzero(t.op1);
     }
 
     else if (t.inst == "gosub") {
@@ -103,13 +100,11 @@ Instruction* get_instruction(std::string instr)
     }
 
     else if (t.inst == "pushscal") {
-        ins = new pushscal();
-        ins->label_for_symbol_table = t.op1;
+        ins = new pushscal(t.op1);
     }
 
     else if (t.inst == "pusharr") {
-        ins = new pusharr();
-        ins->label_for_symbol_table = t.op1;
+        ins = new pusharr(t.op1);
     }
 
     else if (t.inst == "pushi") {
@@ -121,13 +116,11 @@ Instruction* get_instruction(std::string instr)
     }
 
     else if (t.inst == "popscal") {
-        ins = new popscal();
-        ins->label_for_symbol_table = t.op1;
+        ins = new popscal(t.op1);
     }
 
     else if (t.inst == "poparr") {
-        ins = new poparr();
-        ins->label_for_symbol_table = t.op1;
+        ins = new poparr(t.op1);
     }
 
     else if (t.inst == "dup") {
