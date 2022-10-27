@@ -21,15 +21,11 @@
 //     return entry.second;
 // }
 
-TableEntry::TableEntry()
-    : loc(-1)
-    , len(-1)
+TableEntry::TableEntry(): loc(-1), len(-1)
 {
 }
 
-TableEntry::TableEntry(int loc, int len)
-    : loc(loc)
-    , len(len)
+TableEntry::TableEntry(int loc, int len): loc(loc), len(len)
 {
 }
 

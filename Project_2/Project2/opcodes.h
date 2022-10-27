@@ -141,8 +141,9 @@ class gosub : public Instruction {
     public:
     int opcode = OP_GOSUB;
     std::string instr_text = "gosub";
-    std::string label_for_symbol_table; // Might change to pointer to symbol table
+    std::string label_for_symbol_table;
     void serialize();
+    gosub (std::string label) { label_for_symbol_table = label; }
 };
 
 class Return : public Instruction {
@@ -250,8 +251,6 @@ class printtos : public Instruction {
     public:
     int opcode = OP_PRINTTOS;
     std::string instr_text = "printtos";
-
-    //string buffer shit
     void serialize();
 };
 
@@ -259,14 +258,9 @@ class prints : public Instruction {
     public:
     int opcode = OP_PRINTS;
     std::string instr_text = "prints";
+    std::string print_string;
     void serialize();
+    prints (std::string print_string) { this->print_string = print_string; }
 };
-
-
-// void Instruction::serialize() {
-//     std::cout << instr_text << std::endl;
-// }
-
-
 
 #endif /* OP_H_ */

@@ -67,6 +67,7 @@ TableEntry SymbolTable::getEntry(std::string key)
 //     return TableEntry(-1, -1);
 // }
 
+
 int SymbolTable::getLoc()
 {
     return size;

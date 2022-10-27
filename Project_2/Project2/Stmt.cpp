@@ -3,13 +3,10 @@
 
 void gosublabel::serialize()
 {
-    std::cout << "GoSubLabel" << std::endl;
+    std::cout << "GoSubLabel " << label_for_symbol_table << std::endl;
 }
 
-void label::serialize()
-{
-    std::cout << "Label" << std::endl;
-}
+void label::serialize() {}
 
 void pushi::serialize()
 {
@@ -35,7 +32,7 @@ void Exit::serialize()
 
 void jump::serialize()
 {
-    std::cout << "Jump" << std::endl;
+    std::cout << "Jump, " << std::endl;
 }
 
 void jumpzero::serialize()
@@ -50,7 +47,7 @@ void jumpnzero::serialize()
 
 void gosub::serialize()
 {
-    std::cout << "GoSub" << std::endl;
+    std::cout << "GoSub " << label_for_symbol_table << std::endl;
 }
 
 void Return::serialize()
@@ -120,5 +117,5 @@ void printtos::serialize()
 
 void prints::serialize()
 {
-    std::cout << "Prints" << std::endl;
+    std::cout << "Prints " << print_string << std::endl;
 }
