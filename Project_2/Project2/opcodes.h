@@ -99,7 +99,7 @@ class start : public Instruction {
 
 };
 
-class end : public Instruction {
+class End : public Instruction {
     public:
     int opcode = OP_RETURN;
     std::string instr_text = "end";
@@ -211,7 +211,7 @@ class dup : public Instruction {
     void serialize();
 };
 
-class swap : public Instruction {
+class Swap : public Instruction {
     public:
     int opcode = OP_SWAP;
     std::string instr_text = "swap";
@@ -225,7 +225,7 @@ class add : public Instruction {
     void serialize();
 };
 
-class negate : public Instruction {
+class Negate : public Instruction {
     public:
     int opcode = OP_NEGATE;
     std::string instr_text = "negate";

@@ -5,7 +5,6 @@
 #include "Token.h"
 #include "opcodes.h"
 #include "SymbolTable.h"
-#include "StringBuffer.h"
 
 Instruction* get_instruction(std::string instr);
 
@@ -23,7 +22,9 @@ int main(int argc, char* argv[])
     while (getline(fptr, instr)) {
         Instruction* instr_ptr = get_instruction(instr);
         instr_queue.push(instr_ptr);
-    }    
+    }
+
+
 
     while (!instr_queue.empty()) {
         instr_queue.front()->serialize();
@@ -35,7 +36,8 @@ int main(int argc, char* argv[])
 
 Instruction* get_instruction(std::string instr)
 {
-    SymbolTable* sym_table = SymbolTable::getInstance();
+    SymbolTable* sym_table;
+    sym_table = sym_table->getInstance();
     Token t(instr);
     Instruction* ins = nullptr;
     t.tokenize();
@@ -43,7 +45,6 @@ Instruction* get_instruction(std::string instr)
     if (t.inst == "declscal") {
         ins = new declscal();
         ins->label_for_symbol_table = t.op1;
-        std::pair <int, int> p;
     }
 
     else if (t.inst == "declarr") {
@@ -67,7 +68,7 @@ Instruction* get_instruction(std::string instr)
     }
 
     else if (t.inst == "end") {
-        ins = new end();
+        ins = new End();
     }
 
     else if (t.inst == "exit") {
@@ -131,7 +132,7 @@ Instruction* get_instruction(std::string instr)
     }
 
     else if (t.inst == "swap") {
-        ins = new swap();
+        ins = new Swap();
     }
 
     else if (t.inst == "add") {
@@ -139,7 +140,7 @@ Instruction* get_instruction(std::string instr)
     }
 
     else if (t.inst == "negate") {
-        ins = new negate();
+        ins = new Negate();
     }
 
     else if (t.inst == "mul") {

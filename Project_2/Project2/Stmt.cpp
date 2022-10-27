@@ -17,24 +17,16 @@ void pushi::serialize()
 }
 
 void declscal::serialize() {}
-// {
-//     std::cout << "DeclScalar" << std::endl;
-// }
-
 void declarr::serialize() {}
-//{
-//    std::cout << "DeclArray" << std::endl;
-//}
+
 
 void start::serialize()
 {
     std::cout << "Start " << std::endl;
 }
 
-void end::serialize() {}
-//{
-//    std::cout << "End" << std::endl;
-//}
+void End::serialize() {}
+
 
 void Exit::serialize()
 {
@@ -96,7 +88,7 @@ void dup::serialize()
     std::cout << "Dup" << std::endl;
 }
 
-void swap::serialize()
+void Swap::serialize()
 {
     std::cout << "Swap" << std::endl;
 }
@@ -106,7 +98,7 @@ void add::serialize()
     std::cout << "Add" << std::endl;
 }
 
-void negate::serialize()
+void Negate::serialize()
 {
     std::cout << "Negate" << std::endl;
 }
