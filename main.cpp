@@ -60,7 +60,7 @@ Instruction* get_instruction(std::string instr, std::vector <Instruction*>& inst
         symbolTable->addLabel(t.op1, inst_buff_size);
         symbolTable->setScope(1);
 
-        //instr_queue.front();
+        instr_queue.front();
 
     }
 
