@@ -5,7 +5,6 @@
 
 class TableEntry {
 private:
-    // std::pair<int, int> entry;
     int loc;
     int len;
 
@@ -16,12 +15,5 @@ public:
     int getLen();
     std::pair<int, int> getEntry();
 };
-
-// class TableEntry {
-// public:
-//     double loc;
-//     double len;
-//     TableEntry(double loc, double len);
-// };
 
 #endif /* TABLE_ENTRY_H_ */

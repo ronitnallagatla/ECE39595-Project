@@ -42,6 +42,7 @@ void InstructionBuffer::print()
     }
 }
 
+
 int InstructionBuffer::getSize()
 {
     return buffer.size();
