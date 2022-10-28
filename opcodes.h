@@ -66,7 +66,6 @@ class start : public Instruction {
     int opcode = OP_START_PROGRAM;
     int start_val;
     void serialize();
-    void set_start (int val) { start_val = val; }
 };
 
 class End : public Instruction {
