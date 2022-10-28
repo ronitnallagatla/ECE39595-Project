@@ -6,7 +6,7 @@
 #include "Token.h"
 #include "opcodes.h"
 
-Instruction* get_instruction(std::string instr, std::vector <Instruction*>& instr_queue);
+Instruction* get_instruction(std::string instr, std::vector<Instruction*>& instr_queue);
 
 int main(int argc, char* argv[])
 {
@@ -17,35 +17,41 @@ int main(int argc, char* argv[])
 
     std::string instr;
     std::ifstream fptr(argv[1]);
-    std::vector <Instruction*> instr_queue;
+
+    std::string prefix = std::string(argv[1]);
+    std::string outFile = prefix + ".pout";
+    std::ofstream out(outFile);
+
+    std::vector<Instruction*> instr_queue;
     SymbolTable* symbolTable = SymbolTable::getInstance();
 
-    while (getline(fptr, instr)) {        
+    while (getline(fptr, instr)) {
         if ((symbolTable->getEnd()) == 1) {
-            std::cout << "Error: Code after End" << std::endl;
+            // std::cout << "Error: Code after End" << std::endl;
+            out << "Error: Code after End" << std::endl;
             return EXIT_FAILURE;
         }
-        
+
         Instruction* instr_ptr = get_instruction(instr, instr_queue);
 
         if (instr_ptr != nullptr) {
             instr_queue.push_back(instr_ptr);
-        }        
+        }
     }
 
     if (symbolTable->getEnd() == 0) {
-        std::cout << "Error: Missing END statement" << std::endl;
+        out << "Error: Missing END statement" << std::endl;
         return EXIT_FAILURE;
     }
-    
+
     for (auto instr : instr_queue) {
-        instr->serialize();
+        instr->serialize(out);
     }
-    
+
     fptr.close();
 }
 
-Instruction* get_instruction(std::string instr, std::vector <Instruction*>& instr_queue)
+Instruction* get_instruction(std::string instr, std::vector<Instruction*>& instr_queue)
 {
     SymbolTable* symbolTable = SymbolTable::getInstance();
     int inst_buff_size = instr_queue.size();
@@ -111,7 +117,7 @@ Instruction* get_instruction(std::string instr, std::vector <Instruction*>& inst
 
     else if (t.inst == "return") {
         ins = new Return();
-        symbolTable->setScope (0);
+        symbolTable->setScope(0);
     }
 
     else if (t.inst == "pushscal") {
