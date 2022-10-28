@@ -26,7 +26,7 @@ void SymbolTable::addEntry(std::string key, TableEntry entry)
 
 void SymbolTable::addLabel(std::string key, int loc)
 {
-    if (getLabel(key).getLoc() == -1) {
+    if (getLabel(key).getLen() == -1) {
         map[key] = TableEntry(loc, 0);
     }
     else {
@@ -37,8 +37,7 @@ void SymbolTable::addLabel(std::string key, int loc)
 
 void SymbolTable::addVar(std::string key, int len)
 {
-    std::cout << "Adding variable " << key << " with at Loc " << getEntry(key).getLoc() << std::endl;
-    if (getEntry(key).getLoc() == -1) {
+    if (getEntry(key).getLen() == -1) {
         addEntry(key, TableEntry(getLoc(), len));
         size += len;
     }

@@ -1,4 +1,3 @@
 all:
-	/bin/rm -f *.out
+	rm -f a.out
 	g++ *.cpp && clear
-	
