@@ -1,28 +1,23 @@
-#include "Stmt.h"
 #include "opcodes.h"
-#include <iostream>
 
-Label::Label(std::string label) {};
+void declscal::serialize() {}
+void declarr::serialize() {}
+void label::serialize() {}
+void End::serialize() {}
 
-Gosublabel::Gosublabel(std::string label)
+void gosublabel::serialize()
 {
-    opcode = OP_ENTER_SUBROUTINE;
-    label = label;
+    std::cout << "GoSubLabel " << label_for_symbol_table << std::endl;
 }
 
-void Gosublabel::serialize()
+void pushi::serialize()
 {
-    std::cout << "Gosublabel" << std::endl;
+    std::cout << "PushI (" << val << ")" << std::endl;
 }
 
-void Start::serialize()
+void start::serialize()
 {
-    std::cout << "Start" << std::endl;
-}
-
-void End::serialize()
-{
-    std::cout << "End" << std::endl;
+    std::cout << "Start " << symbolTable->getNumVar(0) << std::endl;
 }
 
 void Exit::serialize()
@@ -30,53 +25,24 @@ void Exit::serialize()
     std::cout << "Exit" << std::endl;
 }
 
-Jump::Jump(std::string label)
+void jump::serialize()
 {
-    opcode = OP_JUMP;
-    label = label;
+    std::cout << "Jump, " << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
 }
 
-void Jump::serialize()
+void jumpzero::serialize()
 {
-    std::cout << "Jump" << std::endl;
+    std::cout << "Jumpzero, " << label_for_symbol_table << ", (" <<  (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
-Jumpzero::Jumpzero(std::string label)
+void jumpnzero::serialize()
 {
-    opcode = OP_JUMPZERO;
-    label = label;
+    std::cout << "JumpNZero, " << label_for_symbol_table << ", (" <<  (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
-void Jumpzero::serialize()
+void gosub::serialize()
 {
-    std::cout << "Jumpzero" << std::endl;
-}
-
-Jumpnzero::Jumpnzero(std::string label)
-{
-    opcode = OP_JUMPNZERO;
-    label = label;
-}
-
-void Jumpnzero::serialize()
-{
-    std::cout << "Jumpnzero" << std::endl;
-}
-
-Gosub::Gosub(std::string label)
-{
-    opcode = OP_ENTER_SUBROUTINE;
-    label = label;
-}
-
-void Gosub::serialize()
-{
-    std::cout << "Gosub" << std::endl;
-}
-
-Return::Return()
-{
-    opcode = OP_RETURN;
+    std::cout << "GoSub " << label_for_symbol_table << ", (" <<  (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
 void Return::serialize()
@@ -84,75 +50,34 @@ void Return::serialize()
     std::cout << "Return" << std::endl;
 }
 
-Pushscal::Pushscal(std::string var)
+void pushscal::serialize()
 {
-    opcode = OP_PUSHSCALAR;
-    var = var;
+    std::cout << "PushScalar " << label_for_symbol_table << ", (" <<  index << ")" << std::endl;
 }
 
-void Pushscal::serialize()
+void pusharr::serialize()
 {
-    std::cout << "Pushscal" << std::endl;
+    std::cout << "PushArray " << label_for_symbol_table << ", (" <<  index << ")" << std::endl;
 }
 
-Pusharr::Pusharr(std::string var, int index)
-{
-    opcode = OP_PUSHARRAY;
-    var = var;
-    index = index;
-}
-
-void Pusharr::serialize()
-{
-    std::cout << "Pusharr" << std::endl;
-}
-
-Pop::Pop()
-{
-    opcode = OP_POP;
-}
-
-void Pop::serialize()
+void pop::serialize()
 {
     std::cout << "Pop" << std::endl;
 }
 
-Popscal::Popscal(std::string var)
+void popscal::serialize()
 {
-    opcode = OP_POPSCALAR;
-    var = var;
+    std::cout << "PopScalar " << label_for_symbol_table << ", (" <<  index << ")" << std::endl;
 }
 
-void Popscal::serialize()
+void poparr::serialize()
 {
-    std::cout << "Popscal" << std::endl;
+    std::cout << "PopArray " << label_for_symbol_table << ", (" <<  index << ")" << std::endl;
 }
 
-Poparr::Poparr(std::string var, int index)
-{
-    opcode = OP_POPARRAY;
-    var = var;
-    index = index;
-}
-
-void Poparr::serialize()
-{
-    std::cout << "Poparr" << std::endl;
-}
-
-Dup::Dup()
-{
-    opcode = OP_DUP;
-}
-
-void Dup::serialize()
+void dup::serialize()
 {
     std::cout << "Dup" << std::endl;
-}
-
-Swap::Swap()
-{
-    opcode = OP_SWAP;
 }
 
 void Swap::serialize()
@@ -160,19 +85,9 @@ void Swap::serialize()
     std::cout << "Swap" << std::endl;
 }
 
-Add::Add()
-{
-    opcode = OP_ADD;
-}
-
-void Add::serialize()
+void add::serialize()
 {
     std::cout << "Add" << std::endl;
-}
-
-Negate::Negate()
-{
-    opcode = OP_NEGATE;
 }
 
 void Negate::serialize()
@@ -180,19 +95,9 @@ void Negate::serialize()
     std::cout << "Negate" << std::endl;
 }
 
-Mul::Mul()
-{
-    opcode = OP_MUL;
-}
-
-void Mul::serialize()
+void mul::serialize()
 {
     std::cout << "Mul" << std::endl;
-}
-
-Div::Div()
-{
-    opcode = OP_DIV;
 }
 
 void Div::serialize()
@@ -200,23 +105,12 @@ void Div::serialize()
     std::cout << "Div" << std::endl;
 }
 
-Printtos::Printtos()
+void printtos::serialize()
 {
-    opcode = OP_PRINTTOS;
+    std::cout << "PrintTOS" << std::endl;
 }
 
-void Printtos::serialize()
+void prints::serialize()
 {
-    std::cout << "Printtos" << std::endl;
-}
-
-Prints::Prints(std::string str)
-{
-    opcode = OP_PRINTS;
-    str = str;
-}
-
-void Prints::serialize()
-{
-    std::cout << "Prints" << std::endl;
+    std::cout << "Prints " << print_string << std::endl;
 }

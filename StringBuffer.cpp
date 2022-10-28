@@ -1,9 +1,8 @@
 #include "StringBuffer.h"
-#include "FileIO.h"
 
 #include <iostream>
 
-StringBuffer* StringBuffer::instance = 0;
+StringBuffer* StringBuffer::instance = nullptr;
 
 StringBuffer::StringBuffer() { }
 
@@ -20,6 +19,16 @@ void StringBuffer::add(std::string str)
     buffer.push_back(str);
 }
 
+std::string StringBuffer::get(int i)
+{
+    return buffer[i];
+}
+
+int StringBuffer::getSize()
+{
+    return buffer.size();
+}
+
 // void StringBuffer::print()
 // {
 //     for (auto str : buffer) {
@@ -27,13 +36,13 @@ void StringBuffer::add(std::string str)
 //     }
 // }
 
-void StringBuffer::serialize(std::ofstream& outFile)
-{
-    int length = buffer.size();
-    outFile.write((char*)&length, sizeof(int));
-    for (int i = 0; i < length; i++) {
-        int strLength = buffer[i].size();
-        outFile.write((char*)(&strLength), sizeof(int));
-        outFile.write(buffer[i].c_str(), strLength);
-    }
-}
+// void StringBuffer::serialize(std::ofstream& outFile)
+// {
+//     int length = buffer.size();
+//     outFile.write((char*)&length, sizeof(int));
+//     for (int i = 0; i < length; i++) {
+//         int strLength = buffer[i].size();
+//         outFile.write((char*)(&strLength), sizeof(int));
+//         outFile.write(buffer[i].c_str(), strLength);
+//     }
+// }

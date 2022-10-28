@@ -1,14 +1,13 @@
-#include "Token.h"
 #include <cstring>
 #include <iostream>
-#include <string>
+#include "Token.h"
 
 Token::Token(std::string str)
 {
     Token::inst = str;
 }
 
-void Token::setInstruction(std::string ins)
+void Token::set_instruction(std::string ins)
 {
     Token::inst = ins;
 }
@@ -19,33 +18,33 @@ void Token::set_op(char* s)
     i++;
     
     if (i == 1) {
-        inst = str;
-    }
-
-    else if (i == 2) {
         op1 = str;
     }
 
-    else if (i == 3) {
+    else if (i == 2) {
         op2 = str;
     }
 
-    else {
+    else if (i == 3) {
         op3 = str;
+    }
+
+    else {
+        op4 = str;
     }
 }
 
 void Token::print_tokens() const
 {
-    std::cout << "Opcode: " << inst << std::endl;
-    std::cout << "Operand 1: " << op1 << std::endl;
-    std::cout << "Operand 2: " << op2 << std::endl;
-    std::cout << "Operand 3: " << op3 << std::endl;
+    std::cout << "Opcode: " << op1 << std::endl;
+    std::cout << "Operand 1: " << op2 << std::endl;
+    std::cout << "Operand 2: " << op3 << std::endl;
+    std::cout << "Operand 3: " << op4 << std::endl;
 }
 
 void Token::tokenize(std::string s)
 {
-    setInstruction(s);
+    set_instruction(s);
     tokenize();
 }
 

@@ -2,9 +2,9 @@
 #include <iostream>
 #include <queue>
 
+#include "SymbolTable.h"
 #include "Token.h"
 #include "opcodes.h"
-#include "SymbolTable.h"
 
 Instruction* get_instruction(std::string instr);
 
@@ -17,50 +17,51 @@ int main(int argc, char* argv[])
 
     std::string instr;
     std::ifstream fptr(argv[1]);
-    std::queue<Instruction*> instr_queue;
-    
+    std::vector <Instruction*> instr_queue;
+
     while (getline(fptr, instr)) {
         Instruction* instr_ptr = get_instruction(instr);
-        instr_queue.push(instr_ptr);
+        if (instr_ptr != nullptr) {
+            instr_queue.push_back(instr_ptr);
+        }
     }
-
-
-
-    while (!instr_queue.empty()) {
-        instr_queue.front()->serialize();
-        instr_queue.pop();
+    
+    for (auto instr : instr_queue) {
+        instr->serialize();
     }
-
+    
     fptr.close();
 }
 
 Instruction* get_instruction(std::string instr)
 {
-    SymbolTable* sym_table;
-    sym_table = sym_table->getInstance();
+    SymbolTable* symbolTable = SymbolTable::getInstance();
     Token t(instr);
     Instruction* ins = nullptr;
+
     t.tokenize();
 
     if (t.inst == "declscal") {
         ins = new declscal();
         ins->label_for_symbol_table = t.op1;
+        symbolTable->addVar(t.op1, 1);
     }
 
     else if (t.inst == "declarr") {
         ins = new declarr();
         ins->label_for_symbol_table = t.op1;
         ins->length = stoi(t.op2);
+        symbolTable->addVar(t.op1, stoi(t.op2));
     }
 
     else if (t.inst == "label") {
-        ins = new label();
-        ins->label_for_symbol_table = t.op1;
+        symbolTable->addLabel(t.op1, symbolTable->getLoc());
     }
 
     else if (t.inst == "gosublabel") {
         ins = new gosublabel();
         ins->label_for_symbol_table = t.op1;
+        symbolTable->addLabel(t.op1, symbolTable->getLoc());
     }
 
     else if (t.inst == "start") {
@@ -78,21 +79,23 @@ Instruction* get_instruction(std::string instr)
     else if (t.inst == "jump") {
         ins = new jump();
         ins->label_for_symbol_table = t.op1;
+        symbolTable->addVar(t.op1, 0);
     }
 
     else if (t.inst == "jumpzero") {
-        ins = new jumpzero();
-        ins->label_for_symbol_table = t.op1;
+        ins = new jumpzero(t.op1);
+        symbolTable->addVar(t.op1, 0);
     }
 
     else if (t.inst == "jumpnzero") {
-        ins = new jumpnzero();
-        ins->label_for_symbol_table = t.op1;
+        ins = new jumpnzero(t.op1);
+        symbolTable->addVar(t.op1, 0);
     }
 
     else if (t.inst == "gosub") {
-        ins = new gosub();
-        ins->label_for_symbol_table = t.op1;
+        ins = new gosub(t.op1);
+        symbolTable->setScope(1);
+        symbolTable->addVar(t.op1, 0);
     }
 
     else if (t.inst == "return") {
@@ -100,13 +103,13 @@ Instruction* get_instruction(std::string instr)
     }
 
     else if (t.inst == "pushscal") {
-        ins = new pushscal();
-        ins->label_for_symbol_table = t.op1;
+        ins = new pushscal(t.op1);
+        symbolTable->addVar(t.op1, 1);
     }
 
     else if (t.inst == "pusharr") {
-        ins = new pusharr();
-        ins->label_for_symbol_table = t.op1;
+        ins = new pusharr(t.op1);
+        symbolTable->addVar(t.op1, 1);
     }
 
     else if (t.inst == "pushi") {
@@ -118,13 +121,11 @@ Instruction* get_instruction(std::string instr)
     }
 
     else if (t.inst == "popscal") {
-        ins = new popscal();
-        ins->label_for_symbol_table = t.op1;
+        ins = new popscal(t.op1);
     }
 
     else if (t.inst == "poparr") {
-        ins = new poparr();
-        ins->label_for_symbol_table = t.op1;
+        ins = new poparr(t.op1);
     }
 
     else if (t.inst == "dup") {
@@ -156,7 +157,7 @@ Instruction* get_instruction(std::string instr)
     }
 
     else if (t.inst == "prints") {
-        ins = new prints();
+        ins = new prints(t.op1);
     }
 
     return ins;

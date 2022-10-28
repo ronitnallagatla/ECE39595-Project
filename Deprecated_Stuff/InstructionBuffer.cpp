@@ -34,3 +34,7 @@ bool InstructionBuffer::isEmpty()
 {
     return buffer.empty();
 }
+
+int main () {
+    InstructionBuffer* instance = InstructionBuffer::getInstance();
+}

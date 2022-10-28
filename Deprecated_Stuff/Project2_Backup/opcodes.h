@@ -2,6 +2,7 @@
 #define OP_H_
 #include <iostream>
 #include <string>
+#include "SymbolTable.h"
 
 class Instruction {
     public:
@@ -10,6 +11,7 @@ class Instruction {
         int length;
         std::string instr;
         std::string label_for_symbol_table;
+        SymbolTable* symbolTable = SymbolTable::getInstance();
         virtual void serialize() = 0;
 };
 
@@ -47,8 +49,8 @@ same as the instruction buffer location) holding the variable
 (current value of bufferIdx) and the length 
 */
     public:
-        std::string instr_text = "declscal";
-        std::string label_for_symbol_table; // Might change to pointer to symbol table
+        // std::string instr_text = "declscal";
+        // std::string label_for_symbol_table; // Might change to pointer to symbol table
         void serialize();
 };
 
@@ -63,8 +65,8 @@ the instruction buffer location) holding the variable
 this declaration.
 */
     public:
-        std::string instr_text = "declarr";
-        std::string label_for_symbol_table; // Might change to pointer to symbol table
+        // std::string instr_text = "declarr";
+        // std::string label_for_symbol_table; // Might change to pointer to symbol table
         int length;
         void serialize();
 };
@@ -77,8 +79,8 @@ location where the label is (location of the next
 statement in the instruction buffer).
 */
     public:
-        std::string instr_text = "label";
-        std::string label_for_symbol_table; // Might change to pointer to symbol table
+        // std::string instr_text = "label";
+        // std::string label_for_symbol_table; // Might change to pointer to symbol table
 
         void serialize();  
 };
@@ -86,7 +88,7 @@ statement in the instruction buffer).
 class gosublabel : public Instruction {
     public:
     int opcode = OP_ENTER_SUBROUTINE;
-    std::string instr_text = "enter_subroutine";
+    // std::string instr_text = "enter_subroutine";
     // Change to second level symbol table
     void serialize();
 };
@@ -94,7 +96,7 @@ class gosublabel : public Instruction {
 class start : public Instruction {
     public:
     int opcode = OP_START_PROGRAM;
-    std::string instr_text = "start";
+    // std::string instr_text = "start";
     void serialize();
 
 };
@@ -102,61 +104,68 @@ class start : public Instruction {
 class End : public Instruction {
     public:
     int opcode = OP_RETURN;
-    std::string instr_text = "end";
+    // std::string instr_text = "end";
     void serialize();
 };
 
 class Exit : public Instruction {
     public:
     int opcode = OP_EXIT_PROGRAM;
-    std::string instr_text = "exit";
+    // std::string instr_text = "exit";
     void serialize();
 };
 
 class jump : public Instruction {
     public:
     int opcode = OP_JUMP;
-    std::string instr_text = "jump";
-    std::string label_for_symbol_table; // Might change to pointer to symbol table
+    // std::string instr_text = "jump";
+    // std::string label_for_symbol_table; // Might change to pointer to symbol table
     void serialize();
 };
 
 class jumpzero : public Instruction {
     public:
     int opcode = OP_JUMPZERO;
-    std::string instr_text = "jumpzero";
-    std::string label_for_symbol_table; // Might change to pointer to symbol table
+    // std::string instr_text = "jumpzero";
+    // std::string label_for_symbol_table; // Might change to pointer to symbol table
     void serialize();
+
+    jumpzero (std::string label) { label_for_symbol_table = label; }
 };
 
 class jumpnzero : public Instruction {
     public:
     int opcode = OP_JUMPNZERO;
-    std::string instr_text = "jumpnzero";
-    std::string label_for_symbol_table; // Might change to pointer to symbol table
+    // std::string instr_text = "jumpnzero";
+    // std::string label_for_symbol_table; // Might change to pointer to symbol table
     void serialize();
+
+    jumpnzero (std::string label) { label_for_symbol_table = label; }
 };
 
 class gosub : public Instruction {
     public:
     int opcode = OP_GOSUB;
-    std::string instr_text = "gosub";
-    std::string label_for_symbol_table; // Might change to pointer to symbol table
+    // std::string instr_text = "gosub";
+    // std::string label_for_symbol_table;
     void serialize();
+    gosub (std::string label) { label_for_symbol_table = label; }
 };
 
 class Return : public Instruction {
     public:
     int opcode = OP_RETURN;
-    std::string instr_text = "return";
+    // std::string instr_text = "return";
     void serialize();
 };
 
 class pushscal : public Instruction {
     public:
     int opcode = OP_PUSHSCALAR;
-    std::string instr_text = "pushscal";
-    std::string label_for_symbol_table;
+    // std::string instr_text = "pushscal";
+    // std::string label_for_symbol_table;
+
+    pushscal (std::string label) { label_for_symbol_table = label; }
 
     void serialize();
 };
@@ -164,15 +173,16 @@ class pushscal : public Instruction {
 class pusharr : public Instruction {
     public:
     int opcode = OP_PUSHARRAY;
-    std::string instr_text = "pusharr";
+    // std::string instr_text = "pusharr";
     // Push array doesn't work
     void serialize();
+    pusharr (std::string label) { label_for_symbol_table = label; }
 };
 
 class pushi : public Instruction {
     public:
     int opcode = OP_PUSHI;
-    std::string instr_text = "pushi";
+    // std::string instr_text = "pushi";
     int val;
     void serialize();
     pushi (int val) { this->val = val;}
@@ -181,92 +191,87 @@ class pushi : public Instruction {
 class pop : public Instruction {
     public:
     int opcode = OP_POP;
-    std::string instr_text = "pop";
+    // std::string instr_text = "pop";
     void serialize();
 };
 
 class popscal : public Instruction {
     public:
     int opcode = OP_POPSCALAR;
-    std::string instr_text = "popscalar";
-    std::string label_for_symbol_table; // Might change to pointer to symbol table
-    // Pop Scalar doesn't work
+    // std::string instr_text = "popscalar";
+    // std::string label_for_symbol_table;
     void serialize();
+    popscal (std::string label) { label_for_symbol_table = label; }
 };
 
 class poparr : public Instruction {
     public:
     int opcode = OP_POPARRAY;
-    std::string instr_text = "poparr";
-    std::string label_for_symbol_table;
+    // std::string instr_text = "poparr";
+    // std::string label_for_symbol_table;
     // Pop array doesn't work
     void serialize();
+
+    poparr (std::string label) { label_for_symbol_table = label; }
 };
 
 
 class dup : public Instruction {
     public:
     int opcode = OP_DUP;
-    std::string instr_text = "dup";
+    // std::string instr_text = "dup";
     void serialize();
 };
 
 class Swap : public Instruction {
     public:
     int opcode = OP_SWAP;
-    std::string instr_text = "swap";
+    // std::string instr_text = "swap";
     void serialize();
 };
 
 class add : public Instruction {
     public:
     int opcode = OP_ADD;
-    std::string instr_text = "add";
+    // std::string instr_text = "add";
     void serialize();
 };
 
 class Negate : public Instruction {
     public:
     int opcode = OP_NEGATE;
-    std::string instr_text = "negate";
+    // std::string instr_text = "negate";
     void serialize();
 };
 
 class mul : public Instruction {
     public:
     int opcode = OP_MUL;
-    std::string instr_text = "mul";
+    // std::string instr_text = "mul";
     void serialize();
 };
 
 class Div : public Instruction {
     public:
     int opcode = OP_DIV;
-    std::string instr_text = "div";
+    // std::string instr_text = "div";
     void serialize();
 };
 
 class printtos : public Instruction {
     public:
     int opcode = OP_PRINTTOS;
-    std::string instr_text = "printtos";
-
-    //string buffer shit
+    // std::string instr_text = "printtos";
     void serialize();
 };
 
 class prints : public Instruction {
     public:
     int opcode = OP_PRINTS;
-    std::string instr_text = "prints";
+    // std::string instr_text = "prints";
+    std::string print_string;
     void serialize();
+    prints (std::string print_string) { this->print_string = print_string; }
 };
-
-
-// void Instruction::serialize() {
-//     std::cout << instr_text << std::endl;
-// }
-
-
 
 #endif /* OP_H_ */

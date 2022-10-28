@@ -12,7 +12,6 @@ private:
     static SymbolTable* instance;
     int size;
     int scope;
-    int seen_end = 0;
     std::map<std::string, TableEntry> map;
     std::map<std::string, TableEntry> subMap;
 
@@ -24,13 +23,9 @@ public:
     void addSubEntry(std::string key, TableEntry entry);
     TableEntry getEntry(std::string key);
     TableEntry getSubEntry(std::string key);
-    TableEntry getLabel(std::string key);
     int getLoc();
     void setScope(int scope);
     int getNumVar(int scope);
-    void setEnd( ) { seen_end = 1; }
-    int getEnd( ) { return seen_end; }
-    
 };
 
 #endif /* SYMBOLTABLE_H_ */
