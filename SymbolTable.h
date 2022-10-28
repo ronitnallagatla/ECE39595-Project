@@ -23,9 +23,11 @@ public:
     void addSubEntry(std::string key, TableEntry entry);
     TableEntry getEntry(std::string key);
     TableEntry getSubEntry(std::string key);
+    TableEntry getLabel(std::string key);
     int getLoc();
     void setScope(int scope);
     int getNumVar(int scope);
+    
 };
 
 #endif /* SYMBOLTABLE_H_ */
