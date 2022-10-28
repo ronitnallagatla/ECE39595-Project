@@ -1,116 +1,117 @@
 #include "opcodes.h"
+#include <fstream>
 
-void declscal::serialize() {}
-void declarr::serialize() {}
-void label::serialize() {}
-void End::serialize() {}
+void declscal::serialize(std::ofstream& outFile) { }
+void declarr::serialize(std::ofstream& outFile) { }
+void label::serialize(std::ofstream& outFile) { }
+void End::serialize(std::ofstream& outFile) { }
 
-void gosublabel::serialize()
+void gosublabel::serialize(std::ofstream& outFile)
 {
-    std::cout << "GoSubLabel " << label_for_symbol_table << std::endl;
+    outFile << "GoSubLabel " << label_for_symbol_table << std::endl;
 }
 
-void pushi::serialize()
+void pushi::serialize(std::ofstream& outFile)
 {
-    std::cout << "PushI (" << val << ")" << std::endl;
+    outFile << "PushI (" << val << ")" << std::endl;
 }
 
-void start::serialize()
+void start::serialize(std::ofstream& outFile)
 {
-    std::cout << "Start " << symbolTable->getNumVar(0) << std::endl;
+    outFile << "Start " << symbolTable->getNumVar(0) << std::endl;
 }
 
-void Exit::serialize()
+void Exit::serialize(std::ofstream& outFile)
 {
-    std::cout << "Exit" << std::endl;
+    outFile << "Exit" << std::endl;
 }
 
-void jump::serialize()
+void jump::serialize(std::ofstream& outFile)
 {
-    std::cout << "Jump, " << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
+    outFile << "Jump, " << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
 }
 
-void jumpzero::serialize()
+void jumpzero::serialize(std::ofstream& outFile)
 {
-    std::cout << "Jumpzero, " << label_for_symbol_table << ", (" <<  (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
+    outFile << "Jumpzero, " << label_for_symbol_table << ", (" << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
-void jumpnzero::serialize()
+void jumpnzero::serialize(std::ofstream& outFile)
 {
-    std::cout << "JumpNZero, " << label_for_symbol_table << ", (" <<  (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
+    outFile << "JumpNZero, " << label_for_symbol_table << ", (" << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
-void gosub::serialize()
+void gosub::serialize(std::ofstream& outFile)
 {
-    std::cout << "GoSub " << label_for_symbol_table << ", (" <<  (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
+    outFile << "GoSub " << label_for_symbol_table << ", (" << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
 }
 
-void Return::serialize()
+void Return::serialize(std::ofstream& outFile)
 {
-    std::cout << "Return" << std::endl;
+    outFile << "Return" << std::endl;
 }
 
-void pushscal::serialize()
+void pushscal::serialize(std::ofstream& outFile)
 {
-    std::cout << "PushScalar " << label_for_symbol_table << ", (" <<  index << ")" << std::endl;
+    outFile << "PushScalar " << label_for_symbol_table << ", (" << index << ")" << std::endl;
 }
 
-void pusharr::serialize()
+void pusharr::serialize(std::ofstream& outFile)
 {
-    std::cout << "PushArray " << label_for_symbol_table << ", (" <<  index << ")" << std::endl;
+    outFile << "PushArray " << label_for_symbol_table << ", (" << index << ")" << std::endl;
 }
 
-void pop::serialize()
+void pop::serialize(std::ofstream& outFile)
 {
-    std::cout << "Pop" << std::endl;
+    outFile << "Pop" << std::endl;
 }
 
-void popscal::serialize()
+void popscal::serialize(std::ofstream& outFile)
 {
-    std::cout << "PopScalar " << label_for_symbol_table << ", (" <<  index << ")" << std::endl;
+    outFile << "PopScalar " << label_for_symbol_table << ", (" << index << ")" << std::endl;
 }
 
-void poparr::serialize()
+void poparr::serialize(std::ofstream& outFile)
 {
-    std::cout << "PopArray " << label_for_symbol_table << ", (" <<  index << ")" << std::endl;
+    outFile << "PopArray " << label_for_symbol_table << ", (" << index << ")" << std::endl;
 }
 
-void dup::serialize()
+void dup::serialize(std::ofstream& outFile)
 {
-    std::cout << "Dup" << std::endl;
+    outFile << "Dup" << std::endl;
 }
 
-void Swap::serialize()
+void Swap::serialize(std::ofstream& outFile)
 {
-    std::cout << "Swap" << std::endl;
+    outFile << "Swap" << std::endl;
 }
 
-void add::serialize()
+void add::serialize(std::ofstream& outFile)
 {
-    std::cout << "Add" << std::endl;
+    outFile << "Add" << std::endl;
 }
 
-void Negate::serialize()
+void Negate::serialize(std::ofstream& outFile)
 {
-    std::cout << "Negate" << std::endl;
+    outFile << "Negate" << std::endl;
 }
 
-void mul::serialize()
+void mul::serialize(std::ofstream& outFile)
 {
-    std::cout << "Mul" << std::endl;
+    outFile << "Mul" << std::endl;
 }
 
-void Div::serialize()
+void Div::serialize(std::ofstream& outFile)
 {
-    std::cout << "Div" << std::endl;
+    outFile << "Div" << std::endl;
 }
 
-void printtos::serialize()
+void printtos::serialize(std::ofstream& outFile)
 {
-    std::cout << "PrintTOS" << std::endl;
+    outFile << "PrintTOS" << std::endl;
 }
 
-void prints::serialize()
+void prints::serialize(std::ofstream& outFile)
 {
-    std::cout << "Prints " << print_string << std::endl;
+    outFile << "Prints " << print_string << std::endl;
 }

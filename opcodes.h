@@ -1,18 +1,18 @@
 #ifndef OP_H_
 #define OP_H_
+#include "SymbolTable.h"
 #include <iostream>
 #include <string>
-#include "SymbolTable.h"
 
 class Instruction {
-    public:
-        int opcode;
-        int value;
-        int length;
-        std::string instr;
-        std::string label_for_symbol_table;
-        SymbolTable* symbolTable = SymbolTable::getInstance();
-        virtual void serialize() = 0;
+public:
+    int opcode;
+    int value;
+    int length;
+    std::string instr;
+    std::string label_for_symbol_table;
+    SymbolTable* symbolTable = SymbolTable::getInstance();
+    virtual void serialize(std::ofstream& outFile) = 0;
 };
 
 static const int OP_JUMP = 0x00000010;
@@ -40,177 +40,192 @@ static const int OP_PRINTS = 0x00000060;
 static const int OP_PRINTTOS = 0x00000061;
 
 class declscal : public Instruction {
-    public:
-        void serialize();
+public:
+    void serialize(std::ofstream& outFile);
 };
 
 class declarr : public Instruction {
-    public:
-        int length;
-        void serialize();
+public:
+    int length;
+    void serialize(std::ofstream& outFile);
 };
 
 class label : public Instruction {
-    public:
-        void serialize();  
+public:
+    void serialize(std::ofstream& outFile);
 };
 
 class gosublabel : public Instruction {
-    public:
+public:
     int opcode = OP_ENTER_SUBROUTINE;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class start : public Instruction {
-    public:
+public:
     int opcode = OP_START_PROGRAM;
     int start_val;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class End : public Instruction {
-    public:
+public:
     int opcode = OP_RETURN;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class Exit : public Instruction {
-    public:
+public:
     int opcode = OP_EXIT_PROGRAM;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class jump : public Instruction {
-    public:
+public:
     int opcode = OP_JUMP;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class jumpzero : public Instruction {
-    public:
+public:
     int opcode = OP_JUMPZERO;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 
-    jumpzero (std::string label) { label_for_symbol_table = label; }
+    jumpzero(std::string label) { label_for_symbol_table = label; }
 };
 
 class jumpnzero : public Instruction {
-    public:
+public:
     int opcode = OP_JUMPNZERO;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 
-    jumpnzero (std::string label) { label_for_symbol_table = label; }
+    jumpnzero(std::string label) { label_for_symbol_table = label; }
 };
 
 class gosub : public Instruction {
-    public:
+public:
     int opcode = OP_GOSUB;
-    void serialize();
-    gosub (std::string label) { label_for_symbol_table = label; }
+    void serialize(std::ofstream& outFile);
+    gosub(std::string label) { label_for_symbol_table = label; }
 };
 
 class Return : public Instruction {
-    public:
+public:
     int opcode = OP_RETURN;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class pushscal : public Instruction {
-    public:
+public:
     int opcode = OP_PUSHSCALAR;
     int index;
-    pushscal (std::string label, int idx) { label_for_symbol_table = label; index = idx + 1; }
-    void serialize();
+    pushscal(std::string label, int idx)
+    {
+        label_for_symbol_table = label;
+        index = idx + 1;
+    }
+    void serialize(std::ofstream& outFile);
 };
 
 class pusharr : public Instruction {
-    public:
+public:
     int opcode = OP_PUSHARRAY;
     int index;
-    void serialize();
-    pusharr (std::string label, int idx) { label_for_symbol_table = label; index = idx + 1;}
+    void serialize(std::ofstream& outFile);
+    pusharr(std::string label, int idx)
+    {
+        label_for_symbol_table = label;
+        index = idx + 1;
+    }
 };
 
 class pushi : public Instruction {
-    public:
+public:
     int opcode = OP_PUSHI;
     int val;
-    void serialize();
-    pushi (int val) { this->val = val;}
+    void serialize(std::ofstream& outFile);
+    pushi(int val) { this->val = val; }
 };
 
 class pop : public Instruction {
-    public:
+public:
     int opcode = OP_POP;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class popscal : public Instruction {
-    public:
+public:
     int opcode = OP_POPSCALAR;
     int index;
-    void serialize();
-    popscal (std::string label, int idx) { label_for_symbol_table = label; index = idx + 1;}
+    void serialize(std::ofstream& outFile);
+    popscal(std::string label, int idx)
+    {
+        label_for_symbol_table = label;
+        index = idx + 1;
+    }
 };
 
 class poparr : public Instruction {
-    public:
+public:
     int opcode = OP_POPARRAY;
     int index;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 
-    poparr (std::string label, int idx) { label_for_symbol_table = label; index = idx + 1;}
+    poparr(std::string label, int idx)
+    {
+        label_for_symbol_table = label;
+        index = idx + 1;
+    }
 };
 
-
 class dup : public Instruction {
-    public:
+public:
     int opcode = OP_DUP;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class Swap : public Instruction {
-    public:
+public:
     int opcode = OP_SWAP;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class add : public Instruction {
-    public:
+public:
     int opcode = OP_ADD;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class Negate : public Instruction {
-    public:
+public:
     int opcode = OP_NEGATE;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class mul : public Instruction {
-    public:
+public:
     int opcode = OP_MUL;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class Div : public Instruction {
-    public:
+public:
     int opcode = OP_DIV;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class printtos : public Instruction {
-    public:
+public:
     int opcode = OP_PRINTTOS;
-    void serialize();
+    void serialize(std::ofstream& outFile);
 };
 
 class prints : public Instruction {
-    public:
+public:
     int opcode = OP_PRINTS;
     std::string print_string;
-    void serialize();
-    prints (std::string print_string) { this->print_string = print_string; }
+    void serialize(std::ofstream& outFile);
+    prints(std::string print_string) { this->print_string = print_string; }
 };
 
 #endif /* OP_H_ */
