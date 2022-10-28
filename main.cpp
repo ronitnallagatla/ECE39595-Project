@@ -25,6 +25,40 @@ int main(int argc, char* argv[])
             instr_queue.push_back(instr_ptr);
         }
     }
+
+    for (auto instr : instr_queue) {
+        /*
+        if instruction is label | jump | gosub | jumpzero | jumpnzero
+        
+        read the label
+        
+        if (instr->opcode == OP_ENTER_SUBROUTINE) {
+            gosub* gosub_instr = dynamic_cast<gosub*>(instr);
+            gosub_instr->get_label_loc(instr_queue);
+        }
+        else if (instr->opcode == OP_JUMPZERO) {
+            jumpzero* jumpzero_instr = dynamic_cast<jumpzero*>(instr);
+            jumpzero_instr->get_label_loc(instr_queue);
+        }
+        else if (instr->opcode == OP_JUMPNZERO) {
+            jumpnzero* jumpnzero_instr = dynamic_cast<jumpnzero*>(instr);
+            jumpnzero_instr->get_label_loc(instr_queue);
+        }
+        else if (instr->opcode == OP_JUMP) {
+            jump* jump_instr = dynamic_cast<jump*>(instr);
+            jump_instr->get_label_loc(instr_queue);
+        }
+
+        */
+        instr->get_label_loc(instr_queue);
+        
+
+       // if ((instr->opcode == OP_JUMP) || (instr->opcode == OP_GOSUB) || (instr->opcode == OP_JUMPZERO) || (instr->opcode == OP_JUMPNZERO)) {
+       //     instr->get_label_loc(instr_queue);
+       // }
+
+    }
+
     
     for (auto instr : instr_queue) {
         instr->serialize();

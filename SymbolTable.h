@@ -1,16 +1,17 @@
 #ifndef SYMBOLTABLE_H_
 #define SYMBOLTABLE_H_
 
-#include <string>
+#include "TableEntry.h"
 #include <iostream>
 #include <map>
-#include "TableEntry.h"
+#include <string>
 
 class SymbolTable {
 private:
     SymbolTable();
     static SymbolTable* instance;
     int size;
+    int subSize;
     int scope;
     std::map<std::string, TableEntry> map;
     std::map<std::string, TableEntry> subMap;
@@ -27,7 +28,6 @@ public:
     int getLoc();
     void setScope(int scope);
     int getNumVar(int scope);
-    
 };
 
 #endif /* SYMBOLTABLE_H_ */

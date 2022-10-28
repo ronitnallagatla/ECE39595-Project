@@ -18,6 +18,7 @@ public:
     void print();
     // bool isEmpty();
     int getSize();
+
 };
 
 #endif /* INSTRUCTIONBUFFER_H_ */
