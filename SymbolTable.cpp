@@ -82,12 +82,15 @@ int SymbolTable::getNumVar(int scope)
         }
     }
 
+    if (scope == 0) {
+        return numVar;
+    }
+
     for (it = subMap.begin(); it != subMap.end(); it++) {
         if (it->second.getLen() > 0) {
             numVar += it->second.getLen();
         }
     }
-
     return numVar;
 }
 
