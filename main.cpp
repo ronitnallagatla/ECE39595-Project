@@ -18,12 +18,24 @@ int main(int argc, char* argv[])
     std::string instr;
     std::ifstream fptr(argv[1]);
     std::vector <Instruction*> instr_queue;
+    SymbolTable* symbolTable = SymbolTable::getInstance();
 
-    while (getline(fptr, instr)) {
+    while (getline(fptr, instr)) {        
+        if ((symbolTable->getEnd()) == 1) {
+            std::cout << "Error: Code after End" << std::endl;
+            return EXIT_FAILURE;
+        }
+        
         Instruction* instr_ptr = get_instruction(instr, instr_queue);
+
         if (instr_ptr != nullptr) {
             instr_queue.push_back(instr_ptr);
-        }
+        }        
+    }
+
+    if (symbolTable->getEnd() == 0) {
+        std::cout << "Error: Missing END statement" << std::endl;
+        return EXIT_FAILURE;
     }
     
     for (auto instr : instr_queue) {
@@ -61,7 +73,6 @@ Instruction* get_instruction(std::string instr, std::vector <Instruction*>& inst
         symbolTable->setScope(1);
 
         instr_queue.front();
-
     }
 
     else if (t.inst == "start") {
@@ -69,7 +80,7 @@ Instruction* get_instruction(std::string instr, std::vector <Instruction*>& inst
     }
 
     else if (t.inst == "end") {
-        ins = new End();
+        symbolTable->setEnd();
     }
 
     else if (t.inst == "exit") {
@@ -105,12 +116,12 @@ Instruction* get_instruction(std::string instr, std::vector <Instruction*>& inst
 
     else if (t.inst == "pushscal") {
         ins = new pushscal(t.op1, (symbolTable->getEntry(t.op1)).getLoc());
-        symbolTable->addVar(t.op1, 1);
+        // symbolTable->addVar(t.op1, 1);
     }
 
     else if (t.inst == "pusharr") {
         ins = new pusharr(t.op1, (symbolTable->getEntry(t.op1)).getLoc());
-        symbolTable->addVar(t.op1, 1);
+        // symbolTable->addVar(t.op1, 1);
     }
 
     else if (t.inst == "pushi") {

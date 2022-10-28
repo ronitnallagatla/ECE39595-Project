@@ -12,6 +12,7 @@ private:
     static SymbolTable* instance;
     int size;
     int scope;
+    int seen_end = 0;
     std::map<std::string, TableEntry> map;
     std::map<std::string, TableEntry> subMap;
 
@@ -27,6 +28,8 @@ public:
     int getLoc();
     void setScope(int scope);
     int getNumVar(int scope);
+    void setEnd( ) { seen_end = 1; }
+    int getEnd( ) { return seen_end; }
     
 };
 

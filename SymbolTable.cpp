@@ -24,17 +24,29 @@ void SymbolTable::addEntry(std::string key, TableEntry entry)
     }
 }
 
-
 void SymbolTable::addLabel(std::string key, int loc)
 {
-    // std::cout << key << " " << loc << std::endl;
-    map[key] = TableEntry(loc, 0);
+    if (getLabel(key).getLoc() == -1) {
+        map[key] = TableEntry(loc, 0);
+    }
+    else {
+        std::cout << "Error: Label " << key << " already exists" << std::endl;
+        exit(EXIT_FAILURE);
+    }
 }
 
 void SymbolTable::addVar(std::string key, int len)
 {
-    addEntry(key, TableEntry(getLoc(), len));
-    size += len;
+    std::cout << "Adding variable " << key << " with at Loc " << getEntry(key).getLoc() << std::endl;
+    if (getEntry(key).getLoc() == -1) {
+        addEntry(key, TableEntry(getLoc(), len));
+        size += len;
+    }
+
+    else {
+        std::cout << "Error: Variable " << key << " already exists" << std::endl;
+        exit(EXIT_FAILURE);
+    }
 }
 
 TableEntry SymbolTable::getEntry(std::string key)
