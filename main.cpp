@@ -2,6 +2,7 @@
 #include <iostream>
 #include <queue>
 
+#include "StringBuffer.h"
 #include "SymbolTable.h"
 #include "Token.h"
 #include "opcodes.h"
@@ -24,16 +25,15 @@ int main(int argc, char* argv[])
 
     std::vector<Instruction*> instr_queue;
     SymbolTable* symbolTable = SymbolTable::getInstance();
+    StringBuffer* stringBuffer = StringBuffer::getInstance();
 
     while (getline(fptr, instr)) {
         if ((symbolTable->getEnd()) == 1) {
-            // std::cout << "Error: Code after End" << std::endl;
             out << "Error: Code after End" << std::endl;
             return EXIT_FAILURE;
         }
 
         Instruction* instr_ptr = get_instruction(instr, instr_queue);
-
         if (instr_ptr != nullptr) {
             instr_queue.push_back(instr_ptr);
         }
@@ -44,8 +44,21 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
+    //Modified string buffer to work with new parser instructions
+    stringBuffer->serialize(out);
     for (auto instr : instr_queue) {
-        instr->serialize(out);
+        // 0 in serialize means text, 1 means binary
+        instr->serialize(out, 0);  //Outputs text to .pout file
+    }
+
+    // Redoing file IO to also do Binary
+    std::string outFile_Bin = prefix + ".b";
+    std::ofstream out2(outFile_Bin);
+
+    for (auto instr : instr_queue) {
+        // 1 in serialize means binary
+        instr->serialize(out2, 1); // Outputs binary to .b file
+        // Redefined Serialize Functions in Stmt.cpp and Opcodes.h
     }
 
     fptr.close();
@@ -54,6 +67,8 @@ int main(int argc, char* argv[])
 Instruction* get_instruction(std::string instr, std::vector<Instruction*>& instr_queue)
 {
     SymbolTable* symbolTable = SymbolTable::getInstance();
+    StringBuffer* stringBuffer = StringBuffer::getInstance();
+    
     int inst_buff_size = instr_queue.size();
     Token t(instr);
     Instruction* ins = nullptr;
@@ -123,12 +138,10 @@ Instruction* get_instruction(std::string instr, std::vector<Instruction*>& instr
 
     else if (t.inst == "pushscal") {
         ins = new pushscal(t.op1, (symbolTable->getEntry(t.op1)).getLoc());
-        // symbolTable->addVar(t.op1, 1);
     }
 
     else if (t.inst == "pusharr") {
         ins = new pusharr(t.op1, (symbolTable->getEntry(t.op1)).getLoc());
-        // symbolTable->addVar(t.op1, 1);
     }
 
     else if (t.inst == "pushi") {
@@ -176,7 +189,8 @@ Instruction* get_instruction(std::string instr, std::vector<Instruction*>& instr
     }
 
     else if (t.inst == "prints") {
-        ins = new prints(t.op1);
+        ins = new prints(t.op1, stringBuffer->getSize());
+        stringBuffer->add(t.op1);
     }
 
     return ins;

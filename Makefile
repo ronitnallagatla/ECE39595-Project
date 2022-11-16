@@ -9,4 +9,5 @@ test: all
 clean:
 	rm -f a.out
 	rm -f TestCases10_08_22/*.pout
+	rm -f TestCases10_08_22/*.b
 	clear
