@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     std::ifstream fptr(argv[1]);
 
     std::string prefix = std::string(argv[1]);
-    std::string outFile = prefix + ".out";
+    std::string outFile = prefix + ".pout";
     std::ofstream out(outFile);
 
     std::vector<Instruction*> instr_queue;
@@ -48,17 +48,7 @@ int main(int argc, char* argv[])
     stringBuffer->serialize(out);
     for (auto instr : instr_queue) {
         // 0 in serialize means text, 1 means binary
-        instr->serialize(out, 0); // Outputs text to .pout file
-    }
-
-    // Redoing file IO to also do Binary
-    std::string outFile_Bin = prefix + ".b";
-    std::ofstream out2(outFile_Bin);
-
-    for (auto instr : instr_queue) {
-        // 1 in serialize means binary
-        instr->serialize(out2, 1); // Outputs binary to .b file
-        // Redefined Serialize Functions in Stmt.cpp and Opcodes.h
+        instr->serialize(out); // Outputs text to .pout file
     }
 
     fptr.close();
