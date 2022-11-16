@@ -77,8 +77,6 @@ Instruction* get_instruction(std::string instr, std::vector<Instruction*>& instr
         ins->label_for_symbol_table = t.op1;
         symbolTable->addLabel(t.op1, inst_buff_size);
         symbolTable->setScope(1);
-
-        instr_queue.front();
     }
 
     else if (t.inst == "start") {
@@ -101,17 +99,20 @@ Instruction* get_instruction(std::string instr, std::vector<Instruction*>& instr
 
     else if (t.inst == "jumpzero") {
         ins = new jumpzero(t.op1);
+        symbolTable->err_check = 0;
         symbolTable->addVar(t.op1, 0);
     }
 
     else if (t.inst == "jumpnzero") {
         ins = new jumpnzero(t.op1);
+        symbolTable->err_check = 0;
         symbolTable->addVar(t.op1, 0);
     }
 
     else if (t.inst == "gosub") {
         ins = new gosub(t.op1);
         symbolTable->setScope(1);
+        symbolTable->err_check = 0;
         symbolTable->addVar(t.op1, 0);
     }
 

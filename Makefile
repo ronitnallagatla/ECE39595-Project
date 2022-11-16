@@ -1,3 +1,12 @@
-all:
+all: clean
+	g++ -g *.cpp
+	clear
+
+test: all
+	parsegood
+	-parseerr
+
+clean:
 	rm -f a.out
-	g++ *.cpp && clear
+	rm -f TestCases10_08_22/*.pout
+	clear

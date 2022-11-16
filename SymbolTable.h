@@ -28,6 +28,8 @@ public:
     int getLoc();
     void setScope(int scope);
     int getNumVar(int scope);
+    int err_check = 1;
+
     void setEnd( ) { seen_end = 1; }
     int getEnd( ) { return seen_end; }
     
