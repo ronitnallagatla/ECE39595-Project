@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     std::ifstream fptr(argv[1]);
 
     std::string prefix = std::string(argv[1]);
-    std::string outFile = prefix + ".pout";
+    std::string outFile = prefix + ".out";
     std::ofstream out(outFile);
 
     std::vector<Instruction*> instr_queue;
@@ -44,11 +44,11 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    //Modified string buffer to work with new parser instructions
+    // Modified string buffer to work with new parser instructions
     stringBuffer->serialize(out);
     for (auto instr : instr_queue) {
         // 0 in serialize means text, 1 means binary
-        instr->serialize(out, 0);  //Outputs text to .pout file
+        instr->serialize(out, 0); // Outputs text to .pout file
     }
 
     // Redoing file IO to also do Binary
@@ -68,7 +68,7 @@ Instruction* get_instruction(std::string instr, std::vector<Instruction*>& instr
 {
     SymbolTable* symbolTable = SymbolTable::getInstance();
     StringBuffer* stringBuffer = StringBuffer::getInstance();
-    
+
     int inst_buff_size = instr_queue.size();
     Token t(instr);
     Instruction* ins = nullptr;
