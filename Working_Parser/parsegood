@@ -7,5 +7,5 @@ do
    touch $f.pout
    rm $f.pout
    echo $f 
-   ./a.out TestCases10_08_22/$f
+   ./a.out ../TestCases10_08_22/$f
 done
