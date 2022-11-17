@@ -1,10 +1,11 @@
 #ifndef INSTRUCTIONMEMORY_H_
 #define INSTRUCTIONMEMORY_H_
 
-#include "opcodes.h"
 #include <memory>
 #include <string>
 #include <vector>
+
+#include "opcodes.h"
 
 class InstructionMemory {
 private:

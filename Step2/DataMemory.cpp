@@ -12,14 +12,14 @@ DataMemory* DataMemory::getInstance()
     return instance;
 }
 
-void DataMemory::store(int loc, int val)
-{
-    memory[loc] = val;
-}
-
-int DataMemory::load(int loc)
+int DataMemory::getMemory(int loc)
 {
     return memory[loc];
+}
+
+void DataMemory::setMemory(int loc, int val)
+{
+    memory[loc] = val;
 }
 
 int DataMemory::getSize()

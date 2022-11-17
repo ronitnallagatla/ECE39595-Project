@@ -17,6 +17,7 @@ public:
     std::string get(int i);
     int getSize();
     void serialize(std::ofstream& outFile);
+    void printDebug();
 };
 
 #endif /* STRINGBUFFER_H_ */
