@@ -1,6 +1,6 @@
 #include "StringBuffer.h"
-#include <iostream>
 #include <fstream>
+#include <iostream>
 
 StringBuffer* StringBuffer::instance = nullptr;
 
@@ -19,11 +19,13 @@ void StringBuffer::add(std::string str)
     buffer.push_back(str);
 }
 
-std::string StringBuffer::get(int i) {
+std::string StringBuffer::get(int i)
+{
     return buffer[i];
 }
 
-int StringBuffer::getSize() {
+int StringBuffer::getSize()
+{
     return buffer.size();
 }
 
@@ -31,5 +33,12 @@ void StringBuffer::serialize(std::ofstream& outFile)
 {
     for (auto str : buffer) {
         outFile << str << std::endl;
+    }
+}
+
+void StringBuffer::printDebug()
+{
+    for (auto str : buffer) {
+        std::cout << str << std::endl;
     }
 }

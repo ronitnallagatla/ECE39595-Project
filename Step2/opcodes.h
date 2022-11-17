@@ -1,6 +1,7 @@
 #ifndef OP_H_
 #define OP_H_
-#include "SymbolTable.h"
+
+// #include "SymbolTable.h"
 #include <iostream>
 #include <string>
 
@@ -12,7 +13,7 @@ public:
     int index_in_str_buff;
     std::string instr;
     std::string label_for_symbol_table;
-    SymbolTable* symbolTable = SymbolTable::getInstance();
+    // SymbolTable* symbolTable = SymbolTable::getInstance();
     virtual void serialize(std::ofstream& outFile, int bin) = 0;
 };
 
@@ -227,7 +228,11 @@ public:
     int index_in_str_buff;
     std::string print_string;
     void serialize(std::ofstream& outFile, int bin);
-    prints(std::string p_str, int index) { this->print_string = p_str; this->index_in_str_buff = index; }
+    prints(std::string p_str, int index)
+    {
+        this->print_string = p_str;
+        this->index_in_str_buff = index;
+    }
 };
 
 #endif /* OP_H_ */
