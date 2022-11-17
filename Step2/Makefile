@@ -1,4 +1,4 @@
-OBJS = VM_idea_forgot_to_push.o DataMemory.o InstructionMemory.o RuntimeStack.o StringBuffer.o 
+OBJS = VM_idea_forgot_to_push.o DataMemory.o InstructionMemory.o RuntimeStack.o StringBuffer.o Token.o
 CC = g++
 INCLUDE = 
 LIBS = 
