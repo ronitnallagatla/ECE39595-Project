@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "InstructionMemory.h"
+#include "opcodes.h"
 
 InstructionMemory* InstructionMemory::instance = nullptr;
 
@@ -14,14 +15,23 @@ InstructionMemory* InstructionMemory::getInstance()
     return instance;
 }
 
-void InstructionMemory::addInstruction(std::unique_ptr<Instruction> instruction)
+void InstructionMemory::addInstruction(Instruction* instruction)
 {
-    instructions.push_back(std::move(instruction));
+    instructions.push_back(instruction);
+}
+
+Instruction* InstructionMemory::getInstruction(int instr)
+{
+    if (instr < instructions.size()) {
+        return instructions[instr];
+    }
+    std::cerr << "Attempt to read invalid instruction at " << instr << std::endl;
+    return nullptr;
 }
 
 Instruction* InstructionMemory::getInstruction()
 {
-    return instructions[pc].get();
+    return instructions[pc];
 }
 
 void InstructionMemory::setPC(int pc)
@@ -32,4 +42,9 @@ void InstructionMemory::setPC(int pc)
 int InstructionMemory::getPC()
 {
     return pc;
+}
+
+int InstructionMemory::getSize()
+{
+    return instructions.size();
 }

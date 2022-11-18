@@ -1,132 +1,172 @@
 #include "opcodes.h"
 #include <fstream>
+#include <iostream>
 
-void declscal::serialize (std::ofstream& outFile, int bin) { }
-void declarr::serialize (std::ofstream& outFile, int bin) { }
-void label::serialize (std::ofstream& outFile, int bin) { }
-void End::serialize (std::ofstream& outFile, int bin) { }
+#include "InstructionMemory.h"
+#include "RuntimeStack.h"
+#include "StringBuffer.h"
 
 
-void gosublabel::serialize(std::ofstream& outFile, int bin)
-// If bin == 1, Output binary file - I.e. Opcode plus some other shit that I'm not sure about (SEE VM ACTIONS IN PROJECT DOCUMENTATIOn)
-{
-    if (bin) {
-        outFile << opcode << std::endl;
-    } else {
-        outFile << "GoSubLabel " << label_for_symbol_table << std::endl;
+
+void poparr::execute_instruction () {}
+void popscal::execute_instruction () {}
+
+void Exit::execute_instruction () { 
+    exit (0);
+}
+
+
+void start::execute_instruction () {}
+
+void jump::execute_instruction () {
+    InstructionMemory* instrMem = InstructionMemory::getInstance();
+    instrMem->setPC(jump_val);
+}
+
+void jumpzero::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
+    InstructionMemory* instrMem = InstructionMemory::getInstance();
+
+    if (st->top() == 0) {
+        instrMem->setPC(jump_pc);
     }
-    
 }
 
-void pushi::serialize (std::ofstream& outFile, int bin)
-{
-    if (bin) {
-    // If bin == 1, Output binary file - I.e. Opcode plus some other shit that I'm not sure about (SEE VM ACTIONS IN PROJECT DOCUMENTATIOn)
-        outFile << opcode << std::endl;
-        outFile << value << std::endl;
-    } else {
-        outFile << "PushI (" << val << ")" << std::endl;
+void jumpnzero::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
+    InstructionMemory* instrMem = InstructionMemory::getInstance();
+
+    if (st->top() != 0) {
+        instrMem->setPC(jump_pc);
     }
 }
 
 
-//CHECK THE VM ACTIONS Document to make sure that the opcode is correct 
-void start::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "Start " << symbolTable->getNumVar(0) << std::endl;
+void gosub::execute_instruction () {
+    InstructionMemory* instrMem = InstructionMemory::getInstance();
+    instrMem->setPC(gosub_jump_index);
 }
 
-void Exit::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "Exit" << std::endl;
+
+void pushscal::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
 }
 
-void jump::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "Jump, " << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
+void Return::execute_instruction () {
+    InstructionMemory* instrMem = InstructionMemory::getInstance();
+    instrMem->setPC(instrMem->return_index);
 }
 
-void jumpzero::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "Jumpzero, " << label_for_symbol_table << ", (" << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
+
+
+void pusharr ::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
 }
 
-void jumpnzero::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "JumpNZero, " << label_for_symbol_table << ", (" << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
+
+void pushi::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
+    st->push(val);
 }
 
-void gosub::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "GoSub " << label_for_symbol_table << ", (" << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
+
+void pop::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
+    st->pop();
 }
 
-void Return::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "Return" << std::endl;
+
+void dup::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
+    st->push(st->top());
 }
 
-void pushscal::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "PushScalar " << label_for_symbol_table << ", (" << index << ")" << std::endl;
+
+
+
+void Swap::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
+    int temp = st->pop();
+    int temp2 = st->pop();
+    st->push(temp);
+    st->push(temp2);
+};
+
+
+
+
+void add::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
+    st->push (st->pop() + st->pop());
 }
 
-void pusharr::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "PushArray " << label_for_symbol_table << ", (" << index << ")" << std::endl;
+
+
+
+void Negate::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
+    st->push (st->pop() * -1);
 }
 
-void pop::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "Pop" << std::endl;
+
+
+void mul::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
+    st->push (st->pop() * st->pop());
 }
 
-void popscal::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "PopScalar " << label_for_symbol_table << ", (" << index << ")" << std::endl;
+
+
+
+void Div::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
+    st->push (st->pop() / st->pop());
 }
 
-void poparr::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "PopArray " << label_for_symbol_table << ", (" << index << ")" << std::endl;
+
+void printtos::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
+    std::cout << st->pop() << std::endl;
 }
 
-void dup::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "Dup" << std::endl;
+
+
+void prints::execute_instruction () {
+    StringBuffer* sb = StringBuffer::getInstance();
+    std::cout << sb->get(index_in_str_buff) << std::endl;
+};
+
+popscal::popscal (std::string label, int idx) {
+    this->label_for_symbol_table = label;
+    this->index = idx + 1;
 }
 
-void Swap::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "Swap" << std::endl;
+poparr::poparr (std::string label, int idx) {
+    this->label_for_symbol_table = label;
+    this->index = idx + 1;
 }
 
-void add::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "Add" << std::endl;
+prints::prints(std::string p_str, int index) {
+    this->print_string = p_str;
+    this->index_in_str_buff = index;
 }
 
-void Negate::serialize (std::ofstream& outFile, int bin)
+prints::prints() {}
+
+pushscal::pushscal(std::string label, int idx)
 {
-    outFile << "Negate" << std::endl;
+    label_for_symbol_table = label;
+    index = idx + 1;
 }
 
-void mul::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "Mul" << std::endl;
+
+pusharr::pusharr(std::string label, int idx) {
+    label_for_symbol_table = label;
+    index = idx + 1;
 }
 
-void Div::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "Div" << std::endl;
-}
+jumpnzero::jumpnzero(int i) { jump_pc = i; }
 
-void printtos::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "PrintTOS" << std::endl;
-}
+pushi::pushi(int v) { this->val = v; }
 
-void prints::serialize (std::ofstream& outFile, int bin)
-{
-    outFile << "Prints " << index_in_str_buff << std::endl;
-}
+gosub::gosub(int i) { gosub_jump_index = i; }

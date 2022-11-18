@@ -1,7 +1,6 @@
 #ifndef OP_H_
 #define OP_H_
 
-// #include "SymbolTable.h"
 #include <iostream>
 #include <string>
 
@@ -13,9 +12,9 @@ public:
     int index_in_str_buff;
     std::string instr;
     std::string label_for_symbol_table;
-    // SymbolTable* symbolTable = SymbolTable::getInstance();
-    virtual void serialize(std::ofstream& outFile, int bin) = 0;
+    virtual void execute_instruction() = 0;
 };
+
 
 static const int OP_JUMP = 0x00000010;
 static const int OP_JUMPZERO = 0x00000011;
@@ -41,198 +40,210 @@ static const int OP_DIV = 0x00000053;
 static const int OP_PRINTS = 0x00000060;
 static const int OP_PRINTTOS = 0x00000061;
 
-class declscal : public Instruction {
-public:
-    void serialize(std::ofstream& outFile, int bin);
-};
-
-class declarr : public Instruction {
-public:
-    int length;
-    void serialize(std::ofstream& outFile, int bin);
-};
-
-class label : public Instruction {
-public:
-    void serialize(std::ofstream& outFile, int bin);
-};
 
 class gosublabel : public Instruction {
 public:
     int opcode = OP_ENTER_SUBROUTINE;
-    void serialize(std::ofstream& outFile, int bin);
+    int sub_scope_size;
+    void execute_instruction();
 };
+
 
 class start : public Instruction {
 public:
     int opcode = OP_START_PROGRAM;
     int start_val;
-    void serialize(std::ofstream& outFile, int bin);
+    void execute_instruction();
 };
 
-class End : public Instruction {
-public:
-    int opcode = OP_RETURN;
-    void serialize(std::ofstream& outFile, int bin);
-};
 
 class Exit : public Instruction {
 public:
     int opcode = OP_EXIT_PROGRAM;
-    void serialize(std::ofstream& outFile, int bin);
+    void execute_instruction();
 };
+
 
 class jump : public Instruction {
 public:
     int opcode = OP_JUMP;
-    void serialize(std::ofstream& outFile, int bin);
+    int jump_val;
+
+    void execute_instruction();
 };
+
+
+
 
 class jumpzero : public Instruction {
 public:
     int opcode = OP_JUMPZERO;
-    void serialize(std::ofstream& outFile, int bin);
+    int jump_pc;
 
-    jumpzero(std::string label) { label_for_symbol_table = label; }
+    jumpzero(int i) { jump_pc = i; }
+    void execute_instruction();
 };
+
+
+
+
 
 class jumpnzero : public Instruction {
 public:
     int opcode = OP_JUMPNZERO;
-    void serialize(std::ofstream& outFile, int bin);
+    int jump_pc;
 
-    jumpnzero(std::string label) { label_for_symbol_table = label; }
+
+    jumpnzero(int i);
+    void execute_instruction();
 };
+
 
 class gosub : public Instruction {
 public:
     int opcode = OP_GOSUB;
-    void serialize(std::ofstream& outFile, int bin);
-    gosub(std::string label) { label_for_symbol_table = label; }
+    int gosub_jump_index;
+    gosub(int i);
+    void execute_instruction();
 };
+
 
 class Return : public Instruction {
 public:
     int opcode = OP_RETURN;
-    void serialize(std::ofstream& outFile, int bin);
+    void execute_instruction();
 };
+
 
 class pushscal : public Instruction {
 public:
     int opcode = OP_PUSHSCALAR;
     int index;
-    pushscal(std::string label, int idx)
-    {
-        label_for_symbol_table = label;
-        index = idx + 1;
-    }
-    void serialize(std::ofstream& outFile, int bin);
+    pushscal(std::string label, int idx);
+    void execute_instruction();
 };
+
 
 class pusharr : public Instruction {
 public:
     int opcode = OP_PUSHARRAY;
     int index;
-    void serialize(std::ofstream& outFile, int bin);
-    pusharr(std::string label, int idx)
-    {
-        label_for_symbol_table = label;
-        index = idx + 1;
-    }
+    pusharr(std::string label, int idx);
+    void execute_instruction();
 };
+
+
 
 class pushi : public Instruction {
 public:
     int opcode = OP_PUSHI;
     int val;
-    void serialize(std::ofstream& outFile, int bin);
-    pushi(int val) { this->val = val; }
+    pushi(int v);
+    void execute_instruction();
 };
+
+
+
 
 class pop : public Instruction {
 public:
     int opcode = OP_POP;
-    void serialize(std::ofstream& outFile, int bin);
+    void execute_instruction();
 };
+
+
 
 class popscal : public Instruction {
 public:
     int opcode = OP_POPSCALAR;
     int index;
-    void serialize(std::ofstream& outFile, int bin);
-    popscal(std::string label, int idx)
-    {
-        label_for_symbol_table = label;
-        index = idx + 1;
-    }
+    popscal(std::string label, int idx);
+    void execute_instruction();
 };
+
+
+
+
+
 
 class poparr : public Instruction {
 public:
     int opcode = OP_POPARRAY;
     int index;
-    void serialize(std::ofstream& outFile, int bin);
 
-    poparr(std::string label, int idx)
-    {
-        label_for_symbol_table = label;
-        index = idx + 1;
-    }
+    poparr(std::string label, int idx);
+    void execute_instruction();
 };
+
+
+
+
 
 class dup : public Instruction {
 public:
     int opcode = OP_DUP;
-    void serialize(std::ofstream& outFile, int bin);
+    void execute_instruction();
 };
+
+
+
 
 class Swap : public Instruction {
 public:
     int opcode = OP_SWAP;
-    void serialize(std::ofstream& outFile, int bin);
+    void execute_instruction();
 };
+
+
+
 
 class add : public Instruction {
 public:
     int opcode = OP_ADD;
-    void serialize(std::ofstream& outFile, int bin);
+    void execute_instruction();
 };
+
+
 
 class Negate : public Instruction {
 public:
     int opcode = OP_NEGATE;
-    void serialize(std::ofstream& outFile, int bin);
+    void execute_instruction();
 };
+
 
 class mul : public Instruction {
 public:
     int opcode = OP_MUL;
-    void serialize(std::ofstream& outFile, int bin);
+    void execute_instruction();
 };
+
+
+
 
 class Div : public Instruction {
 public:
     int opcode = OP_DIV;
-    void serialize(std::ofstream& outFile, int bin);
+    void execute_instruction();
 };
+
+
 
 class printtos : public Instruction {
 public:
     int opcode = OP_PRINTTOS;
-    void serialize(std::ofstream& outFile, int bin);
+    void execute_instruction();
 };
+
 
 class prints : public Instruction {
 public:
     int opcode = OP_PRINTS;
     int index_in_str_buff;
     std::string print_string;
-    void serialize(std::ofstream& outFile, int bin);
-    prints(std::string p_str, int index)
-    {
-        this->print_string = p_str;
-        this->index_in_str_buff = index;
-    }
+    prints(std::string p_str, int index);
+    prints();
+    void execute_instruction();
 };
 
 #endif /* OP_H_ */

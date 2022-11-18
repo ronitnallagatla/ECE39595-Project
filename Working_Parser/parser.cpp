@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     std::string outFile = prefix + ".pout";
     std::ofstream out(outFile);
 
-    std::vector<Instruction*> instr_queue;
+    std::vector <Instruction*> instr_queue;
     SymbolTable* symbolTable = SymbolTable::getInstance();
     StringBuffer* stringBuffer = StringBuffer::getInstance();
 

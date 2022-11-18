@@ -8,6 +8,8 @@
 #include "Token.h"
 #include "opcodes.h"
 
+void operate(std::string instr);
+
 int main(int argc, char** argv)
 {
 
@@ -33,11 +35,18 @@ int main(int argc, char** argv)
         stringBuffer->add(instrline);
     }
 
+
     while (getline(fptr, instrline)) {
         operate(instrline);
     }
 
-    stringBuffer->printDebug();
+    
+    int i = 0;
+
+    for (i = 0; i < instrMem->getSize(); i++) {
+        Instruction* ins = instrMem -> getInstruction (i);
+        ins -> execute_instruction();
+    }
 
     return EXIT_SUCCESS;
 }
@@ -45,46 +54,60 @@ int main(int argc, char** argv)
 void operate(std::string instr)
 {
     Token t = Token(instr);
-
-    // std::stack is an object available in the standard library
-    //  Stack* stack = Stack::getInstance(); // Make stack singleton
-    RuntimeStack* stack = RuntimeStack::getInstance();
+    StringBuffer* str_buff = StringBuffer::getInstance();
+    InstructionMemory* instr_mem = InstructionMemory::getInstance();
+    Instruction* ins = nullptr;
+    t.tokenize();
 
     if (t.inst == "Add") {
-        stack->push(stack->pop() + stack->pop()); // Implement Push/Pop functions for stack
+        ins = new add();
     }
 
     if (t.inst == "Mul") {
-        stack->push(stack->pop() * stack->pop());
+        ins = new mul();
     }
 
     if (t.inst == "Div") {
-        stack->push(stack->pop() / stack->pop());
+        ins = new Div();
     }
 
     if (t.inst == "Negate") {
-        stack->push(-stack->pop());
+        ins = new Negate();
     }
 
     if (t.inst == "Swap") {
-        int temp = stack->pop();
-        stack->push(stack->pop());
-        stack->push(temp);
+        ins = new Swap();
     }
 
     if (t.inst == "Dup") {
-        stack->push(stack->top());
+        ins = new dup();
     }
 
     if (t.inst == "Pop") {
-        stack->pop();
+        ins = new pop();
     }
 
-    // if (t.inst == "PushScalar") {
-    //     stack->push(t.op1);
-    // }
+    if (t.inst == "Prints") {
+        ins = new prints();
+        ins -> index_in_str_buff = stoi(t.op1);
+    }
 
-    // if (t.inst == "PushArray") {
-    //     stack->push(t.op1[t.op2]);
-    // }
+    if (t.inst == "PrintTOS") {
+        ins = new printtos();
+    }
+
+    if (t.inst == "PushI") {
+        ins = new pushi(stoi(t.op1));
+    }
+
+    if (t.inst == "Exit") {
+        ins = new Exit();
+    }
+
+    if (ins != nullptr) {
+        instr_mem->addInstruction(ins);
+    } else {
+        std::cout << "\nError: Invalid instruction -> "  << t.inst << std::endl;
+    }
+
 }
