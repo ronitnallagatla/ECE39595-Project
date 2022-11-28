@@ -20,7 +20,7 @@ void start::execute_instruction () {}
 
 void jump::execute_instruction () {
     InstructionMemory* instrMem = InstructionMemory::getInstance();
-    instrMem->setPC(jump_val);
+    instrMem->setPC(jump_val - 2); // Decrement by 2 because the PC will be incremented by 1 in the main loop
 }
 
 void jumpzero::execute_instruction () {
@@ -28,7 +28,7 @@ void jumpzero::execute_instruction () {
     InstructionMemory* instrMem = InstructionMemory::getInstance();
 
     if (st->top() == 0) {
-        instrMem->setPC(jump_pc);
+        instrMem->setPC(jump_pc - 2); // Decrement by 2 because the PC will be incremented by 1 in the main loop
     }
 }
 
@@ -37,7 +37,7 @@ void jumpnzero::execute_instruction () {
     InstructionMemory* instrMem = InstructionMemory::getInstance();
 
     if (st->top() != 0) {
-        instrMem->setPC(jump_pc);
+        instrMem->setPC(jump_pc - 2); // Decrement by 2 because the PC will be incremented by 1 in the main loop
     }
 }
 

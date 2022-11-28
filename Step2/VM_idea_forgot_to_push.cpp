@@ -45,8 +45,8 @@ int main(int argc, char** argv)
 
     instrMem->setPC(-1);
 
-    while (i < 100) {
-        Instruction* ins = instrMem -> getInstruction (instrMem->getPC());
+    while (i < 50) {
+        Instruction* ins = instrMem -> getInstruction ();
         ins -> execute_instruction();
         i++;
     }

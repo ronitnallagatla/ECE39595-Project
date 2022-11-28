@@ -31,6 +31,7 @@ Instruction* InstructionMemory::getInstruction(int instr)
 
 Instruction* InstructionMemory::getInstruction()
 {
+    updatePC();
     return instructions[pc];
 }
 
@@ -41,7 +42,12 @@ void InstructionMemory::setPC(int pc)
 
 int InstructionMemory::getPC()
 {
-    return pc + 1;
+    return pc;
+}
+
+void InstructionMemory::updatePC()
+{
+    pc++;
 }
 
 int InstructionMemory::getSize()

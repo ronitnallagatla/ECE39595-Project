@@ -20,6 +20,7 @@ public:
     void addInstruction(Instruction* instruction);
     Instruction* getInstruction();
     void setPC(int pc);
+    void updatePC();
     int getPC();
     int return_index;
     int getSize();
