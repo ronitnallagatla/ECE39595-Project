@@ -41,7 +41,7 @@ void InstructionMemory::setPC(int pc)
 
 int InstructionMemory::getPC()
 {
-    return pc;
+    return pc + 1;
 }
 
 int InstructionMemory::getSize()

@@ -146,12 +146,10 @@ poparr::poparr (std::string label, int idx) {
     this->index = idx + 1;
 }
 
-prints::prints(std::string p_str, int index) {
-    this->print_string = p_str;
+prints::prints(int index) {
     this->index_in_str_buff = index;
 }
 
-prints::prints() {}
 
 pushscal::pushscal(std::string label, int idx)
 {
@@ -168,5 +166,5 @@ pusharr::pusharr(std::string label, int idx) {
 jumpnzero::jumpnzero(int i) { jump_pc = i; }
 
 pushi::pushi(int v) { this->val = v; }
-
 gosub::gosub(int i) { gosub_jump_index = i; }
+jump::jump (int i) { jump_val = i; }

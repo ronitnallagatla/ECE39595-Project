@@ -43,9 +43,12 @@ int main(int argc, char** argv)
     
     int i = 0;
 
-    for (i = 0; i < instrMem->getSize(); i++) {
-        Instruction* ins = instrMem -> getInstruction (i);
+    instrMem->setPC(-1);
+
+    while (i < 100) {
+        Instruction* ins = instrMem -> getInstruction (instrMem->getPC());
         ins -> execute_instruction();
+        i++;
     }
 
     return EXIT_SUCCESS;
@@ -88,8 +91,7 @@ void operate(std::string instr)
     }
 
     if (t.inst == "Prints") {
-        ins = new prints();
-        ins -> index_in_str_buff = stoi(t.op1);
+        ins = new prints(stoi(t.op1));
     }
 
     if (t.inst == "PrintTOS") {
@@ -102,6 +104,10 @@ void operate(std::string instr)
 
     if (t.inst == "Exit") {
         ins = new Exit();
+    }
+
+    if (t.inst == "Jump") {
+        ins = new jump(stoi(t.op1));
     }
 
     if (ins != nullptr) {

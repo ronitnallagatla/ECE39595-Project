@@ -67,18 +67,15 @@ TableEntry SymbolTable::getLabel(std::string key) {
     return TableEntry(-1, -1);
 }
 
-int SymbolTable::getLoc()
-{
+int SymbolTable::getLoc() {
     return size;
 }
 
-void SymbolTable::setScope(int scope)
-{
+void SymbolTable::setScope(int scope) {
     this->scope = scope;
 }
 
-int SymbolTable::getNumVar(int scope)
-{
+int SymbolTable::getNumVar(int scope) {
     int numVar = 0;
     std::map<std::string, TableEntry>::iterator it;
     for (it = map.begin(); it != map.end(); it++) {

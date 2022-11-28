@@ -15,7 +15,6 @@ public:
     virtual void execute_instruction() = 0;
 };
 
-
 static const int OP_JUMP = 0x00000010;
 static const int OP_JUMPZERO = 0x00000011;
 static const int OP_JUMPNZERO = 0x00000012;
@@ -68,32 +67,27 @@ class jump : public Instruction {
 public:
     int opcode = OP_JUMP;
     int jump_val;
-
+    
+        jump (int i);
     void execute_instruction();
 };
-
-
 
 
 class jumpzero : public Instruction {
 public:
     int opcode = OP_JUMPZERO;
     int jump_pc;
-
-    jumpzero(int i) { jump_pc = i; }
+    
+        jumpzero(int i) { jump_pc = i; }
     void execute_instruction();
 };
-
-
-
-
 
 class jumpnzero : public Instruction {
 public:
     int opcode = OP_JUMPNZERO;
     int jump_pc;
 
-
+    
     jumpnzero(int i);
     void execute_instruction();
 };
@@ -132,8 +126,6 @@ public:
     void execute_instruction();
 };
 
-
-
 class pushi : public Instruction {
 public:
     int opcode = OP_PUSHI;
@@ -143,15 +135,11 @@ public:
 };
 
 
-
-
 class pop : public Instruction {
 public:
     int opcode = OP_POP;
     void execute_instruction();
 };
-
-
 
 class popscal : public Instruction {
 public:
@@ -162,30 +150,20 @@ public:
 };
 
 
-
-
-
-
 class poparr : public Instruction {
 public:
     int opcode = OP_POPARRAY;
     int index;
-
-    poparr(std::string label, int idx);
+    
+        poparr(std::string label, int idx);
     void execute_instruction();
 };
-
-
-
-
 
 class dup : public Instruction {
 public:
     int opcode = OP_DUP;
     void execute_instruction();
 };
-
-
 
 
 class Swap : public Instruction {
@@ -195,15 +173,11 @@ public:
 };
 
 
-
-
 class add : public Instruction {
 public:
     int opcode = OP_ADD;
     void execute_instruction();
 };
-
-
 
 class Negate : public Instruction {
 public:
@@ -219,15 +193,11 @@ public:
 };
 
 
-
-
 class Div : public Instruction {
 public:
     int opcode = OP_DIV;
     void execute_instruction();
 };
-
-
 
 class printtos : public Instruction {
 public:
@@ -240,9 +210,7 @@ class prints : public Instruction {
 public:
     int opcode = OP_PRINTS;
     int index_in_str_buff;
-    std::string print_string;
-    prints(std::string p_str, int index);
-    prints();
+    prints(int index);
     void execute_instruction();
 };
 
