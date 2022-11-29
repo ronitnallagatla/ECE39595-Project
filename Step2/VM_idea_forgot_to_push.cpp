@@ -143,15 +143,10 @@ void operate(std::string instr)
     }
 
     else if (t.inst == "PopArray") {
-        std::cout << "You have entered a PopArray instruction" << std::endl;
+        std::cout << "\nYou have entered a PopArray instruction" << std::endl;
         std::cout << "I don't know how to handle this yet" << std::endl;
-        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl;
-
-        std::cout << "Program is in infinite loop" << std::endl;
-        std::cout << "Feel free to kill me" << std::endl;
-        while (1) {
-            // Do nothing
-        }
+        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl << std::endl;
+        exit(1);
     }
 
     else if (t.inst == "PushScalar") {
