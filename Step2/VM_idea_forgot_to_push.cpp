@@ -25,7 +25,6 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-
     std::string instrline;
 
     InstructionMemory* instrMem = InstructionMemory::getInstance();
@@ -40,23 +39,23 @@ int main(int argc, char** argv)
         instr.tokenize();
         if (instr.inst == "Start") {
             start_scope_size = stoi(instr.op1);
+            dataMem->extend(start_scope_size);
             break;
         }
         stringBuffer->add(instrline);
     }
 
-
     while (getline(fptr, instrline)) {
         operate(instrline);
     }
-    
+
     int i = 0;
 
     instrMem->setPC(-1);
 
     while (i < 50) {
-        Instruction* ins = instrMem -> getInstruction ();
-        ins -> execute_instruction();
+        Instruction* ins = instrMem->getInstruction();
+        ins->execute_instruction();
         i++;
     }
 
@@ -68,6 +67,7 @@ void operate(std::string instr)
     Token t = Token(instr);
     StringBuffer* str_buff = StringBuffer::getInstance();
     InstructionMemory* instr_mem = InstructionMemory::getInstance();
+    RuntimeStack* runtime_stack = RuntimeStack::getInstance();
     Instruction* ins = nullptr;
     t.tokenize();
 
@@ -116,11 +116,11 @@ void operate(std::string instr)
     }
 
     else if (t.inst == "JumpZero") {
-        ins = new jumpzero (stoi(t.op1));
+        ins = new jumpzero(stoi(t.op1));
     }
 
     else if (t.inst == "JumpNZero") {
-        ins = new jumpnzero (stoi(t.op1));
+        ins = new jumpnzero(stoi(t.op1));
     }
 
     else if (t.inst == "Jump") {
@@ -128,49 +128,47 @@ void operate(std::string instr)
     }
 
     else if (t.inst == "GoSub") {
-        ins = new gosub (stoi(t.op1));
+        ins = new gosub(stoi(t.op1));
     }
 
     else if (t.inst == "Return") {
-        ins = new Return ();
+        ins = new Return();
     }
 
     else if (t.inst == "GoSubLabel") {
         int num_vars_in_new_scope = stoi(t.op1);
         // Allocate space for these variables in the data memory
         // Will be done in Gosublabel::execute_instruction()
-        ins = new gosublabel (num_vars_in_new_scope);
+        ins = new gosublabel(num_vars_in_new_scope);
     }
 
     else if (t.inst == "PopArray") {
-        std::cout << "\nYou have entered a PopArray instruction" << std::endl;
-        std::cout << "I don't know how to handle this yet" << std::endl;
-        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl << std::endl;
-        exit(1);
+        // std::cout << "\nYou have entered a PopArray instruction" << std::endl;
+        // std::cout << "I don't know how to handle this yet" << std::endl;
+        // std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl
+        //           << std::endl;
+
+        // exit(1);
+
     }
 
     else if (t.inst == "PushScalar") {
-        std::cout << "\nYou have entered a PushScalar instruction" << std::endl;
-        std::cout << "I don't know how to handle this yet" << std::endl;
-        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl << std::endl;
-        
-        exit(1);
+        // The value at the location in data memory given by opnd is pushed onto the runtime stack.
+        // This should be the location of a scalar variable.
+
+        ins = new pushscal(stoi(t.op1));
+
     }
 
     else if (t.inst == "PushArray") {
-       std::cout << "\nYou have entered a PushArray instruction" << std::endl;
-        std::cout << "I don't know how to handle this yet" << std::endl;
-        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl << std::endl;
 
-        exit(1);
     }
 
     else if (t.inst == "PopScalar") {
-        std::cout << "\nYou have entered a PopScalar instruction" << std::endl;
-        std::cout << "I don't know how to handle this yet" << std::endl;
-        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl << std::endl;
 
-        exit(1);
+        // The value at the top of the runtime stack is removed and stored into the data memory at location opnd.
+
+        ins = new popscal(stoi(t.op1));
     }
 
     else {
@@ -180,7 +178,6 @@ void operate(std::string instr)
     if (ins != nullptr) {
         instr_mem->addInstruction(ins);
     } else {
-        std::cout << "\nError: Invalid instruction -> "  << t.inst << std::endl;
+        std::cout << "\nError: Invalid instruction -> " << t.inst << std::endl;
     }
-
 }

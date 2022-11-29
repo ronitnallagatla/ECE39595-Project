@@ -35,7 +35,6 @@ static const int OP_DIV = 0x00000053;
 static const int OP_PRINTS = 0x00000060;
 static const int OP_PRINTTOS = 0x00000061;
 
-
 class gosublabel : public Instruction {
 public:
     int opcode = OP_ENTER_SUBROUTINE;
@@ -44,14 +43,12 @@ public:
     void execute_instruction();
 };
 
-
 class start : public Instruction {
 public:
     int opcode = OP_START_PROGRAM;
     int start_val;
     void execute_instruction();
 };
-
 
 class Exit : public Instruction {
 public:
@@ -60,17 +57,15 @@ public:
     void execute_instruction();
 };
 
-
 class jump : public Instruction {
 public:
     int opcode = OP_JUMP;
     int jump_val;
     std::string instr = "Jump " + std::to_string(jump_val);
-    
-    jump (int i);
+
+    jump(int i);
     void execute_instruction();
 };
-
 
 class jumpzero : public Instruction {
 public:
@@ -78,7 +73,7 @@ public:
     int jump_pc;
 
     std::string instr = "JumpZero " + std::to_string(jump_pc);
-    
+
     jumpzero(int i);
     void execute_instruction();
 };
@@ -94,7 +89,6 @@ public:
     void execute_instruction();
 };
 
-
 class gosub : public Instruction {
 public:
     int opcode = OP_GOSUB;
@@ -106,7 +100,6 @@ public:
     void execute_instruction();
 };
 
-
 class Return : public Instruction {
 public:
     int opcode = OP_RETURN;
@@ -115,15 +108,14 @@ public:
     void execute_instruction();
 };
 
-
 class pushscal : public Instruction {
 public:
     int opcode = OP_PUSHSCALAR;
     int index;
-    pushscal(std::string label, int idx);
+    // pushscal(std::string label, int idx);
+    pushscal(int idx);
     void execute_instruction();
 };
-
 
 class pusharr : public Instruction {
 public:
@@ -141,7 +133,6 @@ public:
     void execute_instruction();
 };
 
-
 class pop : public Instruction {
 public:
     int opcode = OP_POP;
@@ -152,17 +143,17 @@ class popscal : public Instruction {
 public:
     int opcode = OP_POPSCALAR;
     int index;
-    popscal(std::string label, int idx);
+    // popscal(std::string label, int idx);
+    popscal(int idx);
     void execute_instruction();
 };
-
 
 class poparr : public Instruction {
 public:
     int opcode = OP_POPARRAY;
     int index;
-    
-        poparr(std::string label, int idx);
+
+    poparr(std::string label, int idx);
     void execute_instruction();
 };
 
@@ -172,13 +163,11 @@ public:
     void execute_instruction();
 };
 
-
 class Swap : public Instruction {
 public:
     int opcode = OP_SWAP;
     void execute_instruction();
 };
-
 
 class add : public Instruction {
 public:
@@ -192,13 +181,11 @@ public:
     void execute_instruction();
 };
 
-
 class mul : public Instruction {
 public:
     int opcode = OP_MUL;
     void execute_instruction();
 };
-
 
 class Div : public Instruction {
 public:
@@ -211,7 +198,6 @@ public:
     int opcode = OP_PRINTTOS;
     void execute_instruction();
 };
-
 
 class prints : public Instruction {
 public:
