@@ -121,7 +121,8 @@ class pusharr : public Instruction {
 public:
     int opcode = OP_PUSHARRAY;
     int index;
-    pusharr(std::string label, int idx);
+    // pusharr(std::string label, int idx);
+    pusharr(int idx);
     void execute_instruction();
 };
 
@@ -153,7 +154,8 @@ public:
     int opcode = OP_POPARRAY;
     int index;
 
-    poparr(std::string label, int idx);
+    // poparr(std::string label, int idx);
+    poparr(int idx);
     void execute_instruction();
 };
 
