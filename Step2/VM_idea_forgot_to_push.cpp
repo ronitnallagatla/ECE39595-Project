@@ -155,39 +155,27 @@ void operate(std::string instr)
     }
 
     else if (t.inst == "PushScalar") {
-        std::cout << "You have entered a PushScalar instruction" << std::endl;
+        std::cout << "\nYou have entered a PushScalar instruction" << std::endl;
         std::cout << "I don't know how to handle this yet" << std::endl;
-        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl;
-
-        std::cout << "Program is in infinite loop" << std::endl;
-        std::cout << "Feel free to kill me" << std::endl;
-        while (1) {
-            // Do nothing
-        }
+        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl << std::endl;
+        
+        exit(1);
     }
 
     else if (t.inst == "PushArray") {
-       std::cout << "You have entered a PushArray instruction" << std::endl;
+       std::cout << "\nYou have entered a PushArray instruction" << std::endl;
         std::cout << "I don't know how to handle this yet" << std::endl;
-        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl;
+        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl << std::endl;
 
-        std::cout << "Program is in infinite loop" << std::endl;
-        std::cout << "Feel free to kill me" << std::endl;
-        while (1) {
-            // Do nothing
-        }
+        exit(1);
     }
 
     else if (t.inst == "PopScalar") {
-        std::cout << "You have entered a PopScalar instruction" << std::endl;
+        std::cout << "\nYou have entered a PopScalar instruction" << std::endl;
         std::cout << "I don't know how to handle this yet" << std::endl;
-        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl;
+        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl << std::endl;
 
-        std::cout << "Program is in infinite loop" << std::endl;
-        std::cout << "Feel free to kill me" << std::endl;
-        while (1) {
-            // Do nothing
-        }
+        exit(1);
     }
 
     else {
