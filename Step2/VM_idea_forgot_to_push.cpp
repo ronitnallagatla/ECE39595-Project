@@ -19,6 +19,13 @@ int main(int argc, char** argv)
     }
 
     std::ifstream fptr(argv[1]);
+
+    if (!fptr.is_open()) {
+        std::cout << "Error: Could not open file" << std::endl;
+        return EXIT_FAILURE;
+    }
+
+
     std::string instrline;
 
     InstructionMemory* instrMem = InstructionMemory::getInstance();
@@ -26,10 +33,13 @@ int main(int argc, char** argv)
     RuntimeStack* runtimeStack = RuntimeStack::getInstance();
     StringBuffer* stringBuffer = StringBuffer::getInstance();
 
+    int start_scope_size = 0;
+
     while (getline(fptr, instrline)) {
         Token instr(instrline);
         instr.tokenize();
         if (instr.inst == "Start") {
+            start_scope_size = stoi(instr.op1);
             break;
         }
         stringBuffer->add(instrline);
@@ -39,7 +49,6 @@ int main(int argc, char** argv)
     while (getline(fptr, instrline)) {
         operate(instrline);
     }
-
     
     int i = 0;
 
@@ -66,48 +75,123 @@ void operate(std::string instr)
         ins = new add();
     }
 
-    if (t.inst == "Mul") {
+    else if (t.inst == "Mul") {
         ins = new mul();
     }
 
-    if (t.inst == "Div") {
+    else if (t.inst == "Div") {
         ins = new Div();
     }
 
-    if (t.inst == "Negate") {
+    else if (t.inst == "Negate") {
         ins = new Negate();
     }
 
-    if (t.inst == "Swap") {
+    else if (t.inst == "Swap") {
         ins = new Swap();
     }
 
-    if (t.inst == "Dup") {
+    else if (t.inst == "Dup") {
         ins = new dup();
     }
 
-    if (t.inst == "Pop") {
+    else if (t.inst == "Pop") {
         ins = new pop();
     }
 
-    if (t.inst == "Prints") {
+    else if (t.inst == "Prints") {
         ins = new prints(stoi(t.op1));
     }
 
-    if (t.inst == "PrintTOS") {
+    else if (t.inst == "PrintTOS") {
         ins = new printtos();
     }
 
-    if (t.inst == "PushI") {
+    else if (t.inst == "PushI") {
         ins = new pushi(stoi(t.op1));
     }
 
-    if (t.inst == "Exit") {
+    else if (t.inst == "Exit") {
         ins = new Exit();
     }
 
-    if (t.inst == "Jump") {
+    else if (t.inst == "JumpZero") {
+        ins = new jumpzero (stoi(t.op1));
+    }
+
+    else if (t.inst == "JumpNZero") {
+        ins = new jumpnzero (stoi(t.op1));
+    }
+
+    else if (t.inst == "Jump") {
         ins = new jump(stoi(t.op1));
+    }
+
+    else if (t.inst == "GoSub") {
+        ins = new gosub (stoi(t.op1));
+    }
+
+    else if (t.inst == "Return") {
+        ins = new Return ();
+    }
+
+    else if (t.inst == "GoSubLabel") {
+        int num_vars_in_new_scope = stoi(t.op1);
+        // Allocate space for these variables in the data memory
+        // Will be done in Gosublabel::execute_instruction()
+        ins = new gosublabel (num_vars_in_new_scope);
+    }
+
+    else if (t.inst == "PopArray") {
+        std::cout << "You have entered a PopArray instruction" << std::endl;
+        std::cout << "I don't know how to handle this yet" << std::endl;
+        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl;
+
+        std::cout << "Program is in infinite loop" << std::endl;
+        std::cout << "Feel free to kill me" << std::endl;
+        while (1) {
+            // Do nothing
+        }
+    }
+
+    else if (t.inst == "PushScalar") {
+        std::cout << "You have entered a PushScalar instruction" << std::endl;
+        std::cout << "I don't know how to handle this yet" << std::endl;
+        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl;
+
+        std::cout << "Program is in infinite loop" << std::endl;
+        std::cout << "Feel free to kill me" << std::endl;
+        while (1) {
+            // Do nothing
+        }
+    }
+
+    else if (t.inst == "PushArray") {
+       std::cout << "You have entered a PushArray instruction" << std::endl;
+        std::cout << "I don't know how to handle this yet" << std::endl;
+        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl;
+
+        std::cout << "Program is in infinite loop" << std::endl;
+        std::cout << "Feel free to kill me" << std::endl;
+        while (1) {
+            // Do nothing
+        }
+    }
+
+    else if (t.inst == "PopScalar") {
+        std::cout << "You have entered a PopScalar instruction" << std::endl;
+        std::cout << "I don't know how to handle this yet" << std::endl;
+        std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl;
+
+        std::cout << "Program is in infinite loop" << std::endl;
+        std::cout << "Feel free to kill me" << std::endl;
+        while (1) {
+            // Do nothing
+        }
+    }
+
+    else {
+        std::cout << "Error: Invalid instruction - " << t.inst << std::endl;
     }
 
     if (ins != nullptr) {

@@ -7,11 +7,7 @@
 class Instruction {
 public:
     int opcode;
-    int value;
-    int length;
-    int index_in_str_buff;
     std::string instr;
-    std::string label_for_symbol_table;
     virtual void execute_instruction() = 0;
 };
 
@@ -44,6 +40,7 @@ class gosublabel : public Instruction {
 public:
     int opcode = OP_ENTER_SUBROUTINE;
     int sub_scope_size;
+    gosublabel(int i);
     void execute_instruction();
 };
 
@@ -58,6 +55,7 @@ public:
 
 class Exit : public Instruction {
 public:
+    std::string instr = "Exit";
     int opcode = OP_EXIT_PROGRAM;
     void execute_instruction();
 };
@@ -67,8 +65,9 @@ class jump : public Instruction {
 public:
     int opcode = OP_JUMP;
     int jump_val;
+    std::string instr = "Jump " + std::to_string(jump_val);
     
-        jump (int i);
+    jump (int i);
     void execute_instruction();
 };
 
@@ -77,8 +76,10 @@ class jumpzero : public Instruction {
 public:
     int opcode = OP_JUMPZERO;
     int jump_pc;
+
+    std::string instr = "JumpZero " + std::to_string(jump_pc);
     
-        jumpzero(int i) { jump_pc = i; }
+    jumpzero(int i);
     void execute_instruction();
 };
 
@@ -87,7 +88,8 @@ public:
     int opcode = OP_JUMPNZERO;
     int jump_pc;
 
-    
+    std::string instr = "JumpNZero " + std::to_string(jump_pc);
+
     jumpnzero(int i);
     void execute_instruction();
 };
@@ -97,6 +99,9 @@ class gosub : public Instruction {
 public:
     int opcode = OP_GOSUB;
     int gosub_jump_index;
+
+    std::string instr = "GoSub " + std::to_string(gosub_jump_index);
+
     gosub(int i);
     void execute_instruction();
 };
@@ -105,6 +110,8 @@ public:
 class Return : public Instruction {
 public:
     int opcode = OP_RETURN;
+
+    std::string instr = "Return";
     void execute_instruction();
 };
 

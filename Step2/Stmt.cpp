@@ -5,68 +5,60 @@
 #include "InstructionMemory.h"
 #include "RuntimeStack.h"
 #include "StringBuffer.h"
+#include "ReturnAddrStack.h"
+#include "DataMemory.h"
 
+
+
+void start::execute_instruction () {}
 
 
 void poparr::execute_instruction () {}
 void popscal::execute_instruction () {}
 
-void Exit::execute_instruction () { 
-    exit (0);
-}
 
 
-void start::execute_instruction () {}
-
-void jump::execute_instruction () {
-    InstructionMemory* instrMem = InstructionMemory::getInstance();
-    instrMem->setPC(jump_val - 2); // Decrement by 2 because the PC will be incremented by 1 in the main loop
-}
-
-void jumpzero::execute_instruction () {
-    RuntimeStack* st = RuntimeStack::getInstance();
-    InstructionMemory* instrMem = InstructionMemory::getInstance();
-
-    if (st->top() == 0) {
-        instrMem->setPC(jump_pc - 2); // Decrement by 2 because the PC will be incremented by 1 in the main loop
-    }
-}
-
-void jumpnzero::execute_instruction () {
-    RuntimeStack* st = RuntimeStack::getInstance();
-    InstructionMemory* instrMem = InstructionMemory::getInstance();
-
-    if (st->top() != 0) {
-        instrMem->setPC(jump_pc - 2); // Decrement by 2 because the PC will be incremented by 1 in the main loop
-    }
-}
-
-
-void gosub::execute_instruction () {
-    InstructionMemory* instrMem = InstructionMemory::getInstance();
-    instrMem->setPC(gosub_jump_index);
-}
 
 
 void pushscal::execute_instruction () {
     RuntimeStack* st = RuntimeStack::getInstance();
 }
 
-void Return::execute_instruction () {
-    InstructionMemory* instrMem = InstructionMemory::getInstance();
-    instrMem->setPC(instrMem->return_index);
-}
-
-
-
 void pusharr ::execute_instruction () {
     RuntimeStack* st = RuntimeStack::getInstance();
 }
 
 
+
+/////////////////////////////////////////// WORKING EXECUTE_INSTRUCTIONS  ///////////////////////////////////////////
+
+void Exit::execute_instruction () { 
+    exit (0);
+}
+
 void pushi::execute_instruction () {
     RuntimeStack* st = RuntimeStack::getInstance();
     st->push(val);
+}
+
+
+void gosub::execute_instruction () {
+    InstructionMemory* instrMem = InstructionMemory::getInstance();
+    ReturnAddrStack* returnStack = ReturnAddrStack::getInstance();
+
+    returnStack->push(instrMem->getPC()); // Push the next instruction to the return stack
+                                              // so that we can return to it after the subroutine
+                                              // keeping in mind getPC() returns PC (no increment)
+
+    instrMem->setPC(gosub_jump_index);
+}
+
+void Return::execute_instruction () {
+    InstructionMemory* instrMem = InstructionMemory::getInstance();
+    ReturnAddrStack* ret_adr = ReturnAddrStack::getInstance();
+
+    int ret_adr_val = ret_adr->pop();
+    instrMem->setPC(ret_adr_val);
 }
 
 
@@ -82,8 +74,6 @@ void dup::execute_instruction () {
 }
 
 
-
-
 void Swap::execute_instruction () {
     RuntimeStack* st = RuntimeStack::getInstance();
     int temp = st->pop();
@@ -92,79 +82,104 @@ void Swap::execute_instruction () {
     st->push(temp2);
 };
 
-
-
-
 void add::execute_instruction () {
     RuntimeStack* st = RuntimeStack::getInstance();
     st->push (st->pop() + st->pop());
 }
-
-
-
 
 void Negate::execute_instruction () {
     RuntimeStack* st = RuntimeStack::getInstance();
     st->push (st->pop() * -1);
 }
 
-
-
 void mul::execute_instruction () {
     RuntimeStack* st = RuntimeStack::getInstance();
     st->push (st->pop() * st->pop());
 }
-
-
-
 
 void Div::execute_instruction () {
     RuntimeStack* st = RuntimeStack::getInstance();
     st->push (st->pop() / st->pop());
 }
 
-
 void printtos::execute_instruction () {
     RuntimeStack* st = RuntimeStack::getInstance();
     std::cout << st->pop() << std::endl;
 }
-
-
 
 void prints::execute_instruction () {
     StringBuffer* sb = StringBuffer::getInstance();
     std::cout << sb->get(index_in_str_buff) << std::endl;
 };
 
-popscal::popscal (std::string label, int idx) {
-    this->label_for_symbol_table = label;
-    this->index = idx + 1;
+
+void jump::execute_instruction () {
+    InstructionMemory* instrMem = InstructionMemory::getInstance();
+    instrMem->setPC(jump_val);
 }
 
-poparr::poparr (std::string label, int idx) {
-    this->label_for_symbol_table = label;
-    this->index = idx + 1;
+void jumpzero::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
+    InstructionMemory* instrMem = InstructionMemory::getInstance();
+
+    if (st->pop() == 0) {
+        instrMem->setPC(jump_pc);
+    }
 }
+
+void jumpnzero::execute_instruction () {
+    RuntimeStack* st = RuntimeStack::getInstance();
+    InstructionMemory* instrMem = InstructionMemory::getInstance();
+
+    if (st->pop() != 0) {
+        instrMem->setPC(jump_pc); 
+    }
+}
+
+
+void gosublabel::execute_instruction () {
+    DataMemory* dm = DataMemory::getInstance();
+
+    // ALOCATE MEMORY FOR THE SUBROUTINE
+
+    int size_to_be_allocated = sub_scope_size;
+
+}
+
+////////////////////////////////////  WORKING  CONSTRUCTORS    ////////////////////////////////////
+
+// Decrement by 2 because the PC will be incremented by 1 in the main loop
+// and since Start is not actually in the instruction memory, what should be
+// instruction 1 is actually instruction 0
+
+jump::jump (int i) { jump_val = i - 2; }
+jumpnzero::jumpnzero(int i) { jump_pc = i - 2; }
+jumpzero::jumpzero(int i) { jump_pc = i - 2; }
+gosub::gosub(int i) { gosub_jump_index = i - 2; }
+
+gosublabel::gosublabel (int i) { sub_scope_size = i; }
+
+
+pushi::pushi(int v) { this->val = v; }
 
 prints::prints(int index) {
     this->index_in_str_buff = index;
 }
 
+/////////////////////////////////////////// NOT WORKING CONSTRUCTORS  ///////////////////////////////////////////
 
-pushscal::pushscal(std::string label, int idx)
-{
-    label_for_symbol_table = label;
-    index = idx + 1;
+popscal::popscal (std::string label, int idx) {
+    this->index = idx + 1;
 }
 
+poparr::poparr (std::string label, int idx) {
+    this->index = idx + 1;
+}
+
+pushscal::pushscal(std::string label, int idx) {
+    index = idx + 1;
+}
 
 pusharr::pusharr(std::string label, int idx) {
-    label_for_symbol_table = label;
     index = idx + 1;
 }
-
-jumpnzero::jumpnzero(int i) { jump_pc = i; }
-
-pushi::pushi(int v) { this->val = v; }
-gosub::gosub(int i) { gosub_jump_index = i; }
-jump::jump (int i) { jump_val = i; }

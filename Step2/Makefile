@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -g -std=c++11
 EXECUTABLE = VM
-COMMANDLINE = ../TestCasesPart2_v2/12Jump.pout
+COMMANDLINE = ../TestCasesPart2_v2/13SimpleGoSub_GoSubLabel_Return.pout
 
 .PHONY : run
 run : clean $(EXECUTABLE)
