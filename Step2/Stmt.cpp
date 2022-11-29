@@ -10,7 +10,7 @@
 
 void start::execute_instruction() { }
 
-void poparr::execute_instruction() { }
+// void poparr::execute_instruction() { }
 // void popscal::execute_instruction() { }
 
 // void pushscal::execute_instruction()
@@ -18,10 +18,10 @@ void poparr::execute_instruction() { }
 //     RuntimeStack* st = RuntimeStack::getInstance();
 // }
 
-void pusharr ::execute_instruction()
-{
-    RuntimeStack* st = RuntimeStack::getInstance();
-}
+// void pusharr ::execute_instruction()
+// {
+//     RuntimeStack* st = RuntimeStack::getInstance();
+// }
 
 /////////////////////////////////////////// WORKING EXECUTE_INSTRUCTIONS  ///////////////////////////////////////////
 
@@ -77,6 +77,24 @@ void popscal::execute_instruction()
     DataMemory* dataMem = DataMemory::getInstance();
 
     dataMem->setMemory(index, st->pop());
+}
+
+void pusharr::execute_instruction()
+{
+    RuntimeStack* st = RuntimeStack::getInstance();
+    DataMemory* dataMem = DataMemory::getInstance();
+
+    int idx = st->pop() + index;
+    st->push(dataMem->getMemory(idx));
+}
+
+void poparr::execute_instruction()
+{
+    RuntimeStack* st = RuntimeStack::getInstance();
+    DataMemory* dataMem = DataMemory::getInstance();
+
+    int idx = st->pop() + index;
+    dataMem->setMemory(idx, st->pop());
 }
 
 void dup::execute_instruction()
@@ -199,9 +217,14 @@ popscal::popscal(int idx)
     this->index = idx;
 }
 
-poparr::poparr(std::string label, int idx)
+// poparr::poparr(std::string label, int idx)
+// {
+//     this->index = idx + 1;
+// }
+
+poparr::poparr(int idx)
 {
-    this->index = idx + 1;
+    this->index = idx;
 }
 
 // pushscal::pushscal(std::string label, int idx) {
@@ -213,7 +236,12 @@ pushscal::pushscal(int idx)
     this->index = idx;
 }
 
-pusharr::pusharr(std::string label, int idx)
+// pusharr::pusharr(std::string label, int idx)
+// {
+//     index = idx + 1;
+// }
+
+pusharr::pusharr(int idx)
 {
-    index = idx + 1;
+    this->index = idx;
 }

@@ -53,7 +53,7 @@ int main(int argc, char** argv)
 
     instrMem->setPC(-1);
 
-    while (i < 50) {
+    while (1) {
         Instruction* ins = instrMem->getInstruction();
         ins->execute_instruction();
         i++;
@@ -143,12 +143,8 @@ void operate(std::string instr)
     }
 
     else if (t.inst == "PopArray") {
-        // std::cout << "\nYou have entered a PopArray instruction" << std::endl;
-        // std::cout << "I don't know how to handle this yet" << std::endl;
-        // std::cout << "CRY CRY CRY CRY CRY CRY CRY CRY CRY CRY" << std::endl
-        //           << std::endl;
 
-        // exit(1);
+        ins = new poparr(stoi(t.op1));
 
     }
 
@@ -162,6 +158,7 @@ void operate(std::string instr)
 
     else if (t.inst == "PushArray") {
 
+        ins = new pusharr(stoi(t.op1));
     }
 
     else if (t.inst == "PopScalar") {
