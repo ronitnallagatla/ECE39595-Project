@@ -17,6 +17,7 @@ public:
     int getMemory(int loc);
     int getSize();
     void extend(int size);
+    void allocate(int size);
 };
 
 #endif /* DATAMEMORY_H_ */
