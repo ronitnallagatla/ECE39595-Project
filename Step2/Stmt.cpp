@@ -10,19 +10,6 @@
 
 void start::execute_instruction() { }
 
-// void poparr::execute_instruction() { }
-// void popscal::execute_instruction() { }
-
-// void pushscal::execute_instruction()
-// {
-//     RuntimeStack* st = RuntimeStack::getInstance();
-// }
-
-// void pusharr ::execute_instruction()
-// {
-//     RuntimeStack* st = RuntimeStack::getInstance();
-// }
-
 /////////////////////////////////////////// WORKING EXECUTE_INSTRUCTIONS  ///////////////////////////////////////////
 
 void Exit::execute_instruction()
@@ -205,41 +192,20 @@ prints::prints(int index)
     this->index_in_str_buff = index;
 }
 
-/////////////////////////////////////////// NOT WORKING CONSTRUCTORS  ///////////////////////////////////////////
-
-// popscal::popscal(std::string label, int idx)
-// {
-//     this->index = idx + 1;
-// }
-
 popscal::popscal(int idx)
 {
     this->index = idx;
 }
-
-// poparr::poparr(std::string label, int idx)
-// {
-//     this->index = idx + 1;
-// }
 
 poparr::poparr(int idx)
 {
     this->index = idx;
 }
 
-// pushscal::pushscal(std::string label, int idx) {
-//     index = idx + 1;
-// }
-
 pushscal::pushscal(int idx)
 {
     this->index = idx;
 }
-
-// pusharr::pusharr(std::string label, int idx)
-// {
-//     index = idx + 1;
-// }
 
 pusharr::pusharr(int idx)
 {

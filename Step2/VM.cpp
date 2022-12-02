@@ -169,7 +169,7 @@ void operate(std::string instr)
     }
 
     else {
-        std::cout << "Error: Invalid instruction - " << t.inst << std::endl;
+        std::cout << "Error: Invalid instruction -> " << t.inst << std::endl;
     }
 
     if (ins != nullptr) {
