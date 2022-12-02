@@ -9,13 +9,13 @@ run : clean $(EXECUTABLE)
 
 cleanmake : clean VM
 
-
 .PHONY : clean $(EXECUTABLE)
 $(EXECUTABLE) :
 	$(CC) $(CFLAGS) *.cpp -o $(EXECUTABLE)
 
 clean :
 	rm -f $(EXECUTABLE)
+	rm -f *.o
 	rm -f TestCases10_08_22/*.pout
 	rm -f TestCases10_08_22/*.out
 	rm -f TestCases10_08_22/*.b 
