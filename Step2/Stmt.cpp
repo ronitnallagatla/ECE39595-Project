@@ -27,6 +27,10 @@ void gosub::execute_instruction()
 {
     InstructionMemory* instrMem = InstructionMemory::getInstance();
     ReturnAddrStack* returnStack = ReturnAddrStack::getInstance();
+    DataMemory* data_mem = DataMemory::getInstance();
+
+
+    data_mem -> add_scope();
 
     returnStack->push(instrMem->getPC()); // Push the next instruction to the return stack
                                           // so that we can return to it after the subroutine
@@ -39,9 +43,13 @@ void Return::execute_instruction()
 {
     InstructionMemory* instrMem = InstructionMemory::getInstance();
     ReturnAddrStack* ret_adr = ReturnAddrStack::getInstance();
+    DataMemory* dataMem = DataMemory::getInstance();
 
     int ret_adr_val = ret_adr->pop();
     instrMem->setPC(ret_adr_val);
+
+    dataMem->pop_scope();
+
 }
 
 void pop::execute_instruction()
