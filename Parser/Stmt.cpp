@@ -34,17 +34,17 @@ void jump::serialize (std::ofstream& outFile)
 
 void jumpzero::serialize (std::ofstream& outFile)
 {
-    outFile << "Jumpzero " << label_for_symbol_table  << " " << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
+    outFile << "JumpZero " << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
 }
 
 void jumpnzero::serialize (std::ofstream& outFile)
 {
-    outFile << "JumpNZero " << label_for_symbol_table << " " << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
+    outFile << "JumpNZero " << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
 }
 
 void gosub::serialize (std::ofstream& outFile)
 {
-    outFile << "GoSub " << label_for_symbol_table  << " " <<  (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
+    outFile << "GoSub " << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
 }
 
 void Return::serialize (std::ofstream& outFile)

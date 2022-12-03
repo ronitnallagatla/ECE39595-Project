@@ -9,6 +9,6 @@ do
    ./a.out ../TestCasesPart2_v2/$f
 
    echo "Diffing $f"
-   diff ../TestCasesPart2_v2/$fTest.pout ../TestCasesPart2_v2/$f.pout
+   diff -y -w ../TestCasesPart2_v2/$f"Test".pout ../TestCasesPart2_v2/$f.pout
    echo -e "\n"
 done
