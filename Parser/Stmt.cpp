@@ -29,22 +29,22 @@ void Exit::serialize (std::ofstream& outFile)
 
 void jump::serialize (std::ofstream& outFile)
 {
-    outFile << "Jump, " << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
+    outFile << "Jump " << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
 }
 
 void jumpzero::serialize (std::ofstream& outFile)
 {
-    outFile << "Jumpzero, " << label_for_symbol_table << ", (" << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
+    outFile << "Jumpzero " << label_for_symbol_table  << " " << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
 }
 
 void jumpnzero::serialize (std::ofstream& outFile)
 {
-    outFile << "JumpNZero, " << label_for_symbol_table << ", (" << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
+    outFile << "JumpNZero " << label_for_symbol_table << " " << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
 }
 
 void gosub::serialize (std::ofstream& outFile)
 {
-    outFile << "GoSub " << label_for_symbol_table << ", (" << (symbolTable->getLabel(label_for_symbol_table)).getLoc() << ")" << std::endl;
+    outFile << "GoSub " << label_for_symbol_table  << " " <<  (symbolTable->getLabel(label_for_symbol_table)).getLoc() << std::endl;
 }
 
 void Return::serialize (std::ofstream& outFile)
@@ -54,12 +54,12 @@ void Return::serialize (std::ofstream& outFile)
 
 void pushscal::serialize (std::ofstream& outFile)
 {
-    outFile << "PushScalar " << label_for_symbol_table << ", (" << index << ")" << std::endl;
+    outFile << "PushScalar " << index << std::endl;
 }
 
 void pusharr::serialize (std::ofstream& outFile)
 {
-    outFile << "PushArray " << label_for_symbol_table << ", (" << index << ")" << std::endl;
+    outFile << "PushArray " << index << std::endl;
 }
 
 void pop::serialize (std::ofstream& outFile)
@@ -69,12 +69,12 @@ void pop::serialize (std::ofstream& outFile)
 
 void popscal::serialize (std::ofstream& outFile)
 {
-    outFile << "PopScalar " << label_for_symbol_table << ", (" << index << ")" << std::endl;
+    outFile << "PopScalar " << index << std::endl;
 }
 
 void poparr::serialize (std::ofstream& outFile)
 {
-    outFile << "PopArray " << label_for_symbol_table << ", (" << index << ")" << std::endl;
+    outFile << "PopArray " << index << std::endl;
 }
 
 void dup::serialize (std::ofstream& outFile)
