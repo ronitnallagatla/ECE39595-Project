@@ -11,5 +11,5 @@ do
    echo "Diffing $f"
    diff -y -w ../TestCasesPart2_v2/$f"Test".pout ../TestCasesPart2_v2/$f.pout
    # diff -w ../TestCasesPart2_v2/$f"Test".pout ../TestCasesPart2_v2/$f.pout
-   # echo -e "\n"
+   echo -e "\n"
 done

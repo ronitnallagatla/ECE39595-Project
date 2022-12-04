@@ -8,10 +8,9 @@ class DataMemory {
 private:
     DataMemory();
     void init();
-    
+
     static DataMemory* instance;
-    //std::vector<int> memory;
-    std::vector < std::vector<int> > stack;
+    std::vector<std::vector<int>> stack;
 
 public:
     int scope = 0;

@@ -81,7 +81,6 @@ Instruction* get_instruction(std::string instr, std::vector<Instruction*>& instr
         ins = new gosublabel();
         ins->label_for_symbol_table = t.op1;
         symbolTable->addLabel(t.op1, inst_buff_size);
-        // symbolTable->addVar(t.op1, 0);
         symbolTable->setScope(1);
     }
 

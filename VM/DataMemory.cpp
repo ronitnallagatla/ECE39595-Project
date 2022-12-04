@@ -14,8 +14,8 @@ DataMemory* DataMemory::getInstance()
     return instance;
 }
 
-
-void DataMemory::init() {
+void DataMemory::init()
+{
     std::vector<int> memory;
     scope = 0;
     stack.push_back(memory);
@@ -24,27 +24,22 @@ void DataMemory::init() {
 int DataMemory::getMemory(int loc)
 {
     return stack[scope][loc];
-    //return memory[loc];
 }
 
 void DataMemory::setMemory(int loc, int val)
 {
     stack[scope][loc] = val;
-    //memory[loc] = val;
 }
 
 int DataMemory::getSize()
 {
     return stack[scope].size();
-    //return memory.size();
 }
 
 void DataMemory::extend(int size)
-{  
+{
     stack[scope].resize(size);
-    //memory.resize(size);
 }
-
 
 void DataMemory::add_scope()
 {
@@ -55,8 +50,7 @@ void DataMemory::add_scope()
 
 void DataMemory::pop_scope()
 {
-    if (scope > 0)
-    {
+    if (scope > 0) {
         stack.pop_back();
     }
 
