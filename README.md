@@ -14,6 +14,8 @@ add the GoSubLabel label to the sybmol table (instead of just storing the string
 Also the column output from diff is the -y flag in the diff command in parsegood. Disable it if annoying.
 
 ---
-Edit: I fixed GoSubLabel, there's some errors with jumpNZero that I'm working on.
+Edit: I fixed GoSubLabel, there's some errors with JumpNZero that I'm working on.
+
+Edit2: 27DotProd jumpnzero is the only one thats failing, everything else looks fine.
 
 

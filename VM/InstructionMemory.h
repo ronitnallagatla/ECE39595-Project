@@ -11,7 +11,7 @@ class InstructionMemory {
 private:
     InstructionMemory();
     static InstructionMemory* instance;
-    std::vector <Instruction*> instructions;
+    std::vector<Instruction*> instructions;
     int pc;
 
 public:

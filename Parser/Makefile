@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -g -std=c++11
 EXEC = Parser
-COMMANDLINE = ../TestCasesPart2_v2/13SimpleGoSub_GoSubLabel_Return
+COMMANDLINE = ../TestCasesPart2_v2/27DotProd
 
 cleanmake : clean Parser
 
