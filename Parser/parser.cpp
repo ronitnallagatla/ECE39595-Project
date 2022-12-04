@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     std::string outFile = prefix + "Test.pout";
     std::ofstream out(outFile);
 
-    std::vector <Instruction*> instr_queue;
+    std::vector<Instruction*> instr_queue;
     SymbolTable* symbolTable = SymbolTable::getInstance();
     StringBuffer* stringBuffer = StringBuffer::getInstance();
 
@@ -81,6 +81,7 @@ Instruction* get_instruction(std::string instr, std::vector<Instruction*>& instr
         ins = new gosublabel();
         ins->label_for_symbol_table = t.op1;
         symbolTable->addLabel(t.op1, inst_buff_size);
+        // symbolTable->addVar(t.op1, 0);
         symbolTable->setScope(1);
     }
 
