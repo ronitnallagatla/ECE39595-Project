@@ -6,9 +6,10 @@ for f in 0StartExit 10Swap 11Label 12Jump 13SimpleGoSub_GoSubLabel_Return 14Scal
 do
    touch $f.pout
    rm $f.pout
-   ./a.out ../TestCasesPart2_v2/$f
+   ./Parser ../TestCasesPart2_v2/$f
 
    echo "Diffing $f"
    diff -y -w ../TestCasesPart2_v2/$f"Test".pout ../TestCasesPart2_v2/$f.pout
-   echo -e "\n"
+   # diff -w ../TestCasesPart2_v2/$f"Test".pout ../TestCasesPart2_v2/$f.pout
+   # echo -e "\n"
 done

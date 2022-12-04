@@ -2,18 +2,21 @@
 
 SymbolTable* SymbolTable::instance = nullptr;
 
-SymbolTable::SymbolTable() {
+SymbolTable::SymbolTable()
+{
     size = -1;
 }
 
-SymbolTable* SymbolTable::getInstance() {
+SymbolTable* SymbolTable::getInstance()
+{
     if (instance == nullptr) {
         instance = new SymbolTable();
     }
     return instance;
 }
 
-void SymbolTable::addEntry(std::string key, TableEntry entry) {
+void SymbolTable::addEntry(std::string key, TableEntry entry)
+{
     if (scope == 0) {
         map[key] = entry;
     } else {
@@ -21,17 +24,18 @@ void SymbolTable::addEntry(std::string key, TableEntry entry) {
     }
 }
 
-void SymbolTable::addLabel(std::string key, int loc) {
+void SymbolTable::addLabel(std::string key, int loc)
+{
     if ((getLabel(key).getLoc() == -1)) {
         map[key] = TableEntry(loc, 0);
-    }
-    else {
+    } else {
         std::cout << "Error: Label " << key << " already exists" << std::endl;
         exit(EXIT_FAILURE);
     }
 }
 
-void SymbolTable::addVar(std::string key, int len) {
+void SymbolTable::addVar(std::string key, int len)
+{
     if ((getEntry(key).getLen() == -1) || !err_check) {
         addEntry(key, TableEntry(getLoc(), len));
         size += len;
@@ -43,7 +47,8 @@ void SymbolTable::addVar(std::string key, int len) {
     }
 }
 
-TableEntry SymbolTable::getEntry(std::string key) {
+TableEntry SymbolTable::getEntry(std::string key)
+{
     if (scope == 0) {
         std::map<std::string, TableEntry>::iterator it = map.find(key);
         if (it != map.end()) {
@@ -58,7 +63,8 @@ TableEntry SymbolTable::getEntry(std::string key) {
     return TableEntry(-1, -1);
 }
 
-TableEntry SymbolTable::getLabel(std::string key) {   
+TableEntry SymbolTable::getLabel(std::string key)
+{
     std::map<std::string, TableEntry>::iterator it = map.find(key);
     if (it != map.end()) {
         return it->second;
@@ -67,16 +73,21 @@ TableEntry SymbolTable::getLabel(std::string key) {
     return TableEntry(-1, -1);
 }
 
-int SymbolTable::getLoc() {
+int SymbolTable::getLoc()
+{
     return size;
 }
 
-void SymbolTable::setScope(int scope) {
+void SymbolTable::setScope(int scope)
+{
     this->scope = scope;
 }
 
-int SymbolTable::getNumVar(int scope) {
+int SymbolTable::getNumVar(int scope)
+{
     int numVar = 0;
+    int numSubVar = 0;
+    int retval;
     std::map<std::string, TableEntry>::iterator it;
     for (it = map.begin(); it != map.end(); it++) {
         if (it->second.getLen() > 0) {
@@ -84,15 +95,13 @@ int SymbolTable::getNumVar(int scope) {
         }
     }
 
-    if (scope == 0) {
-        return numVar;
-    }
-
     for (it = subMap.begin(); it != subMap.end(); it++) {
         if (it->second.getLen() > 0) {
-            numVar += it->second.getLen();
+            numSubVar += it->second.getLen();
         }
     }
-    return numVar;
-}
 
+    retval = scope == 0 ? numVar : numSubVar;
+
+    return retval;
+}
