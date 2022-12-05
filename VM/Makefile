@@ -15,6 +15,7 @@ $(EXEC) :
 
 clean :
 	rm -f $(EXECUTABLE)
+	rm -f VM
 	rm -f *.o
 	rm -f *.vout
 	clear

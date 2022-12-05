@@ -47,7 +47,6 @@ int main(int argc, char* argv[])
     // Modified string buffer to work with new parser instructions
     stringBuffer->serialize(out);
     for (auto instr : instr_queue) {
-        // 0 in serialize means text, 1 means binary
         instr->serialize(out); // Outputs text to .pout file
     }
 
@@ -99,19 +98,14 @@ Instruction* get_instruction(std::string instr, std::vector<Instruction*>& instr
     else if (t.inst == "jump") {
         ins = new jump();
         ins->label_for_symbol_table = t.op1;
-        symbolTable->addVar(t.op1, 0);
     }
 
     else if (t.inst == "jumpzero") {
         ins = new jumpzero(t.op1);
-        symbolTable->err_check = 0;
-        symbolTable->addVar(t.op1, 0);
     }
 
     else if (t.inst == "jumpnzero") {
         ins = new jumpnzero(t.op1);
-        symbolTable->err_check = 0;
-        symbolTable->addVar(t.op1, 0);
     }
 
     else if (t.inst == "gosub") {

@@ -3,7 +3,8 @@ CFLAGS = -g -std=c++11
 EXEC = Parser
 COMMANDLINE = ../TestCasesPart2_v2/27DotProd
 
-cleanmake : clean Parser
+cleanmake : clean Parser 
+	parsegood
 
 .PHONY : run
 run : clean $(EXEC)
@@ -17,5 +18,6 @@ clean :
 	rm -f $(EXEC)
 	rm -f *.o
 	rm -f ../TestCasesPart2_v2/*.out
+	rm -f ../TestCasesPart2_v2/*Test.pout
 	rm -f ../TestCases10_08_22/*.out
 	clear
