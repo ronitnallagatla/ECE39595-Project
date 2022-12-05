@@ -39,9 +39,8 @@ void SymbolTable::addVar(std::string key, int len)
     if ((getEntry(key).getLen() == -1) || !err_check) {
         addEntry(key, TableEntry(getLoc(), len));
         size += len;
-    }
 
-    else {
+    } else {
         std::cout << "Error: Variable " << key << " already exists" << std::endl;
         exit(EXIT_FAILURE);
     }

@@ -13,30 +13,9 @@ run : clean $(EXEC)
 $(EXEC) :
 	$(CC) $(CFLAGS) *.cpp -o $(EXEC)
 
-all:
-	g++ -g *.cpp  -std=c++11 -o Parser
-
 clean :
 	rm -f $(EXEC)
 	rm -f *.o
-	rm -f TestCases10_08_22/*.pout
-	rm -f TestCases10_08_22/*.out
-	rm -f TestCases10_08_22/*.b
-	rm -f *.vout
+	rm -f ../TestCasesPart2_v2/*.out
+	rm -f ../TestCases10_08_22/*.out
 	clear
-
-
-# all: clean
-# 	g++ -g *.cpp
-# 	clear
-
-# test: all
-# 	parsegood
-# 	-parseerr
-
-# clean:
-# 	rm -f a.out
-# 	rm -f TestCases10_08_22/*.pout
-# 	rm -f TestCases10_08_22/*.out
-# 	rm -f TestCases10_08_22/*.b
-# 	clear
