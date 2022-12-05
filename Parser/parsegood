@@ -5,7 +5,7 @@
 for f in 0StartExit 1PushI 2PrintTOS 3Add 4Prints 5Div 6Dup 7Mul 8Negate 9Pop 10Swap 11Label 12Jump 13SimpleGoSub_GoSubLabel_Return 14ScalarEasy 15ScalarHard 16ScalarEasy 17ScalarHard 18ScalarHardest 19ArrayEasy 20ArrayHard 21ArrayEasy 22ArrayHard 23ArrayHardest 24JumpZero 25JumpNZero 26Recurse 27DotProd 99Sample
 do
    rm -f ../TestCasesPart2_v2/$f.out
-   ./Parser ../TestCasesPart2_v2/$f
+   ./comp ../TestCasesPart2_v2/$f
 
    echo "Diffing $f"
    diff ../TestCasesPart2_v2/$f.out ../TestCasesPart2_v2/$f.pout
@@ -16,5 +16,5 @@ echo -e "\n\nParser Error Checks\n\n"
 for f in Err1StmtAfterEnd Err2NoEnd Err3DoubleDefScalar Err4DoubleDefArr Err5DoubleDefLabel
 do
    echo "Testing $f"
-   ./Parser ../TestCasesPart2_v2/$f
+   ./comp ../TestCasesPart2_v2/$f
 done

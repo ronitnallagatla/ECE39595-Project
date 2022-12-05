@@ -4,7 +4,7 @@
 for f in 0StartExit 1PushI 2PrintTOS 3Add 4Prints 5Div 6Dup 7Mul 8Negate 9Pop 10Swap 11Label 12Jump 13SimpleGoSub_GoSubLabel_Return 14ScalarEasy 15ScalarHard 16ScalarEasy 17ScalarHard 18ScalarHardest 19ArrayEasy 20ArrayHard 21ArrayEasy 22ArrayHard 23ArrayHardest 24JumpZero 25JumpNZero 26Recurse 27DotProd 99Sample
 do
    rm -f $f.vout
-   ./VM ../TestCasesPart2_v2/$f.out >> $f.vout
+   ./vm ../TestCasesPart2_v2/$f.out >> $f.vout
    echo -e "Diffing $f"
    diff $f.vout ../TestCasesPart2_v2/$f.vout
 done
