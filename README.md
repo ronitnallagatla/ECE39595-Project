@@ -18,4 +18,4 @@ Edit: I fixed GoSubLabel, there's some errors with JumpNZero that I'm working on
 
 Edit2: 27DotProd jumpnzero is the only one thats failing, everything else looks fine.
 
-
+Edit3: 27DotProd is failing cos the the location of the label is being updated when the program sees it the second time.
