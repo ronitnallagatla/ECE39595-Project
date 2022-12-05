@@ -3,7 +3,7 @@
 
 ---
 
-**Final submisison can be found under `tags/step3`**
+**Final submisison can be found under [tags/step3](https://github.com/ronitnallagatla/ECE39595-Project/releases/tag/step3)**
 
 ## Parser Fun
 
