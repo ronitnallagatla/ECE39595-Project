@@ -3,6 +3,8 @@
 
 ---
 
+**Final submisison can be found under `tags/step3`**
+
 ## Parser Fun
 
 The parser code is contained in the `step1/` directory. 
