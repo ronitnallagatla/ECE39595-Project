@@ -1,4 +1,4 @@
-# Hello Grader!
+# ECE 39595 - Course Project
 ## Team: Shantanu Sinha (sinha93), Ronit Nallagatla (rnallaga)
 
 ---
