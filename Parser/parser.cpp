@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     std::ifstream fptr(argv[1]);
 
     std::string prefix = std::string(argv[1]);
-    std::string outFile = prefix + "Test.pout";
+    std::string outFile = prefix + ".out";
     std::ofstream out(outFile);
 
     std::vector<Instruction*> instr_queue;

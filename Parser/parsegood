@@ -8,8 +8,8 @@ do
    rm $f.pout
    ./Parser ../TestCasesPart2_v2/$f
 
-   echo "Diffing $f"
-   diff -y -w ../TestCasesPart2_v2/$f"Test".pout ../TestCasesPart2_v2/$f.pout
-   # diff -w ../TestCasesPart2_v2/$f"Test".pout ../TestCasesPart2_v2/$f.pout
-   echo -e "\n"
+   echo -e "Diffing $f"
+   # diff -y -w ../TestCasesPart2_v2/$f"Test".pout ../TestCasesPart2_v2/$f.pout
+   # echo -e "\n"
+   diff ../TestCasesPart2_v2/$f.out ../TestCasesPart2_v2/$f.pout
 done

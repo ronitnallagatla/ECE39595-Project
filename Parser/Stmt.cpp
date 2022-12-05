@@ -48,7 +48,7 @@ void gosub::serialize(std::ofstream& outFile)
 
 void Return::serialize(std::ofstream& outFile)
 {
-    outFile << "Return" << std::endl;
+    outFile << "Return " << std::endl;
 }
 
 void pushscal::serialize(std::ofstream& outFile)
@@ -63,7 +63,7 @@ void pusharr::serialize(std::ofstream& outFile)
 
 void pop::serialize(std::ofstream& outFile)
 {
-    outFile << "Pop" << std::endl;
+    outFile << "Pop " << std::endl;
 }
 
 void popscal::serialize(std::ofstream& outFile)
@@ -83,22 +83,22 @@ void dup::serialize(std::ofstream& outFile)
 
 void Swap::serialize(std::ofstream& outFile)
 {
-    outFile << "Swap" << std::endl;
+    outFile << "Swap " << std::endl;
 }
 
 void add::serialize(std::ofstream& outFile)
 {
-    outFile << "Add" << std::endl;
+    outFile << "Add " << std::endl;
 }
 
 void Negate::serialize(std::ofstream& outFile)
 {
-    outFile << "Negate" << std::endl;
+    outFile << "Negate " << std::endl;
 }
 
 void mul::serialize(std::ofstream& outFile)
 {
-    outFile << "Mul" << std::endl;
+    outFile << "Mul " << std::endl;
 }
 
 void Div::serialize(std::ofstream& outFile)
@@ -108,7 +108,7 @@ void Div::serialize(std::ofstream& outFile)
 
 void printtos::serialize(std::ofstream& outFile)
 {
-    outFile << "PrintTOS" << std::endl;
+    outFile << "PrintTOS " << std::endl;
 }
 
 void prints::serialize(std::ofstream& outFile)

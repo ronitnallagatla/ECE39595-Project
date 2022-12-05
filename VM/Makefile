@@ -1,26 +1,20 @@
 CC = g++
 CFLAGS = -g -std=c++11
-EXECUTABLE = VM
-COMMANDLINE = ../TestCasesPart2_v2/0StartExit.pout
+EXEC = VM
+COMMANDLINE = ../TestCasesPart2_v2/0StartExit.out
 
 cleanmake : clean VM
 
 .PHONY : run
-run : clean $(EXECUTABLE)
-	./$(EXECUTABLE) $(COMMANDLINE)
+run : clean $(EXEC)
+	./$(EXEC) $(COMMANDLINE)
 
-.PHONY : clean $(EXECUTABLE)
-$(EXECUTABLE) :
-	$(CC) $(CFLAGS) *.cpp -o $(EXECUTABLE)
+.PHONY : clean $(EXEC)
+$(EXEC) :
+	$(CC) $(CFLAGS) *.cpp -o $(EXEC)
 
 clean :
 	rm -f $(EXECUTABLE)
 	rm -f *.o
-	rm -f TestCases10_08_22/*.pout
-	rm -f TestCases10_08_22/*.out
-	rm -f TestCases10_08_22/*.b
 	rm -f *.vout
 	clear
-
-all:
-	g++ -g *.cpp  -std=c++11 -o VM
