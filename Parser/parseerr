@@ -8,5 +8,5 @@ do
    touch $f.pout
    rm $f.pout
    echo $f 
-   ./Parser ../TestCases10_08_22/$f
+   ./comp ../TestCases10_08_22/$f
 done
